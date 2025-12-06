@@ -185,3 +185,61 @@
     background: linear-gradient(to bottom, transparent 0%, hsl(var(--background)) 100%);
   }
 }
+
+/* Accessibility: Skip to content link */
+.skip-to-content {
+  @apply absolute left-4 z-[100] -translate-y-full bg-primary text-primary-foreground px-4 py-2 rounded-b-md font-medium text-sm transition-transform duration-200;
+}
+
+.skip-to-content:focus {
+  @apply translate-y-0 outline-none ring-2 ring-accent ring-offset-2;
+}
+
+/* Accessibility: Enhanced focus states */
+@layer base {
+  /* Global focus-visible styles for better keyboard navigation */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  /* Remove default focus outline to use our custom one */
+  *:focus:not(:focus-visible) {
+    @apply outline-none;
+  }
+
+  /* Links get underline on focus for extra visibility */
+  a:focus-visible {
+    @apply underline underline-offset-4;
+  }
+
+  /* Buttons get a stronger visual indicator */
+  button:focus-visible,
+  [role="button"]:focus-visible {
+    @apply ring-offset-2;
+  }
+
+  /* Cards and interactive containers */
+  .interactive-card:focus-visible {
+    @apply ring-2 ring-accent;
+  }
+}
+
+/* Accessibility: Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Accessibility: High contrast mode support */
+@media (prefers-contrast: more) {
+  :root {
+    --border: 215 30% 50%;
+    --muted-foreground: 215 20% 30%;
+  }
+}
