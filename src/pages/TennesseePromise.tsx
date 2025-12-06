@@ -1,11 +1,11 @@
 import { Layout } from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
-import { ArrowLeft, BookOpen, GraduationCap, Users, DollarSign, Calendar, ChevronRight } from "lucide-react";
+import { BookOpen, GraduationCap, Users, DollarSign, Calendar, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
+import { PolicyBreadcrumb } from "@/components/PolicyBreadcrumb";
 const relatedPages = [
   { name: "K-12 Policy", href: "/k12", description: "Elementary & secondary education" },
   { name: "Higher Education", href: "/higher-ed", description: "Colleges & universities" },
@@ -47,15 +47,14 @@ export default function TennesseePromise() {
         </div>
       </nav>
 
-      {/* Breadcrumb & Back */}
+      {/* Breadcrumb */}
       <div className="container pt-6">
-        <Link 
-          to="/higher-ed" 
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Higher Education
-        </Link>
+        <PolicyBreadcrumb 
+          items={[
+            { label: "Higher Education", href: "/higher-ed" },
+            { label: "Tennessee Promise" },
+          ]} 
+        />
       </div>
 
       {/* Clean Header */}
