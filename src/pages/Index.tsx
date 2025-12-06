@@ -13,13 +13,13 @@ import { useEducationBills } from "@/hooks/useLegislation";
 const featuredContent = [{
   title: "Understanding Tennessee's School Voucher Program",
   description: "A comprehensive look at the Education Savings Account program and what it means for Nashville families.",
-  href: "/k12/vouchers",
+  href: "/advocacy",
   category: "k12" as const,
   date: "Dec 2024"
 }, {
   title: "MNPS Budget Breakdown: Where Does the Money Go?",
   description: "An analysis of Metro Nashville Public Schools' funding allocation and spending priorities.",
-  href: "/k12/budget",
+  href: "/advocacy",
   category: "k12" as const,
   date: "Nov 2024"
 }, {

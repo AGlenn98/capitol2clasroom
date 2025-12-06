@@ -21,8 +21,9 @@ export function useBillSubscription() {
       // Validate input
       const validated = subscriptionSchema.parse(input);
 
+      // Using type assertion since table was just created
       const { data, error } = await supabase
-        .from("bill_subscriptions")
+        .from("bill_subscriptions" as any)
         .insert({
           email: validated.email,
           bill_id: validated.bill_id,
