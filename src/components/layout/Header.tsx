@@ -1,9 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/Logo";
+
 const navigation = [{
   name: "Home",
   href: "/"
@@ -29,10 +30,24 @@ const navigation = [{
   name: "About",
   href: "/about"
 }];
+
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  return <header className="sticky top-0 z-50 bg-white border-b border-border">
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return <header className={cn(
+    "sticky top-0 z-50 bg-white border-b border-border transition-shadow duration-300",
+    scrolled && "shadow-md"
+  )}>
       <nav className="container flex items-center justify-between py-4" aria-label="Main navigation">
         <Logo />
 
