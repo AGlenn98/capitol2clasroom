@@ -23,7 +23,7 @@ export default function About() {
               About
             </Badge>
           </div>
-          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold mb-4">About Capitol 2 Classroom</h1>
+          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Capitol 2 Classroom</h1>
           <p className="text-lg text-primary-foreground/80 max-w-2xl">
             Your trusted, nonpartisan guide to understanding education policy in Nashville and Tennessee.
           </p>
@@ -141,7 +141,7 @@ export default function About() {
                   analysis
                 </li>
                 <li>
-                  • <span className="text-foreground">Journalists and researchers</span> looking for reliable policy
+                  • <span className="text-foreground">Students and researchers</span> looking for reliable policy
                   context
                 </li>
               </ul>
@@ -155,8 +155,8 @@ export default function About() {
                   <p className="text-sm text-muted-foreground mb-4">
                     Have questions, feedback, or a tip? We'd love to hear from you.
                   </p>
-                  <a href="mailto:contact@nashvillepolicycompass.com" className="flex items-center gap-2 text-primary hover:underline mb-4">
-                    <Mail className="w-4 h-4" />
+                  <a href="mailto:contact@nashvillepolicycompass.com" className="flex items-center gap-2 text-primary hover:underline mb-4">contact@c2c.org
+                  <Mail className="w-4 h-4" />
                     contact@nashvillepolicycompass.com
                   </a>
                   <p className="text-xs text-muted-foreground">
