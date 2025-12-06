@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      bill_subscriptions: {
+        Row: {
+          bill_id: number
+          bill_number: string
+          bill_title: string | null
+          email: string
+          id: string
+          is_active: boolean
+          subscribed_at: string
+          unsubscribed_at: string | null
+        }
+        Insert: {
+          bill_id: number
+          bill_number: string
+          bill_title?: string | null
+          email: string
+          id?: string
+          is_active?: boolean
+          subscribed_at?: string
+          unsubscribed_at?: string | null
+        }
+        Update: {
+          bill_id?: number
+          bill_number?: string
+          bill_title?: string | null
+          email?: string
+          id?: string
+          is_active?: boolean
+          subscribed_at?: string
+          unsubscribed_at?: string | null
+        }
+        Relationships: []
+      }
       news_cache: {
         Row: {
           articles: Json

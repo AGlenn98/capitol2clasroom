@@ -17,6 +17,7 @@ import { StakeholderView } from "@/components/advocacy/StakeholderView";
 import { CategoryBadge } from "@/components/advocacy/CategoryFilter";
 import { categorizeBill } from "@/lib/billCategories";
 import { PrintSummary, PrintableBillContent } from "@/components/PrintSummary";
+import { BillSubscription } from "@/components/BillSubscription";
 import { Link } from "react-router-dom";
 
 const statusToStage = (status: number): TimelineStage => {
@@ -372,6 +373,13 @@ export default function BillDetail() {
                   </CardContent>
                 </Card>
               )}
+
+              {/* Email Subscription */}
+              <BillSubscription
+                billId={bill.bill_id}
+                billNumber={bill.bill_number}
+                billTitle={bill.title}
+              />
             </aside>
           </div>
         </div>
