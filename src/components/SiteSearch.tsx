@@ -1,18 +1,22 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, ArrowRight, FileText, Scale, GraduationCap, BookOpen } from "lucide-react";
+import { Search, ArrowRight, FileText, Scale, GraduationCap, BookOpen, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
 interface SearchResult {
   title: string;
   description: string;
   href: string;
-  category: "k12" | "higher-ed" | "legislation" | "action";
+  category: "k12" | "higher-ed" | "legislation" | "action" | "bill";
   icon: typeof FileText;
+  billNumber?: string;
 }
 
-const searchableContent: SearchResult[] = [
+// Static content for policy pages
+const staticContent: SearchResult[] = [
   {
     title: "K-12 Education Policy",
     description: "MNPS, charter schools, funding, curriculum & more",
@@ -70,13 +74,6 @@ const searchableContent: SearchResult[] = [
     icon: Scale,
   },
   {
-    title: "Legislation Tracker",
-    description: "Follow education bills through the TN General Assembly",
-    href: "/legislation",
-    category: "legislation",
-    icon: Scale,
-  },
-  {
     title: "Take Action",
     description: "Make your voice heard on education policy",
     href: "/action",
@@ -101,30 +98,98 @@ export function SiteSearch({ variant = "default", className }: SiteSearchProps) 
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [isSearching, setIsSearching] = useState(false);
+  const [liveResults, setLiveResults] = useState<SearchResult[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLUListElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
   const navigate = useNavigate();
 
-  const results = query.length >= 2
-    ? searchableContent.filter(
+  // Search live bills from API
+  const searchBills = useCallback(async (searchQuery: string) => {
+    if (searchQuery.length < 2) {
+      setLiveResults([]);
+      return;
+    }
+
+    // Cancel previous request
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    abortControllerRef.current = new AbortController();
+    setIsSearching(true);
+
+    try {
+      const response = await fetch(
+        `${SUPABASE_URL}/functions/v1/legislation?action=search&query=${encodeURIComponent(searchQuery)}`,
+        { signal: abortControllerRef.current.signal }
+      );
+
+      if (!response.ok) throw new Error("Search failed");
+
+      const data = await response.json();
+      const searchResults = data.searchresult || {};
+      
+      const bills: SearchResult[] = [];
+      Object.entries(searchResults).forEach(([key, value]) => {
+        if (key !== 'summary' && typeof value === 'object' && bills.length < 5) {
+          const bill = value as { bill_id: number; bill_number: string; title: string; last_action?: string };
+          bills.push({
+            title: bill.title,
+            description: bill.last_action || `Bill ${bill.bill_number}`,
+            href: `/advocacy/bill/${bill.bill_id}`,
+            category: "bill",
+            icon: Scale,
+            billNumber: bill.bill_number,
+          });
+        }
+      });
+
+      setLiveResults(bills);
+    } catch (error) {
+      if ((error as Error).name !== 'AbortError') {
+        console.error("Bill search error:", error);
+        setLiveResults([]);
+      }
+    } finally {
+      setIsSearching(false);
+    }
+  }, []);
+
+  // Debounce search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      searchBills(query);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [query, searchBills]);
+
+  // Filter static content
+  const staticResults = query.length >= 2
+    ? staticContent.filter(
         item =>
           item.title.toLowerCase().includes(query.toLowerCase()) ||
           item.description.toLowerCase().includes(query.toLowerCase())
-      ).slice(0, 5)
+      ).slice(0, 3)
     : [];
+
+  // Combine results: live bills first, then static content
+  const results = [...liveResults, ...staticResults].slice(0, 8);
 
   const handleSelect = (result: SearchResult) => {
     navigate(result.href);
     setQuery("");
     setIsOpen(false);
     setSelectedIndex(-1);
+    setLiveResults([]);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!isOpen || results.length === 0) {
       if (e.key === "Enter" && query.length >= 2) {
-        // Navigate to search results page or first result
         if (results.length > 0) {
           handleSelect(results[0]);
         }
@@ -181,6 +246,15 @@ export function SiteSearch({ variant = "default", className }: SiteSearchProps) 
     }
   }, [selectedIndex]);
 
+  // Cleanup abort controller on unmount
+  useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
+
   const isHero = variant === "hero";
 
   return (
@@ -196,18 +270,28 @@ export function SiteSearch({ variant = "default", className }: SiteSearchProps) 
         Search education policies, bills, and resources
       </label>
       <div className="relative">
-        <Search 
-          className={cn(
-            "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4",
-            isHero ? "text-primary-foreground/60" : "text-muted-foreground"
-          )} 
-          aria-hidden="true" 
-        />
+        {isSearching ? (
+          <Loader2 
+            className={cn(
+              "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 animate-spin",
+              isHero ? "text-primary-foreground/60" : "text-muted-foreground"
+            )} 
+            aria-hidden="true" 
+          />
+        ) : (
+          <Search 
+            className={cn(
+              "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4",
+              isHero ? "text-primary-foreground/60" : "text-muted-foreground"
+            )} 
+            aria-hidden="true" 
+          />
+        )}
         <Input
           ref={inputRef}
           id="site-search"
           type="search"
-          placeholder="Search policies, bills, topics..."
+          placeholder="Search bills, policies, topics..."
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
@@ -236,41 +320,80 @@ export function SiteSearch({ variant = "default", className }: SiteSearchProps) 
           aria-label="Search results"
           className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-lg z-50 overflow-hidden"
         >
+          {liveResults.length > 0 && (
+            <li className="px-3 py-1.5 bg-muted/50 border-b border-border">
+              <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
+                Live Bills from TN Legislature
+              </p>
+            </li>
+          )}
           {results.map((result, index) => {
             const Icon = result.icon;
+            const isLiveBill = result.category === "bill";
+            const showStaticHeader = !isLiveBill && index === liveResults.length && staticResults.length > 0;
+            
             return (
-              <li
-                key={result.href}
-                id={`search-result-${index}`}
-                role="option"
-                aria-selected={selectedIndex === index}
-                className={cn(
-                  "flex items-start gap-3 px-4 py-3 cursor-pointer transition-colors",
-                  selectedIndex === index 
-                    ? "bg-accent/20" 
-                    : "hover:bg-muted/50"
+              <li key={result.href}>
+                {showStaticHeader && (
+                  <div className="px-3 py-1.5 bg-muted/50 border-b border-border">
+                    <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
+                      Policy Topics
+                    </p>
+                  </div>
                 )}
-                onClick={() => handleSelect(result)}
-                onMouseEnter={() => setSelectedIndex(index)}
-              >
-                <div 
-                  className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 shrink-0 mt-0.5"
-                  aria-hidden="true"
+                <div
+                  id={`search-result-${index}`}
+                  role="option"
+                  aria-selected={selectedIndex === index}
+                  className={cn(
+                    "flex items-start gap-3 px-4 py-3 cursor-pointer transition-colors",
+                    selectedIndex === index 
+                      ? "bg-accent/20" 
+                      : "hover:bg-muted/50"
+                  )}
+                  onClick={() => handleSelect(result)}
+                  onMouseEnter={() => setSelectedIndex(index)}
                 >
-                  <Icon className="w-4 h-4 text-primary" />
+                  <div 
+                    className={cn(
+                      "flex items-center justify-center w-8 h-8 rounded-full shrink-0 mt-0.5",
+                      isLiveBill ? "bg-accent/20" : "bg-primary/10"
+                    )}
+                    aria-hidden="true"
+                  >
+                    <Icon className={cn(
+                      "w-4 h-4",
+                      isLiveBill ? "text-accent" : "text-primary"
+                    )} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      {result.billNumber && (
+                        <span className="font-mono text-xs font-semibold text-accent">
+                          {result.billNumber}
+                        </span>
+                      )}
+                      <p className={cn(
+                        "font-medium text-sm text-foreground",
+                        result.billNumber ? "truncate" : ""
+                      )}>
+                        {result.billNumber ? "" : result.title}
+                      </p>
+                    </div>
+                    {result.billNumber ? (
+                      <p className="text-xs text-foreground line-clamp-1 mt-0.5">
+                        {result.title}
+                      </p>
+                    ) : null}
+                    <p className="text-xs text-muted-foreground truncate mt-0.5">
+                      {result.description}
+                    </p>
+                  </div>
+                  <ArrowRight 
+                    className="w-4 h-4 text-muted-foreground shrink-0 mt-1" 
+                    aria-hidden="true" 
+                  />
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium text-sm text-foreground truncate">
-                    {result.title}
-                  </p>
-                  <p className="text-xs text-muted-foreground truncate">
-                    {result.description}
-                  </p>
-                </div>
-                <ArrowRight 
-                  className="w-4 h-4 text-muted-foreground shrink-0 mt-1" 
-                  aria-hidden="true" 
-                />
               </li>
             );
           })}
@@ -280,16 +403,28 @@ export function SiteSearch({ variant = "default", className }: SiteSearchProps) 
               {" "}<kbd className="px-1.5 py-0.5 bg-muted rounded text-[10px] font-mono">↓</kbd>
               {" "}to navigate, {" "}
               <kbd className="px-1.5 py-0.5 bg-muted rounded text-[10px] font-mono">Enter</kbd>
-              {" "}to select, {" "}
-              <kbd className="px-1.5 py-0.5 bg-muted rounded text-[10px] font-mono">Esc</kbd>
-              {" "}to close
+              {" "}to select
             </p>
           </li>
         </ul>
       )}
 
+      {/* Loading state */}
+      {isOpen && query.length >= 2 && isSearching && results.length === 0 && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-lg z-50 p-4 text-center"
+        >
+          <Loader2 className="w-5 h-5 animate-spin mx-auto text-muted-foreground mb-2" />
+          <p className="text-sm text-muted-foreground">
+            Searching legislation...
+          </p>
+        </div>
+      )}
+
       {/* No results message */}
-      {isOpen && query.length >= 2 && results.length === 0 && (
+      {isOpen && query.length >= 2 && !isSearching && results.length === 0 && (
         <div
           role="status"
           aria-live="polite"
@@ -299,7 +434,7 @@ export function SiteSearch({ variant = "default", className }: SiteSearchProps) 
             No results found for "{query}"
           </p>
           <p className="text-xs text-muted-foreground mt-1">
-            Try searching for "voucher", "budget", or "promise"
+            Try searching for "teacher", "funding", or "charter"
           </p>
         </div>
       )}
