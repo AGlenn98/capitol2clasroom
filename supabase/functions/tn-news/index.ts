@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { DOMParser, Element } from "https://deno.land/x/deno_dom@v0.1.38/deno-dom-wasm.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -24,134 +23,99 @@ interface NewsArticle {
   imageUrl: string;
 }
 
-async function fetchChalkbeatNews(): Promise<NewsArticle[]> {
-  const articles: NewsArticle[] = [];
-  
-  try {
-    console.log('Fetching Chalkbeat Tennessee...');
-    const response = await fetch('https://www.chalkbeat.org/tennessee/', {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-      }
-    });
-    
-    if (!response.ok) {
-      console.log('Chalkbeat fetch failed:', response.status);
-      return articles;
-    }
-    
-    const html = await response.text();
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    
-    if (!doc) return articles;
-    
-    const articleElements = doc.querySelectorAll('article');
-    let id = 1;
-    
-    for (const node of articleElements) {
-      if (articles.length >= 4) break;
-      
-      const article = node as Element;
-      const titleEl = article.querySelector('h2 a, h3 a, .headline a');
-      const descEl = article.querySelector('p, .excerpt, .description');
-      const imgEl = article.querySelector('img');
-      const linkEl = article.querySelector('a[href*="/tennessee/"]');
-      
-      if (titleEl) {
-        const title = titleEl.textContent?.trim() || '';
-        const description = descEl?.textContent?.trim() || 'Read the full article for details.';
-        let url = linkEl?.getAttribute('href') || titleEl.getAttribute('href') || '';
-        
-        if (url && !url.startsWith('http')) {
-          url = 'https://www.chalkbeat.org' + url;
-        }
-        
-        const imageUrl = imgEl?.getAttribute('src') || 
-          'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=250&fit=crop';
-        
-        if (title && title.length > 10) {
-          articles.push({
-            id: id++,
-            title: title.slice(0, 120),
-            description: description.slice(0, 200),
-            source: 'Chalkbeat Tennessee',
-            date: new Date().toISOString().split('T')[0],
-            url: url || 'https://www.chalkbeat.org/tennessee/',
-            category: 'Education News',
-            imageUrl
-          });
-        }
-      }
-    }
-    
-    console.log(`Found ${articles.length} Chalkbeat articles`);
-  } catch (error) {
-    console.error('Error fetching Chalkbeat:', error);
-  }
-  
-  return articles;
+interface GNewsArticle {
+  title: string;
+  description: string;
+  content: string;
+  url: string;
+  image: string;
+  publishedAt: string;
+  source: {
+    name: string;
+    url: string;
+  };
 }
 
-async function fetchGoogleNewsRSS(): Promise<NewsArticle[]> {
+interface GNewsResponse {
+  totalArticles: number;
+  articles: GNewsArticle[];
+}
+
+// Category mapping based on keywords in title/description
+function categorizeArticle(title: string, description: string): string {
+  const text = (title + ' ' + description).toLowerCase();
+  
+  if (text.includes('bill') || text.includes('legislation') || text.includes('law') || text.includes('vote')) {
+    return 'Legislation';
+  }
+  if (text.includes('funding') || text.includes('budget') || text.includes('grant') || text.includes('money')) {
+    return 'Funding';
+  }
+  if (text.includes('teacher') || text.includes('educator') || text.includes('staff')) {
+    return 'Teachers';
+  }
+  if (text.includes('college') || text.includes('university') || text.includes('higher ed')) {
+    return 'Higher Ed';
+  }
+  if (text.includes('nashville') || text.includes('memphis') || text.includes('knoxville') || text.includes('county')) {
+    return 'Local News';
+  }
+  if (text.includes('policy') || text.includes('department of education') || text.includes('tisa')) {
+    return 'Policy';
+  }
+  
+  return 'Education News';
+}
+
+async function fetchGNews(): Promise<NewsArticle[]> {
   const articles: NewsArticle[] = [];
+  const apiKey = Deno.env.get('GNEWS_API_KEY');
+  
+  if (!apiKey) {
+    console.error('GNEWS_API_KEY not configured');
+    return articles;
+  }
   
   try {
-    console.log('Fetching Google News RSS for Tennessee education...');
-    const rssUrl = 'https://news.google.com/rss/search?q=Tennessee+education+policy+OR+Tennessee+schools&hl=en-US&gl=US&ceid=US:en';
+    console.log('Fetching from GNews API...');
     
-    const response = await fetch(rssUrl, {
+    // Search for Tennessee education news
+    const searchQuery = 'Tennessee education OR Tennessee schools OR Nashville schools';
+    const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(searchQuery)}&lang=en&country=us&max=10&apikey=${apiKey}`;
+    
+    const response = await fetch(url, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        'Accept': 'application/json'
       }
     });
     
     if (!response.ok) {
-      console.log('Google News RSS fetch failed:', response.status);
+      const errorText = await response.text();
+      console.error('GNews API error:', response.status, errorText);
       return articles;
     }
     
-    const xml = await response.text();
-    const doc = new DOMParser().parseFromString(xml, 'text/xml');
+    const data: GNewsResponse = await response.json();
+    console.log(`GNews returned ${data.totalArticles} articles`);
     
-    if (!doc) return articles;
-    
-    const items = doc.querySelectorAll('item');
-    let id = 100;
-    
-    for (const node of items) {
-      if (articles.length >= 4) break;
+    data.articles.forEach((article, index) => {
+      const category = categorizeArticle(article.title, article.description || '');
       
-      const item = node as Element;
-      const title = item.querySelector('title')?.textContent?.trim() || '';
-      const link = item.querySelector('link')?.textContent?.trim() || '';
-      const pubDate = item.querySelector('pubDate')?.textContent?.trim() || '';
-      const source = item.querySelector('source')?.textContent?.trim() || 'News';
-      
-      const isTennesseeRelated = 
-        title.toLowerCase().includes('tennessee') ||
-        title.toLowerCase().includes('nashville') ||
-        title.toLowerCase().includes('memphis') ||
-        title.toLowerCase().includes('knoxville');
-      
-      if (title && isTennesseeRelated) {
-        const date = pubDate ? new Date(pubDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
-        
-        articles.push({
-          id: id++,
-          title: title.slice(0, 120),
-          description: `Latest education news from ${source}. Click to read the full story.`,
-          source: source,
-          date,
-          url: link,
-          category: 'Education News',
-          imageUrl: 'https://images.unsplash.com/photo-1588072432836-e10032774350?w=400&h=250&fit=crop'
-        });
-      }
-    }
+      articles.push({
+        id: index + 1,
+        title: article.title.slice(0, 120),
+        description: (article.description || 'Read the full article for details.').slice(0, 200),
+        source: article.source.name,
+        date: article.publishedAt.split('T')[0],
+        url: article.url,
+        category,
+        imageUrl: article.image || 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=250&fit=crop'
+      });
+    });
     
-    console.log(`Found ${articles.length} Google News articles`);
+    console.log(`Processed ${articles.length} articles from GNews`);
   } catch (error) {
-    console.error('Error fetching Google News RSS:', error);
+    console.error('Error fetching GNews:', error);
   }
   
   return articles;
@@ -186,24 +150,14 @@ serve(async (req) => {
   }
 
   try {
-    console.log('Fetching TN education news from multiple sources...');
+    console.log('Fetching TN education news from GNews API...');
     
-    const [chalkbeatNews, googleNews] = await Promise.all([
-      fetchChalkbeatNews(),
-      fetchGoogleNewsRSS()
-    ]);
+    const gnewsArticles = await fetchGNews();
     
-    let allNews = [...chalkbeatNews, ...googleNews];
-    
-    if (allNews.length === 0) {
-      console.log('No news scraped, using fallback');
-      allNews = FALLBACK_NEWS;
-    }
-    
-    const finalNews = allNews.slice(0, 6).map((article, index) => ({
-      ...article,
-      id: index + 1
-    }));
+    // Use GNews articles or fallback
+    const finalNews = gnewsArticles.length > 0 
+      ? gnewsArticles.slice(0, 6) 
+      : FALLBACK_NEWS;
     
     console.log(`Returning ${finalNews.length} news articles`);
     
