@@ -2,8 +2,7 @@
 
 ## Project info
 
-**URL**: [Capitol2Clasroom"](https://lovable.dev/projects/88307ce7-4e56-4be0-a0ce-1591f8181d94?magic_link=mc_3f1acdde-3a56-4e8f-97d0-40d0f26ec96e)
-
+**URL**: https://lovable.dev/projects/88307ce7-4e56-4be0-a0ce-1591f8181d94?magic_link=mc_bad71d05-f4d3-4c23-b407-21e487d36b30
 ## How can I edit this code?
 
 There are several ways of editing your application.
