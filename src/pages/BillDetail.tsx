@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
-import { useParams, Link } from "react-router-dom";
+import { PolicyBreadcrumb } from "@/components/PolicyBreadcrumb";
+import { useParams } from "react-router-dom";
 import { ArrowLeft, ExternalLink, FileText, Calendar, Users, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,6 +16,7 @@ import { ImpactDashboard } from "@/components/advocacy/ImpactDashboard";
 import { StakeholderView } from "@/components/advocacy/StakeholderView";
 import { CategoryBadge } from "@/components/advocacy/CategoryFilter";
 import { categorizeBill } from "@/lib/billCategories";
+import { Link } from "react-router-dom";
 
 const statusToStage = (status: number): TimelineStage => {
   switch (status) {
@@ -139,12 +141,10 @@ export default function BillDetail() {
       {/* Breadcrumb */}
       <section className="py-3 border-b border-border bg-muted/30">
         <div className="container">
-          <Button asChild variant="ghost" size="sm" className="gap-1.5 -ml-2 h-8">
-            <Link to="/advocacy">
-              <ArrowLeft className="w-3 h-3" />
-              Back to Advocacy Hub
-            </Link>
-          </Button>
+          <PolicyBreadcrumb items={[
+            { label: "Advocacy Hub", href: "/advocacy" },
+            { label: bill.bill_number }
+          ]} />
         </div>
       </section>
 
