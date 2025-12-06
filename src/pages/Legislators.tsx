@@ -63,7 +63,7 @@ export default function Legislators() {
       </section>
 
       {/* Filters */}
-      <section className="py-6 border-b border-border sticky top-16 bg-background z-10">
+      <section className="py-6 border-b border-border sticky top-16 bg-background z-sticky">
         <div className="container">
           <div className="flex flex-col md:flex-row md:items-center gap-4">
             <div className="relative flex-1 max-w-md">
@@ -87,8 +87,8 @@ export default function Legislators() {
                     onClick={() => setPartyFilter(party)}
                     className={cn(
                       "shrink-0",
-                      party === "R" && partyFilter === party && "bg-destructive hover:bg-destructive/90",
-                      party === "D" && partyFilter === party && "bg-blue-600 hover:bg-blue-700"
+                      party === "R" && partyFilter === party && "bg-republican hover:bg-republican/90",
+                      party === "D" && partyFilter === party && "bg-democrat hover:bg-democrat/90"
                     )}
                   >
                     {party === "All" ? "All Parties" : party === "R" ? "Republican" : "Democrat"}
@@ -147,8 +147,8 @@ export default function Legislators() {
                             <div className={cn(
                               "w-12 h-12 rounded-full overflow-hidden shrink-0 border-3",
                               legislator.party === "R" 
-                                ? "border-destructive" 
-                                : "border-blue-600"
+                                ? "border-republican" 
+                                : "border-democrat"
                             )}>
                               <img 
                                 src={legislator.photo_url} 
@@ -157,7 +157,7 @@ export default function Legislators() {
                                 onError={(e) => {
                                   const parent = e.currentTarget.parentElement;
                                   if (parent) {
-                                    parent.innerHTML = `<span class="w-full h-full flex items-center justify-center text-lg font-bold ${legislator.party === 'R' ? 'bg-destructive/10 text-destructive' : 'bg-blue-500/10 text-blue-700'}">${legislator.first_name[0]}${legislator.last_name[0]}</span>`;
+                                    parent.innerHTML = `<span class="w-full h-full flex items-center justify-center text-lg font-bold ${legislator.party === 'R' ? 'bg-republican-muted text-republican' : 'bg-democrat-muted text-democrat'}">${legislator.first_name[0]}${legislator.last_name[0]}</span>`;
                                   }
                                 }}
                               />
@@ -166,8 +166,8 @@ export default function Legislators() {
                             <div className={cn(
                               "w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold shrink-0 border-3",
                               legislator.party === "R" 
-                                ? "bg-destructive/10 text-destructive border-destructive"
-                                : "bg-blue-500/10 text-blue-700 border-blue-600"
+                                ? "bg-republican-muted text-republican border-republican"
+                                : "bg-democrat-muted text-democrat border-democrat"
                             )}>
                               {legislator.first_name[0]}{legislator.last_name[0]}
                             </div>
@@ -182,8 +182,8 @@ export default function Legislators() {
                                 className={cn(
                                   "text-xs",
                                   legislator.party === "R" 
-                                    ? "border-destructive/30 text-destructive"
-                                    : "border-blue-500/30 text-blue-700"
+                                    ? "border-republican/30 text-republican"
+                                    : "border-democrat/30 text-democrat"
                                 )}
                               >
                                 {legislator.party === "R" ? "Republican" : "Democrat"}

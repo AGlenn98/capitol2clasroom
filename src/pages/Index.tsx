@@ -243,24 +243,37 @@ export default function Index() {
 
           {error && (
             <div 
-              className="p-6 bg-destructive/5 border border-destructive/20 rounded-lg flex items-start gap-3"
+              className="p-6 bg-destructive/5 border border-destructive/20 rounded-lg"
               role="alert"
               aria-live="polite"
             >
-              <AlertCircle className="w-5 h-5 text-destructive shrink-0 mt-0.5" aria-hidden="true" />
-              <div>
-                <p className="font-medium text-destructive">Unable to load live legislation</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  We're having trouble connecting to the data source. You can try refreshing the page or visit the TN General Assembly website directly.
-                </p>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="mt-3"
-                  onClick={() => window.location.reload()}
-                >
-                  Try again
-                </Button>
+              <div className="flex items-start gap-4">
+                <div className="p-2 bg-destructive/10 rounded-full">
+                  <AlertCircle className="w-5 h-5 text-destructive" aria-hidden="true" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold text-destructive mb-1">Unable to load live legislation</h3>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    This could be due to a temporary connection issue. The Tennessee General Assembly data service may be experiencing high traffic.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => window.location.reload()}
+                      className="gap-2"
+                    >
+                      Try again
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => window.open('https://wapp.capitol.tn.gov/apps/BillInfo/Default.aspx?BillNumber=', '_blank')}
+                    >
+                      Visit TN Legislature directly
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
           )}

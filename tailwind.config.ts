@@ -62,6 +62,17 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Party colors
+        republican: {
+          DEFAULT: "hsl(var(--party-republican))",
+          foreground: "hsl(var(--party-republican-foreground))",
+          muted: "hsl(var(--party-republican-muted))",
+        },
+        democrat: {
+          DEFAULT: "hsl(var(--party-democrat))",
+          foreground: "hsl(var(--party-democrat-foreground))",
+          muted: "hsl(var(--party-democrat-muted))",
+        },
         chart: {
           "1": "hsl(var(--chart-1))",
           "2": "hsl(var(--chart-2))",
@@ -79,6 +90,26 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      boxShadow: {
+        sm: "var(--shadow-sm)",
+        card: "var(--shadow-card)",
+        DEFAULT: "var(--shadow-md)",
+        md: "var(--shadow-md)",
+        lg: "var(--shadow-lg)",
+        modal: "var(--shadow-modal)",
+      },
+      zIndex: {
+        dropdown: "var(--z-dropdown)",
+        sticky: "var(--z-sticky)",
+        modal: "var(--z-modal)",
+        tooltip: "var(--z-tooltip)",
+        toast: "var(--z-toast)",
+      },
+      transitionDuration: {
+        fast: "var(--duration-fast)",
+        normal: "var(--duration-normal)",
+        slow: "var(--duration-slow)",
       },
       borderRadius: {
         lg: "var(--radius)",

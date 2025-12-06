@@ -318,7 +318,7 @@ export function SiteSearch({ variant = "default", className }: SiteSearchProps) 
           id="search-results"
           role="listbox"
           aria-label="Search results"
-          className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-lg z-50 overflow-hidden"
+          className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-lg z-dropdown overflow-hidden"
         >
           {liveResults.length > 0 && (
             <li className="px-3 py-1.5 bg-muted/50 border-b border-border">
@@ -414,7 +414,7 @@ export function SiteSearch({ variant = "default", className }: SiteSearchProps) 
         <div
           role="status"
           aria-live="polite"
-          className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-lg z-50 p-4 text-center"
+          className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-lg z-dropdown p-4 text-center"
         >
           <Loader2 className="w-5 h-5 animate-spin mx-auto text-muted-foreground mb-2" />
           <p className="text-sm text-muted-foreground">
@@ -428,7 +428,7 @@ export function SiteSearch({ variant = "default", className }: SiteSearchProps) 
         <div
           role="status"
           aria-live="polite"
-          className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-lg z-50 p-4 text-center"
+          className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-lg z-dropdown p-4 text-center"
         >
           <p className="text-sm text-muted-foreground">
             No results found for "{query}"
@@ -444,7 +444,7 @@ export function SiteSearch({ variant = "default", className }: SiteSearchProps) 
         <div
           role="status"
           aria-live="polite"
-          className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-lg z-50 p-3 text-center"
+          className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-lg shadow-lg z-dropdown p-3 text-center"
         >
           <p className="text-xs text-muted-foreground">
             Type at least 2 characters to search

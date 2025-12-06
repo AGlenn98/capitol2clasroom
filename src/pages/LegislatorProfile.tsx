@@ -69,9 +69,9 @@ export default function LegislatorProfile() {
   }
 
   const partyColor = legislator.party === 'R' 
-    ? 'bg-destructive/10 text-destructive border-destructive/30'
+    ? 'bg-republican-muted text-republican border-republican/30'
     : legislator.party === 'D'
-    ? 'bg-blue-500/10 text-blue-700 border-blue-500/30'
+    ? 'bg-democrat-muted text-democrat border-democrat/30'
     : 'bg-muted text-muted-foreground';
 
   return (
@@ -94,9 +94,9 @@ export default function LegislatorProfile() {
             <div className={cn(
               "w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden flex items-center justify-center shrink-0 border-4",
               legislator.party === 'R' 
-                ? "border-destructive bg-destructive/20" 
+                ? "border-republican bg-republican/20" 
                 : legislator.party === 'D'
-                ? "border-blue-600 bg-blue-600/20"
+                ? "border-democrat bg-democrat/20"
                 : "border-primary-foreground/30 bg-primary-foreground/20"
             )}>
               {legislator.photo_url ? (
