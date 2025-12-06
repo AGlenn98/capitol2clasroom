@@ -35,3 +35,6 @@ verify_jwt = false
 
 [functions.tn-news]
 verify_jwt = false
+
+[functions.bill-analysis]
+verify_jwt = false
