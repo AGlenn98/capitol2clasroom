@@ -40,23 +40,7 @@ export function Footer() {
       <div className="container py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
-          <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              
-              <div className="flex flex-col">
-                <span className="font-serif text-lg font-bold leading-tight">
-                  Nashville Policy
-                </span>
-                <span className="font-serif text-sm text-accent font-semibold -mt-1">
-                  Compass
-                </span>
-              </div>
-            </Link>
-            <p className="text-primary-foreground/80 text-sm leading-relaxed">
-              Your trusted guide to understanding Nashville education policy. 
-              Making policy accessible for all Nashvillians.
-            </p>
-          </div>
+          
 
           {/* Explore Links */}
           <div>
