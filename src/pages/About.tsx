@@ -4,23 +4,21 @@ import { PolicyBreadcrumb } from "@/components/PolicyBreadcrumb";
 import { Compass, Target, Eye, Mail, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-
 export default function About() {
-  return (
-    <Layout>
+  return <Layout>
       {/* Breadcrumb */}
       <section className="py-3 border-b border-border bg-muted/30">
         <div className="container">
-          <PolicyBreadcrumb items={[{ label: "About" }]} />
+          <PolicyBreadcrumb items={[{
+          label: "About"
+        }]} />
         </div>
       </section>
       {/* Hero */}
       <section className="bg-primary text-primary-foreground py-16">
         <div className="container">
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-accent text-accent-foreground">
-              <Compass className="w-6 h-6" />
-            </div>
+            
             <Badge variant="secondary" className="bg-primary-foreground/20 text-primary-foreground border-none">
               About
             </Badge>
@@ -157,10 +155,7 @@ export default function About() {
                   <p className="text-sm text-muted-foreground mb-4">
                     Have questions, feedback, or a tip? We'd love to hear from you.
                   </p>
-                  <a
-                    href="mailto:contact@nashvillepolicycompass.com"
-                    className="flex items-center gap-2 text-primary hover:underline mb-4"
-                  >
+                  <a href="mailto:contact@nashvillepolicycompass.com" className="flex items-center gap-2 text-primary hover:underline mb-4">
                     <Mail className="w-4 h-4" />
                     contact@nashvillepolicycompass.com
                   </a>
@@ -183,6 +178,5 @@ export default function About() {
           </div>
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>;
 }
