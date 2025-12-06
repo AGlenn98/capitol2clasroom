@@ -163,11 +163,11 @@ export function EducationNewsSection() {
                   style={{ scrollbarWidth: 'thin' }}
                 >
                   {(cat === "All" ? news : news.filter(n => n.category === cat))
-                    .map((item, index) => (
+                    .map((item) => (
                       <div key={item.id} className="flex-shrink-0 w-72">
                         <NewsCard 
                           news={item} 
-                          variant={index === 0 && cat === "All" ? "featured" : "default"}
+                          variant="default"
                         />
                       </div>
                     ))}
