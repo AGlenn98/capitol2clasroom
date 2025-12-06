@@ -20,7 +20,7 @@ export function Header() {
   const location = useLocation();
 
   return (
-    <header className="sticky top-0 z-50 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80 border-b border-border">
+    <header className="sticky top-0 z-50 bg-white border-b border-border">
       <nav className="container flex items-center justify-between py-4" aria-label="Main navigation">
         <Logo />
 
@@ -65,7 +65,7 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-border bg-card">
+        <div className="lg:hidden border-t border-border bg-white">
           <div className="container py-4 space-y-1">
             {navigation.map((item) => (
               <Link
