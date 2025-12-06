@@ -16,6 +16,8 @@ export default {
       fontFamily: {
         serif: ['Libre Baskerville', 'Georgia', 'serif'],
         sans: ['Source Sans 3', 'system-ui', 'sans-serif'],
+        display: ['Playfair Display', 'Georgia', 'serif'],
+        marker: ['Permanent Marker', 'cursive'],
       },
       colors: {
         border: "hsl(var(--border))",
