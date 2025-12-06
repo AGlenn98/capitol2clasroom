@@ -157,16 +157,21 @@ export function EducationNewsSection() {
           </TabsList>
           {categories.map(cat => (
             <TabsContent key={cat} value={cat} className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {(cat === "All" ? news : news.filter(n => n.category === cat))
-                  .slice(0, 6)
-                  .map((item, index) => (
-                    <NewsCard 
-                      key={item.id} 
-                      news={item} 
-                      variant={index === 0 && cat === "All" ? "featured" : "default"}
-                    />
-                  ))}
+              <div className="relative">
+                <div 
+                  className="flex gap-4 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-border scrollbar-track-muted/30"
+                  style={{ scrollbarWidth: 'thin' }}
+                >
+                  {(cat === "All" ? news : news.filter(n => n.category === cat))
+                    .map((item, index) => (
+                      <div key={item.id} className="flex-shrink-0 w-72">
+                        <NewsCard 
+                          news={item} 
+                          variant={index === 0 && cat === "All" ? "featured" : "default"}
+                        />
+                      </div>
+                    ))}
+                </div>
               </div>
             </TabsContent>
           ))}
