@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { PolicyCard } from "@/components/PolicyCard";
 import { LiveBillCard } from "@/components/LiveBillCard";
+import { SiteSearch } from "@/components/SiteSearch";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight, BookOpen, GraduationCap, Scale, Megaphone, TrendingUp, Users, AlertCircle, Info } from "lucide-react";
 import { useEducationBills } from "@/hooks/useLegislation";
@@ -108,27 +109,16 @@ export default function Index() {
               Track real legislation, contact your legislators, and make your voice heard.
             </p>
             <div 
-              className="flex flex-wrap gap-3 animate-fade-in" 
+              className="flex flex-col sm:flex-row gap-3 animate-fade-in" 
               style={{ animationDelay: "0.2s" }}
-              role="group"
-              aria-label="Primary actions"
             >
               <Link to="/advocacy">
-                <Button size="lg" variant="secondary" className="gap-2">
+                <Button size="lg" variant="secondary" className="gap-2 w-full sm:w-auto">
                   <Scale className="w-5 h-5" aria-hidden="true" />
                   <span>Track Live Bills</span>
                 </Button>
               </Link>
-              <Link to="/k12">
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="gap-2 border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground hover:bg-primary-foreground/20"
-                >
-                  <GraduationCap className="w-5 h-5" aria-hidden="true" />
-                  <span>Learn About K-12</span>
-                </Button>
-              </Link>
+              <SiteSearch variant="hero" className="flex-1" />
             </div>
           </div>
         </div>
