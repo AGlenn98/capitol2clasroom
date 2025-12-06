@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { PolicyBreadcrumb } from "@/components/PolicyBreadcrumb";
 import { useParams, Link } from "react-router-dom";
-import { User, Mail, Phone, MapPin, ExternalLink, FileText, Loader2, AlertCircle, ArrowLeft, Users, Filter } from "lucide-react";
+import { User, Mail, Phone, MapPin, ExternalLink, FileText, Loader2, AlertCircle, ArrowLeft, Users, Filter, Globe, Facebook, Twitter, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -90,9 +90,20 @@ export default function LegislatorProfile() {
       <section className="py-8 bg-primary text-primary-foreground print:bg-transparent print:text-foreground">
         <div className="container">
           <div className="flex flex-col md:flex-row gap-6 items-start">
-            {/* Avatar */}
-            <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-primary-foreground/20 flex items-center justify-center shrink-0 print:bg-muted">
-              <User className="w-12 h-12 md:w-16 md:h-16 text-primary-foreground/60 print:text-muted-foreground" />
+            {/* Photo */}
+            <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden bg-primary-foreground/20 flex items-center justify-center shrink-0 print:bg-muted border-4 border-primary-foreground/30">
+              {legislator.photo_url ? (
+                <img 
+                  src={legislator.photo_url} 
+                  alt={`${legislator.name} official photo`}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.parentElement?.querySelector('.fallback-icon')?.classList.remove('hidden');
+                  }}
+                />
+              ) : null}
+              <User className={`w-12 h-12 md:w-16 md:h-16 text-primary-foreground/60 print:text-muted-foreground fallback-icon ${legislator.photo_url ? 'hidden' : ''}`} />
             </div>
 
             {/* Info */}
@@ -238,23 +249,34 @@ export default function LegislatorProfile() {
                       </a>
                     </Button>
                   )}
-                  {legislator.ballotpedia && (
+                  {legislator.official_website && (
                     <Button
                       variant="outline"
                       size="sm"
                       className="w-full"
-                      onClick={() => window.open(legislator.ballotpedia, '_blank')}
+                      onClick={() => window.open(legislator.official_website, '_blank')}
+                    >
+                      <Globe className="w-4 h-4 mr-2" />
+                      Official Website
+                    </Button>
+                  )}
+                  {legislator.ballotpedia_url && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full"
+                      onClick={() => window.open(legislator.ballotpedia_url, '_blank')}
                     >
                       <ExternalLink className="w-4 h-4 mr-2" />
                       Ballotpedia
                     </Button>
                   )}
-                  {legislator.votesmart_id && (
+                  {legislator.votesmart_url && (
                     <Button
                       variant="outline"
                       size="sm"
                       className="w-full"
-                      onClick={() => window.open(`https://justfacts.votesmart.org/candidate/${legislator.votesmart_id}`, '_blank')}
+                      onClick={() => window.open(legislator.votesmart_url, '_blank')}
                     >
                       <ExternalLink className="w-4 h-4 mr-2" />
                       VoteSmart
@@ -270,6 +292,45 @@ export default function LegislatorProfile() {
                       <ExternalLink className="w-4 h-4 mr-2" />
                       Follow The Money
                     </Button>
+                  )}
+
+                  {/* Social Media Links */}
+                  {(legislator.facebook || legislator.twitter || legislator.linkedin) && (
+                    <div className="pt-3 border-t border-border mt-3">
+                      <p className="text-xs text-muted-foreground mb-2">Social Media</p>
+                      <div className="flex gap-2">
+                        {legislator.facebook && (
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={() => window.open(legislator.facebook, '_blank')}
+                          >
+                            <Facebook className="w-4 h-4" />
+                          </Button>
+                        )}
+                        {legislator.twitter && (
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={() => window.open(legislator.twitter, '_blank')}
+                          >
+                            <Twitter className="w-4 h-4" />
+                          </Button>
+                        )}
+                        {legislator.linkedin && (
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={() => window.open(legislator.linkedin, '_blank')}
+                          >
+                            <Linkedin className="w-4 h-4" />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
                   )}
                 </CardContent>
               </Card>
