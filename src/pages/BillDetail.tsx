@@ -10,17 +10,13 @@ import { useUserStance } from "@/hooks/useUserStance";
 import { BillTimeline, TimelineStage, generateTimelineSteps } from "@/components/BillTimeline";
 import { AdvocacyBar } from "@/components/advocacy/AdvocacyBar";
 import { CriticalDatesTimeline } from "@/components/advocacy/CriticalDatesTimeline";
-import { NewsCommentary } from "@/components/advocacy/NewsCommentary";
+import { PlainEnglishSummary } from "@/components/advocacy/PlainEnglishSummary";
+import { ImpactDashboard } from "@/components/advocacy/ImpactDashboard";
+import { StakeholderView } from "@/components/advocacy/StakeholderView";
+import { CategoryBadge } from "@/components/advocacy/CategoryFilter";
+import { categorizeBill } from "@/lib/billCategories";
 
-// Map LegiScan status codes to our timeline stages
 const statusToStage = (status: number): TimelineStage => {
-  // LegiScan status codes:
-  // 1 = Introduced
-  // 2 = Engrossed
-  // 3 = Enrolled
-  // 4 = Passed
-  // 5 = Vetoed
-  // 6 = Failed
   switch (status) {
     case 1: return 'introduced';
     case 2: return 'committee';
@@ -51,7 +47,6 @@ export default function BillDetail() {
   const { data: bill, isLoading, error } = useBillDetail(numericBillId);
   const { stance, setStance } = useUserStance(numericBillId || 0);
 
-  // Build critical dates from bill history/calendar
   const criticalDates = bill?.history?.slice(0, 5).map((h, i) => ({
     date: h.date,
     label: h.action,
@@ -60,7 +55,6 @@ export default function BillDetail() {
     isCurrent: i === 0,
   })) || [];
 
-  // Add upcoming calendar events
   if (bill?.calendar) {
     bill.calendar.forEach(event => {
       criticalDates.push({
@@ -73,30 +67,26 @@ export default function BillDetail() {
     });
   }
 
-  // Prepare sponsors for contact feature
   const sponsors = bill?.sponsors?.map(s => ({
     name: `${s.first_name} ${s.last_name}`,
     party: s.party,
     district: s.district,
-    email: undefined, // LegiScan doesn't provide emails
+    email: undefined,
   })) || [];
 
   if (isLoading) {
     return (
       <Layout>
-        <section className="py-8">
+        <section className="py-6">
           <div className="container">
-            <Skeleton className="h-8 w-32 mb-6" />
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2 space-y-6">
-                <Skeleton className="h-10 w-3/4" />
-                <Skeleton className="h-6 w-full" />
-                <Skeleton className="h-6 w-2/3" />
-                <Skeleton className="h-40 w-full" />
+            <Skeleton className="h-6 w-32 mb-4" />
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2 space-y-4">
+                <Skeleton className="h-8 w-3/4" />
+                <Skeleton className="h-5 w-full" />
+                <Skeleton className="h-32 w-full" />
               </div>
-              <div>
-                <Skeleton className="h-80 w-full" />
-              </div>
+              <Skeleton className="h-64 w-full" />
             </div>
           </div>
         </section>
@@ -107,27 +97,28 @@ export default function BillDetail() {
   if (error || !bill) {
     return (
       <Layout>
-        <section className="py-16">
-          <div className="container max-w-2xl">
+        <section className="py-12">
+          <div className="container max-w-xl">
             <Card className="border-destructive/50 bg-destructive/5">
-              <CardContent className="p-8 text-center">
-                <AlertCircle className="w-12 h-12 text-destructive mx-auto mb-4" />
-                <h2 className="font-serif text-xl font-bold mb-2">Bill Not Found</h2>
-                <p className="text-muted-foreground mb-6">
-                  We couldn't load this bill. It may have been removed or there was a connection issue.
+              <CardContent className="p-6 text-center">
+                <AlertCircle className="w-10 h-10 text-destructive mx-auto mb-3" />
+                <h2 className="font-serif text-lg font-bold mb-2">Bill Not Found</h2>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Unable to load this bill.
                 </p>
-                <div className="flex justify-center gap-3">
-                  <Button asChild variant="outline">
+                <div className="flex justify-center gap-2">
+                  <Button asChild variant="outline" size="sm">
                     <Link to="/advocacy">
-                      <ArrowLeft className="w-4 h-4 mr-2" />
-                      Back to Advocacy Hub
+                      <ArrowLeft className="w-3 h-3 mr-1" />
+                      Back
                     </Link>
                   </Button>
                   <Button
+                    size="sm"
                     onClick={() => window.open('https://wapp.capitol.tn.gov/apps/BillInfo/default.aspx', '_blank')}
                   >
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    Search TN Legislature
+                    <ExternalLink className="w-3 h-3 mr-1" />
+                    TN Legislature
                   </Button>
                 </div>
               </CardContent>
@@ -141,15 +132,16 @@ export default function BillDetail() {
   const stage = statusToStage(bill.status);
   const billStatus = statusToBillStatus(bill.status);
   const timelineSteps = generateTimelineSteps(stage, billStatus);
+  const category = categorizeBill(bill.title, bill.description);
 
   return (
     <Layout>
       {/* Breadcrumb */}
-      <section className="py-4 border-b border-border bg-muted/30">
+      <section className="py-3 border-b border-border bg-muted/30">
         <div className="container">
-          <Button asChild variant="ghost" size="sm" className="gap-2 -ml-2">
+          <Button asChild variant="ghost" size="sm" className="gap-1.5 -ml-2 h-8">
             <Link to="/advocacy">
-              <ArrowLeft className="w-4 h-4" />
+              <ArrowLeft className="w-3 h-3" />
               Back to Advocacy Hub
             </Link>
           </Button>
@@ -157,14 +149,12 @@ export default function BillDetail() {
       </section>
 
       {/* Bill Header */}
-      <section className="py-8 bg-primary text-primary-foreground">
+      <section className="py-6 bg-primary text-primary-foreground">
         <div className="container">
-          <div className="flex flex-wrap items-center gap-3 mb-4">
-            <span className="font-mono text-lg font-bold">{bill.bill_number}</span>
-            <Badge variant="secondary" className="bg-primary-foreground/20 text-primary-foreground border-none">
-              Tennessee
-            </Badge>
-            <Badge variant="secondary" className="bg-primary-foreground/20 text-primary-foreground border-none">
+          <div className="flex flex-wrap items-center gap-2 mb-3">
+            <span className="font-mono text-base font-bold">{bill.bill_number}</span>
+            <CategoryBadge categoryId={category} />
+            <Badge variant="secondary" className="bg-primary-foreground/20 text-primary-foreground border-none text-xs">
               {bill.session.session_name}
             </Badge>
             {stance && (
@@ -175,95 +165,110 @@ export default function BillDetail() {
                   : 'bg-destructive/20 text-destructive-foreground border-destructive/50'
                 }
               >
-                {stance === 'support' ? '✓ You support this bill' : '✗ You oppose this bill'}
+                {stance === 'support' ? '✓ Supporting' : '✗ Opposing'}
               </Badge>
             )}
           </div>
           
-          <h1 className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
+          <h1 className="font-serif text-xl md:text-2xl font-bold mb-2">
             {bill.title}
           </h1>
           
           {bill.description && (
-            <p className="text-lg text-primary-foreground/80 max-w-3xl">
+            <p className="text-sm text-primary-foreground/80 max-w-3xl line-clamp-2">
               {bill.description}
             </p>
           )}
         </div>
       </section>
 
-      {/* Bill Timeline */}
-      <section className="py-6 bg-muted/30 border-b border-border">
+      {/* Timeline */}
+      <section className="py-4 bg-muted/30 border-b border-border">
         <div className="container">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-3xl mx-auto">
             <BillTimeline steps={timelineSteps} />
           </div>
         </div>
       </section>
 
       {/* Main Content */}
-      <section className="py-12">
+      <section className="py-6">
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Bill Details */}
-            <div className="lg:col-span-2 space-y-8">
+            <div className="lg:col-span-2 space-y-5">
+              {/* Plain English Summary */}
+              <PlainEnglishSummary
+                billNumber={bill.bill_number}
+                billTitle={bill.title}
+                billDescription={bill.description}
+              />
+
+              {/* Impact Dashboard */}
+              <ImpactDashboard
+                billNumber={bill.bill_number}
+                billTitle={bill.title}
+                billDescription={bill.description}
+              />
+
+              {/* Stakeholder Analysis */}
+              <StakeholderView
+                billNumber={bill.bill_number}
+                billTitle={bill.title}
+                billDescription={bill.description}
+              />
+
               {/* Sponsors */}
               {bill.sponsors && bill.sponsors.length > 0 && (
                 <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 font-serif">
-                      <Users className="w-5 h-5 text-accent" />
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm font-medium flex items-center gap-2">
+                      <Users className="w-4 h-4 text-accent" />
                       Sponsors ({bill.sponsors.length})
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {bill.sponsors.map((sponsor) => (
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                      {bill.sponsors.slice(0, 6).map((sponsor) => (
                         <div
                           key={sponsor.people_id}
-                          className="p-3 bg-muted/50 rounded-lg"
+                          className="p-2 bg-muted/50 rounded-lg text-xs"
                         >
-                          <p className="font-medium">
-                            {sponsor.role === 'Sponsor' ? '★ ' : ''}
+                          <p className="font-medium truncate">
                             {sponsor.first_name} {sponsor.last_name}
                           </p>
-                          <p className="text-sm text-muted-foreground">
-                            {sponsor.party} • District {sponsor.district}
-                          </p>
-                          <p className="text-xs text-muted-foreground mt-1">
-                            {sponsor.role}
+                          <p className="text-muted-foreground">
+                            {sponsor.party} • D-{sponsor.district.replace('HD-', '').replace('SD-', '')}
                           </p>
                         </div>
                       ))}
                     </div>
+                    {bill.sponsors.length > 6 && (
+                      <p className="text-xs text-muted-foreground mt-2">
+                        +{bill.sponsors.length - 6} more sponsors
+                      </p>
+                    )}
                   </CardContent>
                 </Card>
               )}
 
-              {/* Bill History */}
+              {/* History */}
               {bill.history && bill.history.length > 0 && (
                 <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 font-serif">
-                      <Calendar className="w-5 h-5 text-accent" />
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm font-medium flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-accent" />
                       Legislative History
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-3">
-                      {bill.history.map((event, i) => (
-                        <div
-                          key={i}
-                          className="flex gap-4 pb-3 border-b border-border last:border-0"
-                        >
-                          <div className="shrink-0 w-24 text-sm text-muted-foreground">
-                            {event.date}
-                          </div>
+                    <div className="space-y-2 max-h-64 overflow-y-auto">
+                      {bill.history.slice(0, 10).map((event, i) => (
+                        <div key={i} className="flex gap-3 pb-2 border-b border-border last:border-0 text-xs">
+                          <span className="shrink-0 w-20 text-muted-foreground">{event.date}</span>
                           <div>
                             <p className="font-medium">{event.action}</p>
-                            <p className="text-sm text-muted-foreground">
-                              {event.chamber}
-                            </p>
+                            <p className="text-muted-foreground">{event.chamber}</p>
                           </div>
                         </div>
                       ))}
@@ -272,68 +277,66 @@ export default function BillDetail() {
                 </Card>
               )}
 
-              {/* Bill Texts */}
+              {/* Documents */}
               {bill.texts && bill.texts.length > 0 && (
                 <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 font-serif">
-                      <FileText className="w-5 h-5 text-accent" />
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm font-medium flex items-center gap-2">
+                      <FileText className="w-4 h-4 text-accent" />
                       Bill Documents
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2">
-                      {bill.texts.map((text) => (
-                        <Button
-                          key={text.doc_id}
-                          variant="outline"
-                          className="w-full justify-between"
-                          onClick={() => window.open(text.state_link || text.url, '_blank')}
-                        >
-                          <span>{text.type} - {text.date}</span>
-                          <ExternalLink className="w-4 h-4" />
-                        </Button>
-                      ))}
-                    </div>
+                  <CardContent className="space-y-1.5">
+                    {bill.texts.slice(0, 3).map((text) => (
+                      <Button
+                        key={text.doc_id}
+                        variant="outline"
+                        size="sm"
+                        className="w-full justify-between h-8 text-xs"
+                        onClick={() => window.open(text.state_link || text.url, '_blank')}
+                      >
+                        <span>{text.type} - {text.date}</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </Button>
+                    ))}
                   </CardContent>
                 </Card>
               )}
 
               {/* Official Links */}
               <Card>
-                <CardHeader>
-                  <CardTitle className="font-serif">Official Resources</CardTitle>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-medium">Official Resources</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-2">
+                <CardContent className="space-y-1.5">
                   {bill.state_link && (
                     <Button
                       variant="outline"
-                      className="w-full justify-between"
+                      size="sm"
+                      className="w-full justify-between h-8 text-xs"
                       onClick={() => window.open(bill.state_link, '_blank')}
                     >
-                      <span>View on TN Legislature Website</span>
-                      <ExternalLink className="w-4 h-4" />
+                      View on TN Legislature
+                      <ExternalLink className="w-3 h-3" />
                     </Button>
                   )}
                   {bill.url && (
                     <Button
                       variant="outline"
-                      className="w-full justify-between"
+                      size="sm"
+                      className="w-full justify-between h-8 text-xs"
                       onClick={() => window.open(bill.url, '_blank')}
                     >
-                      <span>LegiScan Bill Page</span>
-                      <ExternalLink className="w-4 h-4" />
+                      LegiScan Bill Page
+                      <ExternalLink className="w-3 h-3" />
                     </Button>
                   )}
                 </CardContent>
               </Card>
-
-              {/* News */}
-              <NewsCommentary />
             </div>
 
             {/* Advocacy Sidebar */}
-            <aside className="lg:col-span-1 space-y-6">
+            <aside className="lg:col-span-1 space-y-4">
               <AdvocacyBar
                 billId={bill.bill_id}
                 billNumber={bill.bill_number}
@@ -343,11 +346,10 @@ export default function BillDetail() {
                 sponsors={sponsors}
               />
 
-              {/* Critical Dates */}
               {criticalDates.length > 0 && (
                 <Card>
-                  <CardContent className="p-6">
-                    <CriticalDatesTimeline dates={criticalDates.slice(0, 6)} />
+                  <CardContent className="p-4">
+                    <CriticalDatesTimeline dates={criticalDates.slice(0, 5)} />
                   </CardContent>
                 </Card>
               )}
