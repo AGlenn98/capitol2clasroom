@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Calendar, User } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { BillTimeline, TimelineStage, generateTimelineSteps } from "./BillTimeline";
 
 type BillStatus = "proposed" | "committee" | "passed" | "failed";
 
@@ -15,6 +16,7 @@ interface LegislationCardProps {
   lastAction: string;
   lastActionDate: string;
   href: string;
+  timelineStage?: TimelineStage;
   className?: string;
 }
 
@@ -23,6 +25,14 @@ const statusConfig: Record<BillStatus, { label: string; className: string }> = {
   committee: { label: "In Committee", className: "bg-accent/20 text-accent-foreground border-accent/50" },
   passed: { label: "Passed", className: "bg-success/20 text-success border-success/50" },
   failed: { label: "Failed", className: "bg-destructive/20 text-destructive border-destructive/50" },
+};
+
+// Map bill status to timeline stage
+const statusToTimelineStage: Record<BillStatus, TimelineStage> = {
+  proposed: "first_reading",
+  committee: "committee",
+  passed: "enacted",
+  failed: "committee",
 };
 
 export function LegislationCard({
@@ -35,9 +45,12 @@ export function LegislationCard({
   lastAction,
   lastActionDate,
   href,
+  timelineStage,
   className = "",
 }: LegislationCardProps) {
   const statusInfo = statusConfig[status];
+  const stage = timelineStage || statusToTimelineStage[status];
+  const timelineSteps = generateTimelineSteps(stage, status);
 
   return (
     <Link
@@ -60,6 +73,11 @@ export function LegislationCard({
       </h3>
 
       <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{summary}</p>
+
+      {/* Timeline */}
+      <div className="mb-4 py-3 px-2 bg-muted/30 rounded-lg">
+        <BillTimeline steps={timelineSteps} />
+      </div>
 
       <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground mb-4">
         <span className="flex items-center gap-1">
