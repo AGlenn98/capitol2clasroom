@@ -183,11 +183,25 @@ export interface NewsItem {
   date: string;
   url: string;
   category: string;
+  imageUrl?: string;
 }
 
 export interface NewsSource {
   name: string;
   url: string;
+}
+
+export interface TennesseeLegislatorContact {
+  name: string;
+  title: string;
+  party: "R" | "D";
+  chamber: "House" | "Senate";
+  district: string;
+  counties: string[];
+  phone: string;
+  email: string;
+  role?: string;
+  imageUrl?: string;
 }
 
 export type UserStance = 'support' | 'oppose' | null;
