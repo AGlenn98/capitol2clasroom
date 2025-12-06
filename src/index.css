@@ -176,6 +176,27 @@
   }
 }
 
+/* Logo gradient with animated hover */
+.logo-gradient {
+  background: linear-gradient(90deg, #c41e3a, #ffffff, #1e3a8a);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.5s ease;
+}
+
+.logo-gradient:hover,
+.group:hover .logo-gradient {
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -210,6 +231,16 @@
   /* Links get underline on focus for extra visibility */
   a:focus-visible {
     @apply underline underline-offset-4;
+  }
+
+  /* Soft hover transitions for all interactive elements */
+  a, button, [role="button"] {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  /* Links soft hover effect */
+  a:not(.logo-gradient):hover {
+    @apply opacity-80;
   }
 
   /* Buttons get a stronger visual indicator */
