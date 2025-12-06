@@ -21,7 +21,7 @@ export function Logo() {
   return (
     <Link 
       to="/" 
-      className="flex items-center gap-0.5 group"
+      className="flex items-center gap-0.5 group hover:scale-105 transition-transform duration-300 ease-out"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
