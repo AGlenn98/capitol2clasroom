@@ -8,6 +8,9 @@ import K12Policy from "./pages/K12Policy";
 import HigherEducation from "./pages/HigherEducation";
 import TennesseePromise from "./pages/TennesseePromise";
 import Legislation from "./pages/Legislation";
+import LegislativeCalendar from "./pages/LegislativeCalendar";
+import Legislators from "./pages/Legislators";
+import LegislatorProfile from "./pages/LegislatorProfile";
 import Resources from "./pages/Resources";
 import TakeAction from "./pages/TakeAction";
 import About from "./pages/About";
@@ -30,6 +33,9 @@ const App = () => (
           <Route path="/higher-ed" element={<HigherEducation />} />
           <Route path="/higher-ed/promise" element={<TennesseePromise />} />
           <Route path="/legislation" element={<Legislation />} />
+          <Route path="/legislation/calendar" element={<LegislativeCalendar />} />
+          <Route path="/legislators" element={<Legislators />} />
+          <Route path="/legislators/:legislatorId" element={<LegislatorProfile />} />
           <Route path="/advocacy" element={<AdvocacyHub />} />
           <Route path="/advocacy/bill/:billId" element={<BillDetail />} />
           <Route path="/resources" element={<Resources />} />

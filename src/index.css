@@ -270,3 +270,113 @@
     --muted-foreground: 215 20% 30%;
   }
 }
+
+/* Print styles for bill summaries */
+@media print {
+  /* Hide non-essential elements */
+  header,
+  footer,
+  nav,
+  .print\\:hidden,
+  button,
+  [role="navigation"],
+  .sticky {
+    display: none !important;
+  }
+
+  /* Reset backgrounds and shadows */
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  .print\\:block {
+    display: block !important;
+  }
+
+  .print\\:bg-transparent {
+    background: transparent !important;
+  }
+
+  .print\\:text-foreground {
+    color: black !important;
+  }
+
+  /* Ensure good page breaks */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+
+  section {
+    page-break-inside: avoid;
+  }
+
+  /* Card styling for print */
+  .card {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  /* Link styling */
+  a {
+    text-decoration: none !important;
+    color: black !important;
+  }
+
+  /* Badge styling */
+  .badge {
+    border: 1px solid #999 !important;
+    background: transparent !important;
+    color: black !important;
+  }
+}
+
+/* Mobile-specific optimizations */
+@layer utilities {
+  /* Touch-friendly tap targets */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Safe area insets for notched devices */
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  .safe-top {
+    padding-top: env(safe-area-inset-top, 0);
+  }
+
+  /* Improved scroll behavior on mobile */
+  .scroll-smooth-mobile {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Prevent text size adjustment on orientation change */
+  .text-size-adjust-none {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+}
+
+/* Mobile card hover states */
+@media (hover: none) {
+  .hover\\:shadow-md:active {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+  
+  .hover\\:bg-muted:active {
+    background-color: hsl(var(--muted));
+  }
+}
+
+/* Sticky header mobile optimization */
+@media (max-width: 1024px) {
+  .sticky.top-16 {
+    top: 4rem;
+  }
+}

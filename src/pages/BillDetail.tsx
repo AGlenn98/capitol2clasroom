@@ -16,6 +16,7 @@ import { ImpactDashboard } from "@/components/advocacy/ImpactDashboard";
 import { StakeholderView } from "@/components/advocacy/StakeholderView";
 import { CategoryBadge } from "@/components/advocacy/CategoryFilter";
 import { categorizeBill } from "@/lib/billCategories";
+import { PrintSummary, PrintableBillContent } from "@/components/PrintSummary";
 import { Link } from "react-router-dom";
 
 const statusToStage = (status: number): TimelineStage => {
@@ -138,8 +139,17 @@ export default function BillDetail() {
 
   return (
     <Layout>
+      {/* Printable content - hidden on screen, shown on print */}
+      <PrintableBillContent
+        billNumber={bill.bill_number}
+        billTitle={bill.title}
+        description={bill.description}
+        sponsors={sponsors}
+        history={bill.history?.map(h => ({ date: h.date, action: h.action, chamber: h.chamber }))}
+      />
+
       {/* Breadcrumb */}
-      <section className="py-3 border-b border-border bg-muted/30">
+      <section className="py-3 border-b border-border bg-muted/30 print:hidden">
         <div className="container">
           <PolicyBreadcrumb items={[
             { label: "Advocacy Hub", href: "/advocacy" },
@@ -149,7 +159,7 @@ export default function BillDetail() {
       </section>
 
       {/* Bill Header */}
-      <section className="py-6 bg-primary text-primary-foreground">
+      <section className="py-6 bg-primary text-primary-foreground print:hidden">
         <div className="container">
           <div className="flex flex-wrap items-center gap-2 mb-3">
             <span className="font-mono text-base font-bold">{bill.bill_number}</span>
@@ -183,7 +193,7 @@ export default function BillDetail() {
       </section>
 
       {/* Timeline */}
-      <section className="py-4 bg-muted/30 border-b border-border">
+      <section className="py-4 bg-muted/30 border-b border-border print:hidden">
         <div className="container">
           <div className="max-w-3xl mx-auto">
             <BillTimeline steps={timelineSteps} />
@@ -222,17 +232,26 @@ export default function BillDetail() {
               {bill.sponsors && bill.sponsors.length > 0 && (
                 <Card>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-sm font-medium flex items-center gap-2">
-                      <Users className="w-4 h-4 text-accent" />
-                      Sponsors ({bill.sponsors.length})
-                    </CardTitle>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-sm font-medium flex items-center gap-2">
+                        <Users className="w-4 h-4 text-accent" />
+                        Sponsors ({bill.sponsors.length})
+                      </CardTitle>
+                      <PrintSummary
+                        billNumber={bill.bill_number}
+                        billTitle={bill.title}
+                        summary={bill.description}
+                        sponsors={sponsors}
+                      />
+                    </div>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                       {bill.sponsors.slice(0, 6).map((sponsor) => (
-                        <div
+                        <Link
                           key={sponsor.people_id}
-                          className="p-2 bg-muted/50 rounded-lg text-xs"
+                          to={`/legislators/${sponsor.people_id}`}
+                          className="p-2 bg-muted/50 rounded-lg text-xs hover:bg-muted transition-colors"
                         >
                           <p className="font-medium truncate">
                             {sponsor.first_name} {sponsor.last_name}
@@ -240,7 +259,7 @@ export default function BillDetail() {
                           <p className="text-muted-foreground">
                             {sponsor.party} • D-{sponsor.district.replace('HD-', '').replace('SD-', '')}
                           </p>
-                        </div>
+                        </Link>
                       ))}
                     </div>
                     {bill.sponsors.length > 6 && (
