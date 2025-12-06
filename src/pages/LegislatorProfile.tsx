@@ -91,7 +91,14 @@ export default function LegislatorProfile() {
         <div className="container">
           <div className="flex flex-col md:flex-row gap-6 items-start">
             {/* Photo */}
-            <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden bg-primary-foreground/20 flex items-center justify-center shrink-0 print:bg-muted border-4 border-primary-foreground/30">
+            <div className={cn(
+              "w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden flex items-center justify-center shrink-0 border-4",
+              legislator.party === 'R' 
+                ? "border-destructive bg-destructive/20" 
+                : legislator.party === 'D'
+                ? "border-blue-600 bg-blue-600/20"
+                : "border-primary-foreground/30 bg-primary-foreground/20"
+            )}>
               {legislator.photo_url ? (
                 <img 
                   src={legislator.photo_url} 

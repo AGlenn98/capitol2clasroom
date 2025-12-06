@@ -144,26 +144,30 @@ export default function Legislators() {
                       <CardContent className="p-4">
                         <div className="flex items-start gap-4">
                           {legislator.photo_url ? (
-                            <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border-2 border-border">
+                            <div className={cn(
+                              "w-12 h-12 rounded-full overflow-hidden shrink-0 border-3",
+                              legislator.party === "R" 
+                                ? "border-destructive" 
+                                : "border-blue-600"
+                            )}>
                               <img 
                                 src={legislator.photo_url} 
                                 alt={legislator.name}
                                 className="w-full h-full object-cover"
                                 onError={(e) => {
-                                  e.currentTarget.style.display = 'none';
-                                  e.currentTarget.parentElement?.classList.add('flex', 'items-center', 'justify-center');
-                                  const icon = document.createElement('div');
-                                  icon.innerHTML = `<span class="text-lg font-bold">${legislator.first_name[0]}${legislator.last_name[0]}</span>`;
-                                  e.currentTarget.parentElement?.appendChild(icon);
+                                  const parent = e.currentTarget.parentElement;
+                                  if (parent) {
+                                    parent.innerHTML = `<span class="w-full h-full flex items-center justify-center text-lg font-bold ${legislator.party === 'R' ? 'bg-destructive/10 text-destructive' : 'bg-blue-500/10 text-blue-700'}">${legislator.first_name[0]}${legislator.last_name[0]}</span>`;
+                                  }
                                 }}
                               />
                             </div>
                           ) : (
                             <div className={cn(
-                              "w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold shrink-0",
+                              "w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold shrink-0 border-3",
                               legislator.party === "R" 
-                                ? "bg-destructive/10 text-destructive"
-                                : "bg-blue-500/10 text-blue-700"
+                                ? "bg-destructive/10 text-destructive border-destructive"
+                                : "bg-blue-500/10 text-blue-700 border-blue-600"
                             )}>
                               {legislator.first_name[0]}{legislator.last_name[0]}
                             </div>
