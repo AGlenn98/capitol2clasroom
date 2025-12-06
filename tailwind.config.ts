@@ -18,6 +18,7 @@ export default {
         sans: ['Source Sans 3', 'system-ui', 'sans-serif'],
         display: ['Playfair Display', 'Georgia', 'serif'],
         marker: ['Kalam', 'cursive'],
+        mono: ['Courier New', 'Courier', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -101,12 +102,18 @@ export default {
           from: { opacity: "0", transform: "translateX(-10px)" },
           to: { opacity: "1", transform: "translateX(0)" },
         },
+        "gradient-shift": {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.5s ease-out forwards",
         "slide-in": "slide-in 0.3s ease-out forwards",
+        "gradient-shift": "gradient-shift 3s ease infinite",
       },
     },
   },
