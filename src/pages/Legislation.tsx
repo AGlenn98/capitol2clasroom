@@ -34,7 +34,7 @@ const legislation: Array<{
     sponsor: "Rep. Jane Smith",
     lastAction: "Referred to Education Committee",
     lastActionDate: "Nov 15, 2024",
-    href: "/legislation/hb-1234",
+    href: "/advocacy",
     timelineStage: "committee",
   },
   {
@@ -46,7 +46,7 @@ const legislation: Array<{
     sponsor: "Sen. John Davis",
     lastAction: "First reading",
     lastActionDate: "Dec 1, 2024",
-    href: "/legislation/sb-567",
+    href: "/advocacy",
     timelineStage: "first_reading",
   },
   {
@@ -58,7 +58,7 @@ const legislation: Array<{
     sponsor: "Rep. Maria Garcia",
     lastAction: "Hearing scheduled for Jan 15",
     lastActionDate: "Nov 20, 2024",
-    href: "/legislation/hb-890",
+    href: "/advocacy",
     timelineStage: "floor_vote",
   },
   {
@@ -70,7 +70,7 @@ const legislation: Array<{
     sponsor: "Sen. Robert Wilson",
     lastAction: "Signed by Governor",
     lastActionDate: "Oct 30, 2024",
-    href: "/legislation/sb-345",
+    href: "/advocacy",
     timelineStage: "enacted",
   },
   {
@@ -82,7 +82,7 @@ const legislation: Array<{
     sponsor: "Rep. Thomas Brown",
     lastAction: "Failed in committee vote",
     lastActionDate: "Sep 15, 2024",
-    href: "/legislation/hb-456",
+    href: "/advocacy",
     timelineStage: "committee",
   },
   {
@@ -94,7 +94,7 @@ const legislation: Array<{
     sponsor: "Sen. Lisa Chen",
     lastAction: "Amended in subcommittee",
     lastActionDate: "Nov 28, 2024",
-    href: "/legislation/sb-789",
+    href: "/advocacy",
     timelineStage: "second_chamber",
   },
 ];

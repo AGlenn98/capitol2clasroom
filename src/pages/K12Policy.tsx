@@ -13,7 +13,7 @@ const articles = [
   {
     title: "Understanding Tennessee's School Voucher Program",
     description: "A comprehensive look at the Education Savings Account program and what it means for Nashville families, including eligibility, funding mechanisms, and ongoing legal challenges.",
-    href: "/k12/vouchers",
+    href: "/advocacy",
     category: "k12" as const,
     date: "Dec 2024",
     tags: ["Vouchers"],
@@ -21,7 +21,7 @@ const articles = [
   {
     title: "MNPS Budget Breakdown: Where Does the Money Go?",
     description: "An analysis of Metro Nashville Public Schools' funding allocation and spending priorities for the current fiscal year.",
-    href: "/k12/budget",
+    href: "/advocacy",
     category: "k12" as const,
     date: "Nov 2024",
     tags: ["Funding"],
@@ -29,7 +29,7 @@ const articles = [
   {
     title: "Charter Schools in Nashville: A Complete Guide",
     description: "Everything you need to know about charter school options, authorization, and performance data in Davidson County.",
-    href: "/k12/charters",
+    href: "/advocacy",
     category: "k12" as const,
     date: "Nov 2024",
     tags: ["Charter Schools"],
@@ -37,7 +37,7 @@ const articles = [
   {
     title: "Tennessee's New Literacy Standards Explained",
     description: "Breaking down the Sound Literacy standards and how they're being implemented across Nashville schools.",
-    href: "/k12/literacy",
+    href: "/resources",
     category: "k12" as const,
     date: "Oct 2024",
     tags: ["Curriculum"],
@@ -45,7 +45,7 @@ const articles = [
   {
     title: "Teacher Shortage: Causes and Solutions",
     description: "Examining the factors contributing to Nashville's teacher vacancy crisis and what policymakers are proposing.",
-    href: "/k12/teacher-shortage",
+    href: "/advocacy",
     category: "k12" as const,
     date: "Oct 2024",
     tags: ["Teachers"],
@@ -53,7 +53,7 @@ const articles = [
   {
     title: "School Safety Funding in Tennessee",
     description: "How state and local funds are being allocated to improve security measures in Nashville schools.",
-    href: "/k12/safety",
+    href: "/advocacy",
     category: "k12" as const,
     date: "Sep 2024",
     tags: ["Funding"],
