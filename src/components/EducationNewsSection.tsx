@@ -5,10 +5,32 @@ import { Badge } from "@/components/ui/badge";
 import { AlertCircle, ExternalLink, Newspaper, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 export function EducationNewsSection() {
-  const { data, isLoading, error, refetch } = useTennesseeNews();
+  const { data, isLoading, error, refetch, isFetching } = useTennesseeNews();
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const { toast } = useToast();
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    try {
+      await refetch();
+      toast({
+        title: "News updated",
+        description: "Latest education news has been loaded.",
+      });
+    } catch {
+      toast({
+        title: "Refresh failed",
+        description: "Unable to fetch latest news. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
 
   const categories = useMemo(() => {
     if (!data?.news) return [];
@@ -99,10 +121,22 @@ export function EducationNewsSection() {
               </p>
             </div>
           </div>
-          <Badge variant="outline" className="hidden sm:inline-flex gap-1">
-            <span className="w-2 h-2 bg-success rounded-full animate-pulse" />
-            Live Updates
-          </Badge>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleRefresh}
+              disabled={isRefreshing || isFetching}
+              className="gap-2"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing || isFetching ? 'animate-spin' : ''}`} />
+              <span className="hidden sm:inline">Refresh</span>
+            </Button>
+            <Badge variant="outline" className="hidden sm:inline-flex gap-1">
+              <span className="w-2 h-2 bg-success rounded-full animate-pulse" />
+              Live Updates
+            </Badge>
+          </div>
         </div>
 
         <Tabs defaultValue="All" className="w-full">
@@ -117,7 +151,6 @@ export function EducationNewsSection() {
               </TabsTrigger>
             ))}
           </TabsList>
-
           {categories.map(cat => (
             <TabsContent key={cat} value={cat} className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
