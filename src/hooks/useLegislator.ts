@@ -2,22 +2,16 @@ import { useQuery } from "@tanstack/react-query";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
-// Generate TN General Assembly photo URL
-// Senate: https://www.capitol.tn.gov/senate/members/images/s[district].jpg
-// House: https://www.capitol.tn.gov/house/members/images/h[district].jpg
-function generatePhotoUrl(chamber: string, district: string): string {
-  // Extract district number from district string (e.g., "SD-01" -> "01", "HD-99" -> "99", or just "1")
-  const districtMatch = district.match(/(\d+)/);
-  if (!districtMatch) return "";
+// Generate Ballotpedia photo URL
+// Pattern: https://s3.amazonaws.com/ballotpedia-api4/files/thumbs/200/300/[First_Last].jpg
+function generatePhotoUrl(firstName: string, lastName: string): string {
+  if (!firstName || !lastName) return "";
   
-  const districtNum = districtMatch[1];
-  const isSenate = chamber?.toLowerCase().includes('senate') || district.startsWith("SD");
+  // Clean and format names for Ballotpedia URL
+  const cleanFirst = firstName.trim().replace(/\s+/g, '_');
+  const cleanLast = lastName.trim().replace(/\s+/g, '_');
   
-  if (isSenate) {
-    return `https://www.capitol.tn.gov/senate/members/images/s${districtNum}.jpg`;
-  } else {
-    return `https://www.capitol.tn.gov/house/members/images/h${districtNum}.jpg`;
-  }
+  return `https://s3.amazonaws.com/ballotpedia-api4/files/thumbs/200/300/${cleanFirst}_${cleanLast}.jpg`;
 }
 
 export interface LegislatorProfile {
@@ -139,7 +133,7 @@ export function useLegislatorProfile(peopleId: number | null) {
         capitol_address: capitolAddress.address1 
           ? `${capitolAddress.address1}${capitolAddress.address2 ? ', ' + capitolAddress.address2 : ''}, ${capitolAddress.city}, ${capitolAddress.state} ${capitolAddress.zip}`.trim()
           : person.address,
-        photo_url: generatePhotoUrl(person.chamber, person.district),
+        photo_url: generatePhotoUrl(person.first_name, person.last_name),
         ballotpedia: person.ballotpedia,
         ballotpedia_url: social.ballotpedia,
         votesmart_url: social.votesmart,
