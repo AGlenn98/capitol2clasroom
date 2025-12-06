@@ -1,20 +1,27 @@
 import { Layout } from "@/components/layout/Layout";
 import { PolicyBreadcrumb } from "@/components/PolicyBreadcrumb";
 import { useParams, Link } from "react-router-dom";
-import { User, Mail, Phone, MapPin, ExternalLink, FileText, Loader2, AlertCircle, ArrowLeft } from "lucide-react";
+import { User, Mail, Phone, MapPin, ExternalLink, FileText, Loader2, AlertCircle, ArrowLeft, Users, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLegislatorProfile, useSponsoredBills } from "@/hooks/useLegislator";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 export default function LegislatorProfile() {
   const { legislatorId } = useParams<{ legislatorId: string }>();
   const numericId = legislatorId ? parseInt(legislatorId, 10) : null;
+  const [showEducationOnly, setShowEducationOnly] = useState(false);
   
   const { data: legislator, isLoading: loadingProfile, error: profileError } = useLegislatorProfile(numericId);
-  const { data: sponsoredBills, isLoading: loadingBills } = useSponsoredBills(numericId);
+  const { data: allBills, isLoading: loadingAllBills } = useSponsoredBills(numericId, false);
+  const { data: educationBills, isLoading: loadingEducationBills } = useSponsoredBills(numericId, true);
+
+  const displayedBills = showEducationOnly ? educationBills : allBills;
+  const loadingBills = showEducationOnly ? loadingEducationBills : loadingAllBills;
 
   if (loadingProfile) {
     return (
@@ -115,6 +122,24 @@ export default function LegislatorProfile() {
                   <span>{legislator.chamber}</span>
                 )}
               </div>
+
+              {/* Stats */}
+              <div className="flex flex-wrap gap-4 mt-4">
+                <div className="bg-primary-foreground/10 rounded-lg px-3 py-2">
+                  <div className="text-2xl font-bold">{allBills?.length || 0}</div>
+                  <div className="text-xs text-primary-foreground/70">Sponsored Bills</div>
+                </div>
+                <div className="bg-primary-foreground/10 rounded-lg px-3 py-2">
+                  <div className="text-2xl font-bold">{educationBills?.length || 0}</div>
+                  <div className="text-xs text-primary-foreground/70">Education Bills</div>
+                </div>
+                {legislator.committee && legislator.committee.length > 0 && (
+                  <div className="bg-primary-foreground/10 rounded-lg px-3 py-2">
+                    <div className="text-2xl font-bold">{legislator.committee.length}</div>
+                    <div className="text-xs text-primary-foreground/70">Committees</div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -169,6 +194,30 @@ export default function LegislatorProfile() {
                 </CardContent>
               </Card>
 
+              {/* Committee Memberships */}
+              {legislator.committee && legislator.committee.length > 0 && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg font-serif flex items-center gap-2">
+                      <Users className="w-5 h-5 text-accent" />
+                      Committee Memberships
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2">
+                      {legislator.committee.map((comm) => (
+                        <li key={comm.committee_id} className="p-2 rounded bg-muted/50 text-sm">
+                          <div className="font-medium">{comm.name}</div>
+                          {comm.position && (
+                            <div className="text-xs text-muted-foreground">{comm.position}</div>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              )}
+
               {/* Quick Actions */}
               <Card className="bg-secondary/50">
                 <CardContent className="p-6 space-y-3">
@@ -200,6 +249,28 @@ export default function LegislatorProfile() {
                       Ballotpedia
                     </Button>
                   )}
+                  {legislator.votesmart_id && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full"
+                      onClick={() => window.open(`https://justfacts.votesmart.org/candidate/${legislator.votesmart_id}`, '_blank')}
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      VoteSmart
+                    </Button>
+                  )}
+                  {legislator.followthemoney_eid && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full"
+                      onClick={() => window.open(`https://www.followthemoney.org/entity-details?eid=${legislator.followthemoney_eid}`, '_blank')}
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Follow The Money
+                    </Button>
+                  )}
                 </CardContent>
               </Card>
             </aside>
@@ -208,19 +279,35 @@ export default function LegislatorProfile() {
             <div className="lg:col-span-2">
               <Card>
                 <CardHeader>
-                  <CardTitle className="font-serif flex items-center gap-2">
-                    <FileText className="w-5 h-5 text-accent" />
-                    Sponsored Education Bills
-                  </CardTitle>
+                  <div className="flex items-center justify-between flex-wrap gap-4">
+                    <CardTitle className="font-serif flex items-center gap-2">
+                      <FileText className="w-5 h-5 text-accent" />
+                      Sponsored Bills
+                    </CardTitle>
+                    <Button
+                      variant={showEducationOnly ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setShowEducationOnly(!showEducationOnly)}
+                      className="gap-2"
+                    >
+                      <Filter className="w-4 h-4" />
+                      {showEducationOnly ? "Education Only" : "All Bills"}
+                    </Button>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {showEducationOnly 
+                      ? `${educationBills?.length || 0} education-related bills`
+                      : `${allBills?.length || 0} total sponsored bills`}
+                  </p>
                 </CardHeader>
                 <CardContent>
                   {loadingBills ? (
                     <div className="flex items-center justify-center py-8">
                       <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
                     </div>
-                  ) : sponsoredBills && sponsoredBills.length > 0 ? (
-                    <div className="space-y-3">
-                      {sponsoredBills.map((bill) => (
+                  ) : displayedBills && displayedBills.length > 0 ? (
+                    <div className="space-y-3 max-h-[600px] overflow-y-auto pr-2">
+                      {displayedBills.map((bill) => (
                         <Link
                           key={bill.bill_id}
                           to={`/advocacy/bill/${bill.bill_id}`}
@@ -251,7 +338,9 @@ export default function LegislatorProfile() {
                     <div className="text-center py-8">
                       <FileText className="w-10 h-10 text-muted-foreground/50 mx-auto mb-3" />
                       <p className="text-muted-foreground">
-                        No education-related bills found for this legislator.
+                        {showEducationOnly 
+                          ? "No education-related bills found for this legislator."
+                          : "No sponsored bills found for this legislator."}
                       </p>
                     </div>
                   )}
