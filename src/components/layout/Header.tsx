@@ -10,8 +10,8 @@ const navigation = [
   { name: "K-12 Policy", href: "/k12" },
   { name: "Higher Ed", href: "/higher-ed" },
   { name: "Legislation", href: "/legislation" },
+  { name: "Advocacy Hub", href: "/advocacy" },
   { name: "Resources", href: "/resources" },
-  { name: "Take Action", href: "/action" },
   { name: "About", href: "/about" },
 ];
 
