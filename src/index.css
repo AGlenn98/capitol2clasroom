@@ -186,6 +186,23 @@
   }
 }
 
+/* Logo title with gradient and hover effects */
+.logo-title {
+  background: linear-gradient(90deg, #c41e3a 0%, #ffffff 50%, #1e3a8a 100%);
+  background-size: 200% 100%;
+  background-position: 50% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background-position 0.4s ease-out, transform 0.3s ease-out;
+}
+
+.logo-title:hover,
+.group:hover .logo-title {
+  background-position: 0% 0;
+  transform: scale(1.05);
+}
+
 /* Accessibility: Skip to content link */
 .skip-to-content {
   @apply absolute left-4 z-[100] -translate-y-full bg-primary text-primary-foreground px-4 py-2 rounded-b-md font-medium text-sm transition-transform duration-200;
