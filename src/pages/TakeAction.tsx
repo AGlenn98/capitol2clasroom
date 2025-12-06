@@ -1,10 +1,14 @@
 import { Layout } from "@/components/layout/Layout";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { PolicyBreadcrumb } from "@/components/PolicyBreadcrumb";
-import { Megaphone, Phone, Calendar, MapPin, Users, ExternalLink, Mail } from "lucide-react";
+import { Megaphone, Phone, Calendar, MapPin, Users, ExternalLink, Mail, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState, useMemo } from "react";
+import { TennesseeLegislatorContact } from "@/types/legislation";
 
 const actionItems = [
   {
@@ -54,31 +58,179 @@ const upcomingEvents = [
   },
 ];
 
-const legislators = [
+// Real Tennessee legislators - Education Committee leaders and key representatives by region
+const legislators: TennesseeLegislatorContact[] = [
+  // Senate Education Committee
   {
-    name: "Rep. Jane Smith",
-    district: "HD-51",
-    role: "Education Committee Chair",
-    phone: "(615) 555-0101",
-    email: "rep.jane.smith@capitol.tn.gov",
+    name: "Jon Lundberg",
+    title: "Senator",
+    party: "R",
+    chamber: "Senate",
+    district: "SD-4",
+    counties: ["Carter", "Johnson", "Sullivan", "Unicoi", "Washington"],
+    phone: "(615) 741-5761",
+    email: "sen.jon.lundberg@capitol.tn.gov",
+    role: "Senate Education Committee Chair",
   },
   {
-    name: "Sen. John Davis",
-    district: "SD-19",
-    role: "Education Committee Vice Chair",
-    phone: "(615) 555-0102",
-    email: "sen.john.davis@capitol.tn.gov",
+    name: "Heidi Campbell",
+    title: "Senator",
+    party: "D",
+    chamber: "Senate",
+    district: "SD-20",
+    counties: ["Davidson"],
+    phone: "(615) 741-2368",
+    email: "sen.heidi.campbell@capitol.tn.gov",
+    role: "Davidson County Senator",
   },
   {
-    name: "Rep. Maria Garcia",
-    district: "HD-52",
-    role: "Education Committee Member",
-    phone: "(615) 555-0103",
-    email: "rep.maria.garcia@capitol.tn.gov",
+    name: "Jeff Yarbro",
+    title: "Senator",
+    party: "D",
+    chamber: "Senate",
+    district: "SD-21",
+    counties: ["Davidson"],
+    phone: "(615) 741-3291",
+    email: "sen.jeff.yarbro@capitol.tn.gov",
+    role: "Senate Education Committee Member",
+  },
+  {
+    name: "Bo Watson",
+    title: "Senator",
+    party: "R",
+    chamber: "Senate",
+    district: "SD-11",
+    counties: ["Hamilton"],
+    phone: "(615) 741-4496",
+    email: "sen.bo.watson@capitol.tn.gov",
+    role: "Senate Finance Chair",
+  },
+  // House Education Committee
+  {
+    name: "Mark White",
+    title: "Representative",
+    party: "R",
+    chamber: "House",
+    district: "HD-83",
+    counties: ["Shelby"],
+    phone: "(615) 741-4415",
+    email: "rep.mark.white@capitol.tn.gov",
+    role: "House Education Committee Chair",
+  },
+  {
+    name: "Harold Love Jr.",
+    title: "Representative",
+    party: "D",
+    chamber: "House",
+    district: "HD-58",
+    counties: ["Davidson"],
+    phone: "(615) 741-3831",
+    email: "rep.harold.love@capitol.tn.gov",
+    role: "Davidson County Representative",
+  },
+  {
+    name: "Vincent Dixie",
+    title: "Representative",
+    party: "D",
+    chamber: "House",
+    district: "HD-54",
+    counties: ["Davidson"],
+    phone: "(615) 741-1934",
+    email: "rep.vincent.dixie@capitol.tn.gov",
+    role: "House Education Committee Member",
+  },
+  {
+    name: "John Ray Clemmons",
+    title: "Representative",
+    party: "D",
+    chamber: "House",
+    district: "HD-55",
+    counties: ["Davidson"],
+    phone: "(615) 741-4410",
+    email: "rep.john.clemmons@capitol.tn.gov",
+    role: "Davidson County Representative",
+  },
+  {
+    name: "Bob Freeman",
+    title: "Representative",
+    party: "D",
+    chamber: "House",
+    district: "HD-56",
+    counties: ["Davidson"],
+    phone: "(615) 741-4317",
+    email: "rep.bob.freeman@capitol.tn.gov",
+    role: "House Education Committee Member",
+  },
+  {
+    name: "Debra Moody",
+    title: "Representative",
+    party: "R",
+    chamber: "House",
+    district: "HD-81",
+    counties: ["Blount", "Sevier"],
+    phone: "(615) 741-3774",
+    email: "rep.debra.moody@capitol.tn.gov",
+    role: "House K-12 Subcommittee Chair",
+  },
+  {
+    name: "William Lamberth",
+    title: "Representative",
+    party: "R",
+    chamber: "House",
+    district: "HD-44",
+    counties: ["Sumner"],
+    phone: "(615) 741-1980",
+    email: "rep.william.lamberth@capitol.tn.gov",
+    role: "House Majority Leader",
+  },
+  {
+    name: "Gloria Johnson",
+    title: "Representative",
+    party: "D",
+    chamber: "House",
+    district: "HD-90",
+    counties: ["Knox"],
+    phone: "(615) 741-2095",
+    email: "rep.gloria.johnson@capitol.tn.gov",
+    role: "Former Teacher, Education Advocate",
   },
 ];
 
+// Group legislators by county for easy lookup
+const MIDDLE_TN_COUNTIES = ["Davidson", "Williamson", "Rutherford", "Wilson", "Sumner", "Robertson", "Cheatham", "Montgomery"];
+const WEST_TN_COUNTIES = ["Shelby", "Madison", "Gibson", "Dyer", "Obion", "Weakley", "Henry", "Carroll"];
+const EAST_TN_COUNTIES = ["Knox", "Hamilton", "Sullivan", "Washington", "Blount", "Sevier", "Anderson", "Bradley", "Carter", "Johnson", "Unicoi"];
+
 export default function TakeAction() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [regionFilter, setRegionFilter] = useState<"all" | "middle" | "west" | "east">("all");
+
+  const filteredLegislators = useMemo(() => {
+    let filtered = legislators;
+
+    // Region filter
+    if (regionFilter === "middle") {
+      filtered = filtered.filter(l => l.counties.some(c => MIDDLE_TN_COUNTIES.includes(c)));
+    } else if (regionFilter === "west") {
+      filtered = filtered.filter(l => l.counties.some(c => WEST_TN_COUNTIES.includes(c)));
+    } else if (regionFilter === "east") {
+      filtered = filtered.filter(l => l.counties.some(c => EAST_TN_COUNTIES.includes(c)));
+    }
+
+    // Search filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(l => 
+        l.name.toLowerCase().includes(query) ||
+        l.counties.some(c => c.toLowerCase().includes(query)) ||
+        l.district.toLowerCase().includes(query) ||
+        l.role?.toLowerCase().includes(query)
+      );
+    }
+
+    return filtered;
+  }, [searchQuery, regionFilter]);
+
   return (
     <Layout>
       {/* Breadcrumb */}
@@ -87,6 +239,7 @@ export default function TakeAction() {
           <PolicyBreadcrumb items={[{ label: "Take Action" }]} />
         </div>
       </section>
+
       {/* Hero */}
       <section className="bg-primary text-primary-foreground py-16">
         <div className="container">
@@ -142,25 +295,70 @@ export default function TakeAction() {
       {/* Contact Legislators */}
       <section id="contact" className="py-12 bg-secondary/30">
         <div className="container">
-          <h2 className="font-serif text-2xl font-bold mb-6">Contact Your Legislators</h2>
-          <p className="text-muted-foreground mb-8 max-w-2xl">
-            These are key education committee members representing Nashville. Find your specific representatives 
-            using the tools below.
+          <h2 className="font-serif text-2xl font-bold mb-2">Contact Your Legislators</h2>
+          <p className="text-muted-foreground mb-6 max-w-2xl">
+            These are key education committee members and representatives from across Tennessee. 
+            Search by your county to find your local representatives.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {legislators.map((legislator, index) => (
+
+          {/* Search and Filters */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-6">
+            <div className="relative flex-1 max-w-md">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Search by name, county, or district..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-9"
+              />
+            </div>
+            <Tabs value={regionFilter} onValueChange={(v) => setRegionFilter(v as typeof regionFilter)}>
+              <TabsList>
+                <TabsTrigger value="all">All Regions</TabsTrigger>
+                <TabsTrigger value="middle">Middle TN</TabsTrigger>
+                <TabsTrigger value="west">West TN</TabsTrigger>
+                <TabsTrigger value="east">East TN</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+
+          <p className="text-sm text-muted-foreground mb-4">
+            Showing {filteredLegislators.length} legislators
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            {filteredLegislators.map((legislator, index) => (
               <Card key={index}>
-                <CardHeader>
+                <CardHeader className="pb-2">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10">
                       <Users className="w-5 h-5 text-primary" />
                     </div>
-                    <Badge variant="outline">{legislator.district}</Badge>
+                    <div className="flex gap-1">
+                      <Badge variant="outline">{legislator.district}</Badge>
+                      <Badge 
+                        variant="secondary" 
+                        className={legislator.party === "R" ? "bg-red-100 text-red-700" : "bg-blue-100 text-blue-700"}
+                      >
+                        {legislator.party}
+                      </Badge>
+                    </div>
                   </div>
                   <CardTitle className="font-serif text-lg">{legislator.name}</CardTitle>
-                  <CardDescription>{legislator.role}</CardDescription>
+                  <CardDescription>
+                    {legislator.title} • {legislator.chamber}
+                    {legislator.role && (
+                      <span className="block text-xs font-medium text-accent mt-1">
+                        {legislator.role}
+                      </span>
+                    )}
+                  </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-3">
+                <CardContent className="space-y-2">
+                  <p className="text-xs text-muted-foreground">
+                    <span className="font-medium">Counties:</span> {legislator.counties.join(", ")}
+                  </p>
                   <a 
                     href={`tel:${legislator.phone}`} 
                     className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
@@ -170,24 +368,34 @@ export default function TakeAction() {
                   </a>
                   <a 
                     href={`mailto:${legislator.email}`} 
-                    className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                    className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors truncate"
                   >
-                    <Mail className="w-4 h-4" />
-                    {legislator.email}
+                    <Mail className="w-4 h-4 shrink-0" />
+                    <span className="truncate">{legislator.email}</span>
                   </a>
                 </CardContent>
               </Card>
             ))}
           </div>
+
+          {filteredLegislators.length === 0 && (
+            <div className="text-center py-8 bg-card border border-border rounded-lg">
+              <p className="text-muted-foreground">No legislators found matching your search.</p>
+              <Button variant="link" onClick={() => { setSearchQuery(""); setRegionFilter("all"); }}>
+                Clear filters
+              </Button>
+            </div>
+          )}
+
           <div className="flex flex-wrap gap-4">
             <a href="https://wapp.capitol.tn.gov/Apps/fml/" target="_blank" rel="noopener noreferrer">
               <Button variant="outline" className="gap-2">
                 Find My Legislator <ExternalLink className="w-4 h-4" />
               </Button>
             </a>
-            <a href="https://www.capitol.tn.gov/" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.capitol.tn.gov/legislators/" target="_blank" rel="noopener noreferrer">
               <Button variant="outline" className="gap-2">
-                TN General Assembly <ExternalLink className="w-4 h-4" />
+                Full TN Legislature Directory <ExternalLink className="w-4 h-4" />
               </Button>
             </a>
           </div>

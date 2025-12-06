@@ -5,6 +5,7 @@ import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { PolicyCard } from "@/components/PolicyCard";
 import { LiveBillCard } from "@/components/LiveBillCard";
 import { SiteSearch } from "@/components/SiteSearch";
+import { EducationNewsSection } from "@/components/EducationNewsSection";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight, BookOpen, GraduationCap, Scale, Megaphone, TrendingUp, Users, AlertCircle, Info } from "lucide-react";
 import { useEducationBills } from "@/hooks/useLegislation";
@@ -282,9 +283,12 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Education News Section */}
+      <EducationNewsSection />
+
       {/* Featured Content */}
       <section 
-        className="py-12 bg-muted/30"
+        className="py-12"
         aria-labelledby="explainers-heading"
       >
         <div className="container">
