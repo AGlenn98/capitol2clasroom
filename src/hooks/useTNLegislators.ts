@@ -18,6 +18,24 @@ export interface TNLegislator {
   votesmart_url?: string;
 }
 
+// Generate TN General Assembly photo URL
+// Senate: https://www.capitol.tn.gov/senate/members/images/s[district].jpg
+// House: https://www.capitol.tn.gov/house/members/images/h[district].jpg
+function generatePhotoUrl(role: string, district: string): string {
+  // Extract district number from district string (e.g., "SD-01" -> "01", "HD-99" -> "99")
+  const districtMatch = district.match(/(\d+)/);
+  if (!districtMatch) return "";
+  
+  const districtNum = districtMatch[1];
+  const isSenate = role === "Sen" || district.startsWith("SD");
+  
+  if (isSenate) {
+    return `https://www.capitol.tn.gov/senate/members/images/s${districtNum}.jpg`;
+  } else {
+    return `https://www.capitol.tn.gov/house/members/images/h${districtNum}.jpg`;
+  }
+}
+
 export function useTNLegislators() {
   return useQuery({
     queryKey: ["tn-legislators"],
@@ -36,7 +54,13 @@ export function useTNLegislators() {
         throw new Error(data.error);
       }
       
-      return data.legislators || [];
+      // Add photo URLs to legislators
+      const legislators = (data.legislators || []).map((leg: TNLegislator) => ({
+        ...leg,
+        photo_url: generatePhotoUrl(leg.role, leg.district)
+      }));
+      
+      return legislators;
     },
     staleTime: 30 * 60 * 1000, // 30 minutes cache
   });
