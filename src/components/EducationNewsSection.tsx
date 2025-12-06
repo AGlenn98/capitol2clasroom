@@ -32,10 +32,14 @@ export function EducationNewsSection() {
     }
   };
 
+  const PREDEFINED_CATEGORIES = ["All", "Policy", "Legislation", "Local News", "Higher Ed", "Teachers", "Funding"];
+  
   const categories = useMemo(() => {
-    if (!data?.news) return [];
-    const cats = [...new Set(data.news.map(n => n.category))];
-    return ["All", ...cats];
+    if (!data?.news) return PREDEFINED_CATEGORIES;
+    // Get unique categories from news and merge with predefined ones
+    const newsCategories = [...new Set(data.news.map(n => n.category))];
+    const allCategories = new Set([...PREDEFINED_CATEGORIES, ...newsCategories]);
+    return Array.from(allCategories);
   }, [data?.news]);
 
   if (isLoading) {
