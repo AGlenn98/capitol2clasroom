@@ -10,7 +10,20 @@ import { useState } from "react";
 const statusFilters = ["All", "Proposed", "In Committee", "Passed", "Failed"];
 const categoryFilters = ["All Categories", "K-12 Funding", "K-12 Oversight", "Higher Ed", "Teachers"];
 
-const legislation = [
+import { TimelineStage } from "@/components/BillTimeline";
+
+const legislation: Array<{
+  billNumber: string;
+  title: string;
+  summary: string;
+  status: "proposed" | "committee" | "passed" | "failed";
+  category: string;
+  sponsor: string;
+  lastAction: string;
+  lastActionDate: string;
+  href: string;
+  timelineStage: TimelineStage;
+}> = [
   {
     billNumber: "HB 1234",
     title: "Teacher Compensation Enhancement Act",
@@ -21,6 +34,7 @@ const legislation = [
     lastAction: "Referred to Education Committee",
     lastActionDate: "Nov 15, 2024",
     href: "/legislation/hb-1234",
+    timelineStage: "committee",
   },
   {
     billNumber: "SB 567",
@@ -32,6 +46,7 @@ const legislation = [
     lastAction: "First reading",
     lastActionDate: "Dec 1, 2024",
     href: "/legislation/sb-567",
+    timelineStage: "first_reading",
   },
   {
     billNumber: "HB 890",
@@ -43,6 +58,7 @@ const legislation = [
     lastAction: "Hearing scheduled for Jan 15",
     lastActionDate: "Nov 20, 2024",
     href: "/legislation/hb-890",
+    timelineStage: "floor_vote",
   },
   {
     billNumber: "SB 345",
@@ -54,6 +70,7 @@ const legislation = [
     lastAction: "Signed by Governor",
     lastActionDate: "Oct 30, 2024",
     href: "/legislation/sb-345",
+    timelineStage: "enacted",
   },
   {
     billNumber: "HB 456",
@@ -65,6 +82,7 @@ const legislation = [
     lastAction: "Failed in committee vote",
     lastActionDate: "Sep 15, 2024",
     href: "/legislation/hb-456",
+    timelineStage: "committee",
   },
   {
     billNumber: "SB 789",
@@ -76,6 +94,7 @@ const legislation = [
     lastAction: "Amended in subcommittee",
     lastActionDate: "Nov 28, 2024",
     href: "/legislation/sb-789",
+    timelineStage: "second_chamber",
   },
 ];
 
