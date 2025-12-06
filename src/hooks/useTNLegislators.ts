@@ -18,22 +18,16 @@ export interface TNLegislator {
   votesmart_url?: string;
 }
 
-// Generate TN General Assembly photo URL
-// Senate: https://www.capitol.tn.gov/senate/members/images/s[district].jpg
-// House: https://www.capitol.tn.gov/house/members/images/h[district].jpg
-function generatePhotoUrl(role: string, district: string): string {
-  // Extract district number from district string (e.g., "SD-01" -> "01", "HD-99" -> "99")
-  const districtMatch = district.match(/(\d+)/);
-  if (!districtMatch) return "";
+// Generate Ballotpedia photo URL
+// Pattern: https://s3.amazonaws.com/ballotpedia-api4/files/thumbs/200/300/[First_Last].jpg
+function generatePhotoUrl(firstName: string, lastName: string): string {
+  if (!firstName || !lastName) return "";
   
-  const districtNum = districtMatch[1];
-  const isSenate = role === "Sen" || district.startsWith("SD");
+  // Clean and format names for Ballotpedia URL
+  const cleanFirst = firstName.trim().replace(/\s+/g, '_');
+  const cleanLast = lastName.trim().replace(/\s+/g, '_');
   
-  if (isSenate) {
-    return `https://www.capitol.tn.gov/senate/members/images/s${districtNum}.jpg`;
-  } else {
-    return `https://www.capitol.tn.gov/house/members/images/h${districtNum}.jpg`;
-  }
+  return `https://s3.amazonaws.com/ballotpedia-api4/files/thumbs/200/300/${cleanFirst}_${cleanLast}.jpg`;
 }
 
 export function useTNLegislators() {
@@ -54,10 +48,10 @@ export function useTNLegislators() {
         throw new Error(data.error);
       }
       
-      // Add photo URLs to legislators
+      // Add photo URLs to legislators using Ballotpedia pattern
       const legislators = (data.legislators || []).map((leg: TNLegislator) => ({
         ...leg,
-        photo_url: generatePhotoUrl(leg.role, leg.district)
+        photo_url: generatePhotoUrl(leg.first_name, leg.last_name)
       }));
       
       return legislators;
