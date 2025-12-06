@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -79,14 +80,11 @@ async function fetchGNews(): Promise<NewsArticle[]> {
   try {
     console.log('Fetching from GNews API...');
     
-    // Search for Tennessee education news
     const searchQuery = 'Tennessee education OR Tennessee schools OR Nashville schools';
     const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(searchQuery)}&lang=en&country=us&max=10&apikey=${apiKey}`;
     
     const response = await fetch(url, {
-      headers: {
-        'Accept': 'application/json'
-      }
+      headers: { 'Accept': 'application/json' }
     });
     
     if (!response.ok) {
@@ -149,22 +147,66 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+  const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
   try {
-    console.log('Fetching TN education news from GNews API...');
+    console.log('Checking news cache...');
     
+    // Check for valid cached data (not expired)
+    const { data: cachedData, error: cacheError } = await supabase
+      .from('news_cache')
+      .select('*')
+      .gt('expires_at', new Date().toISOString())
+      .order('fetched_at', { ascending: false })
+      .limit(1)
+      .single();
+    
+    if (cachedData && !cacheError) {
+      console.log('Returning cached news from', cachedData.fetched_at);
+      return new Response(JSON.stringify({
+        news: cachedData.articles,
+        sources: cachedData.sources,
+        lastUpdated: cachedData.fetched_at,
+        cached: true
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    
+    console.log('Cache miss or expired, fetching fresh news...');
+    
+    // Fetch fresh news from GNews
     const gnewsArticles = await fetchGNews();
+    const finalNews = gnewsArticles.length > 0 ? gnewsArticles.slice(0, 6) : FALLBACK_NEWS;
+    const now = new Date().toISOString();
     
-    // Use GNews articles or fallback
-    const finalNews = gnewsArticles.length > 0 
-      ? gnewsArticles.slice(0, 6) 
-      : FALLBACK_NEWS;
+    // Cache the results (expires in 1 hour)
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000).toISOString();
     
-    console.log(`Returning ${finalNews.length} news articles`);
+    // Delete old cache entries first
+    await supabase.from('news_cache').delete().lt('expires_at', now);
+    
+    // Insert new cache entry
+    const { error: insertError } = await supabase.from('news_cache').insert({
+      articles: finalNews,
+      sources: NEWS_SOURCES,
+      fetched_at: now,
+      expires_at: expiresAt
+    });
+    
+    if (insertError) {
+      console.error('Failed to cache news:', insertError);
+    } else {
+      console.log('News cached until', expiresAt);
+    }
     
     return new Response(JSON.stringify({
       news: finalNews,
       sources: NEWS_SOURCES,
-      lastUpdated: new Date().toISOString()
+      lastUpdated: now,
+      cached: false
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
@@ -176,7 +218,8 @@ serve(async (req) => {
     return new Response(JSON.stringify({
       news: FALLBACK_NEWS,
       sources: NEWS_SOURCES,
-      lastUpdated: new Date().toISOString()
+      lastUpdated: new Date().toISOString(),
+      cached: false
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
