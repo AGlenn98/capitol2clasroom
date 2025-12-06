@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import K12Policy from "./pages/K12Policy";
 import HigherEducation from "./pages/HigherEducation";
+import TennesseePromise from "./pages/TennesseePromise";
 import Legislation from "./pages/Legislation";
 import Resources from "./pages/Resources";
 import TakeAction from "./pages/TakeAction";
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/k12" element={<K12Policy />} />
           <Route path="/higher-ed" element={<HigherEducation />} />
+          <Route path="/higher-ed/promise" element={<TennesseePromise />} />
           <Route path="/legislation" element={<Legislation />} />
           <Route path="/advocacy" element={<AdvocacyHub />} />
           <Route path="/advocacy/bill/:billId" element={<BillDetail />} />
