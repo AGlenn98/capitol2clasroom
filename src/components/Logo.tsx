@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 export function Logo() {
   return <Link to="/" className="flex items-center gap-0.5 group">
-      <span className="logo-title font-mono text-2xl tracking-tight mx-0 px-0 text-center font-extrabold">
+      <span className="text-2xl tracking-[0.2em] text-foreground font-bold" style={{ fontFamily: 'Helvetica, Arial, sans-serif' }}>
         Capitol to Classroom
       </span>
     </Link>;
