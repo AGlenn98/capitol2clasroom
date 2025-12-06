@@ -1,68 +1,34 @@
 import { Layout } from "@/components/layout/Layout";
 import { PolicyBreadcrumb } from "@/components/PolicyBreadcrumb";
-import { Users, Search, Filter, Loader2 } from "lucide-react";
+import { Users, Search, Filter, Loader2, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useEducationBills } from "@/hooks/useLegislation";
+import { useTNLegislators } from "@/hooks/useTNLegislators";
 import { cn } from "@/lib/utils";
-
-interface LegislatorSummary {
-  people_id: number;
-  name: string;
-  first_name: string;
-  last_name: string;
-  party: string;
-  district: string;
-  billCount: number;
-}
 
 export default function Legislators() {
   const [searchQuery, setSearchQuery] = useState("");
   const [partyFilter, setPartyFilter] = useState<"All" | "R" | "D">("All");
   const [chamberFilter, setChamberFilter] = useState<"All" | "House" | "Senate">("All");
   
-  const { data: bills, isLoading } = useEducationBills();
+  const { data: legislators, isLoading, error } = useTNLegislators();
 
-  // Extract unique legislators from bill sponsors
-  const legislators = useMemo(() => {
-    if (!bills) return [];
-    
-    const legislatorMap = new Map<number, LegislatorSummary>();
-    
-    // Note: We'd need detailed bill data to get sponsors
-    // For now, this serves as the structure
-    
-    return Array.from(legislatorMap.values()).sort((a, b) => 
-      b.billCount - a.billCount
-    );
-  }, [bills]);
-
-  // Static legislator data for demonstration
-  const staticLegislators: LegislatorSummary[] = [
-    { people_id: 1, name: "Sen. Todd Gardenhire", first_name: "Todd", last_name: "Gardenhire", party: "R", district: "SD-10", billCount: 5 },
-    { people_id: 2, name: "Rep. Mark White", first_name: "Mark", last_name: "White", party: "R", district: "HD-83", billCount: 8 },
-    { people_id: 3, name: "Sen. Raumesh Akbari", first_name: "Raumesh", last_name: "Akbari", party: "D", district: "SD-29", billCount: 4 },
-    { people_id: 4, name: "Rep. Antonio Parkinson", first_name: "Antonio", last_name: "Parkinson", party: "D", district: "HD-98", billCount: 6 },
-    { people_id: 5, name: "Sen. Jon Lundberg", first_name: "Jon", last_name: "Lundberg", party: "R", district: "SD-4", billCount: 3 },
-    { people_id: 6, name: "Rep. Scott Cepicky", first_name: "Scott", last_name: "Cepicky", party: "R", district: "HD-64", billCount: 7 },
-  ];
-
-  const displayLegislators = legislators.length > 0 ? legislators : staticLegislators;
-
-  const filteredLegislators = displayLegislators.filter((leg) => {
+  const filteredLegislators = (legislators || []).filter((leg) => {
     const matchesSearch = searchQuery === "" ||
       leg.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       leg.district.toLowerCase().includes(searchQuery.toLowerCase());
     
     const matchesParty = partyFilter === "All" || leg.party === partyFilter;
     
+    const isSenator = leg.role === "Sen" || leg.district.startsWith("SD");
+    const isRep = leg.role === "Rep" || leg.district.startsWith("HD");
     const matchesChamber = chamberFilter === "All" ||
-      (chamberFilter === "House" && leg.district.startsWith("HD")) ||
-      (chamberFilter === "Senate" && leg.district.startsWith("SD"));
+      (chamberFilter === "House" && isRep) ||
+      (chamberFilter === "Senate" && isSenator);
 
     return matchesSearch && matchesParty && matchesChamber;
   });
@@ -152,13 +118,20 @@ export default function Legislators() {
       <section className="py-8">
         <div className="container">
           {isLoading ? (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+            <div className="flex flex-col items-center justify-center py-12">
+              <Loader2 className="w-8 h-8 animate-spin text-muted-foreground mb-4" />
+              <p className="text-muted-foreground">Loading Tennessee legislators...</p>
+            </div>
+          ) : error ? (
+            <div className="text-center py-12 bg-destructive/5 border border-destructive/20 rounded-lg">
+              <Users className="w-10 h-10 text-destructive/50 mx-auto mb-3" />
+              <p className="text-destructive font-medium">Failed to load legislators</p>
+              <p className="text-sm text-muted-foreground mt-1">Please try again later</p>
             </div>
           ) : (
             <>
               <p className="text-sm text-muted-foreground mb-6">
-                Showing {filteredLegislators.length} legislators
+                Showing {filteredLegislators.length} legislators who have sponsored education-related bills
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -170,17 +143,34 @@ export default function Legislators() {
                     <Card className="h-full hover:border-primary/50 hover:shadow-md transition-all">
                       <CardContent className="p-4">
                         <div className="flex items-start gap-4">
-                          <div className={cn(
-                            "w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold shrink-0",
-                            legislator.party === "R" 
-                              ? "bg-destructive/10 text-destructive"
-                              : "bg-blue-500/10 text-blue-700"
-                          )}>
-                            {legislator.first_name[0]}{legislator.last_name[0]}
-                          </div>
+                          {legislator.photo_url ? (
+                            <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border-2 border-border">
+                              <img 
+                                src={legislator.photo_url} 
+                                alt={legislator.name}
+                                className="w-full h-full object-cover"
+                                onError={(e) => {
+                                  e.currentTarget.style.display = 'none';
+                                  e.currentTarget.parentElement?.classList.add('flex', 'items-center', 'justify-center');
+                                  const icon = document.createElement('div');
+                                  icon.innerHTML = `<span class="text-lg font-bold">${legislator.first_name[0]}${legislator.last_name[0]}</span>`;
+                                  e.currentTarget.parentElement?.appendChild(icon);
+                                }}
+                              />
+                            </div>
+                          ) : (
+                            <div className={cn(
+                              "w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold shrink-0",
+                              legislator.party === "R" 
+                                ? "bg-destructive/10 text-destructive"
+                                : "bg-blue-500/10 text-blue-700"
+                            )}>
+                              {legislator.first_name[0]}{legislator.last_name[0]}
+                            </div>
+                          )}
                           <div className="flex-1 min-w-0">
                             <h3 className="font-serif font-semibold truncate">
-                              {legislator.name}
+                              {legislator.role}. {legislator.name}
                             </h3>
                             <div className="flex items-center gap-2 mt-1">
                               <Badge 
@@ -192,17 +182,12 @@ export default function Legislators() {
                                     : "border-blue-500/30 text-blue-700"
                                 )}
                               >
-                                {legislator.party}
+                                {legislator.party === "R" ? "Republican" : "Democrat"}
                               </Badge>
                               <span className="text-xs text-muted-foreground">
                                 {legislator.district}
                               </span>
                             </div>
-                            {legislator.billCount > 0 && (
-                              <p className="text-xs text-muted-foreground mt-2">
-                                {legislator.billCount} education bill{legislator.billCount !== 1 ? 's' : ''} sponsored
-                              </p>
-                            )}
                           </div>
                         </div>
                       </CardContent>

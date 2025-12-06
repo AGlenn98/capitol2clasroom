@@ -73,6 +73,72 @@ serve(async (req) => {
         }
         apiUrl = `${BASE_URL}/?key=${LEGISCAN_API_KEY}&op=getPerson&id=${personId}`;
         break;
+
+      case 'getTNLegislators':
+        // Get Tennessee legislators by fetching education bills and extracting unique sponsors
+        console.log('Fetching TN legislators from education bills');
+        
+        // First, search for education bills to get sponsors
+        const searchUrl = `${BASE_URL}/?key=${LEGISCAN_API_KEY}&op=search&state=TN&query=education&year=2`;
+        const searchResponse = await fetch(searchUrl);
+        const searchData = await searchResponse.json();
+        
+        if (searchData.status === 'ERROR') {
+          throw new Error(searchData.alert?.message || 'Search failed');
+        }
+
+        const billIds = Object.values(searchData.searchresult || {})
+          .filter((item: unknown) => typeof item === 'object' && item !== null && 'bill_id' in (item as Record<string, unknown>))
+          .slice(0, 15) // Limit to 15 bills for performance
+          .map((item: unknown) => (item as { bill_id: number }).bill_id);
+
+        console.log(`Found ${billIds.length} bills, fetching sponsors`);
+
+        // Fetch bill details to get sponsors
+        const legislatorsMap = new Map<number, unknown>();
+        
+        for (const billId of billIds) {
+          try {
+            const billUrl = `${BASE_URL}/?key=${LEGISCAN_API_KEY}&op=getBill&id=${billId}`;
+            const billResponse = await fetch(billUrl);
+            const billData = await billResponse.json();
+            
+            if (billData.bill?.sponsors) {
+              for (const sponsor of billData.bill.sponsors) {
+                if (!legislatorsMap.has(sponsor.people_id)) {
+                  legislatorsMap.set(sponsor.people_id, {
+                    people_id: sponsor.people_id,
+                    name: sponsor.name,
+                    first_name: sponsor.first_name,
+                    last_name: sponsor.last_name,
+                    party: sponsor.party,
+                    party_id: sponsor.party_id,
+                    role: sponsor.role,
+                    district: sponsor.district,
+                    photo_url: sponsor.bio?.social?.image || '',
+                    email: sponsor.bio?.social?.email || '',
+                    capitol_phone: sponsor.bio?.social?.capitol_phone || '',
+                    ballotpedia_url: sponsor.bio?.social?.ballotpedia || '',
+                    votesmart_url: sponsor.bio?.social?.votesmart || '',
+                  });
+                }
+              }
+            }
+          } catch (e) {
+            console.error(`Failed to fetch bill ${billId}:`, e);
+          }
+        }
+
+        const legislators = Array.from(legislatorsMap.values());
+        console.log(`Found ${legislators.length} unique legislators`);
+
+        return new Response(JSON.stringify({ 
+          status: 'OK', 
+          legislators,
+          count: legislators.length 
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
         
       default:
         throw new Error(`Unknown action: ${action}`);
