@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/Capitol2Clasroom
+**URL**: [Capitol2Clasroom"](https://lovable.dev/projects/88307ce7-4e56-4be0-a0ce-1591f8181d94?magic_link=mc_3f1acdde-3a56-4e8f-97d0-40d0f26ec96e)
 
 ## How can I edit this code?
 
