@@ -1,6 +1,7 @@
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { PageTransition } from "./PageTransition";
+import { BackToTop } from "./BackToTop";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -24,6 +25,7 @@ export function Layout({ children }: LayoutProps) {
         </PageTransition>
       </main>
       <Footer />
+      <BackToTop />
     </div>
   );
 }
