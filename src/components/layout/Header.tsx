@@ -17,11 +17,14 @@ const navigation = [{
   name: "Legislation",
   href: "/legislation"
 }, {
+  name: "Calendar",
+  href: "/legislation/calendar"
+}, {
+  name: "Legislators",
+  href: "/legislators"
+}, {
   name: "Advocacy Hub",
   href: "/advocacy"
-}, {
-  name: "Resources",
-  href: "/resources"
 }, {
   name: "About",
   href: "/about"
