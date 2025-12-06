@@ -3,19 +3,19 @@ import { Home } from "lucide-react";
 import {
   Breadcrumb,
   BreadcrumbList,
-  BreadcrumbItem,
+  BreadcrumbItem as BreadcrumbItemUI,
   BreadcrumbLink,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-export interface BreadcrumbItem {
+export interface BreadcrumbItemType {
   label: string;
   href?: string;
 }
 
 interface PolicyBreadcrumbProps {
-  items: BreadcrumbItem[];
+  items: BreadcrumbItemType[];
   className?: string;
 }
 
@@ -23,14 +23,14 @@ export function PolicyBreadcrumb({ items, className }: PolicyBreadcrumbProps) {
   return (
     <Breadcrumb className={className}>
       <BreadcrumbList>
-        <BreadcrumbItem>
+        <BreadcrumbItemUI>
           <BreadcrumbLink asChild>
             <Link to="/" className="flex items-center gap-1">
               <Home className="w-3.5 h-3.5" />
               <span className="sr-only">Home</span>
             </Link>
           </BreadcrumbLink>
-        </BreadcrumbItem>
+        </BreadcrumbItemUI>
         
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
@@ -38,7 +38,7 @@ export function PolicyBreadcrumb({ items, className }: PolicyBreadcrumbProps) {
           return (
             <div key={item.label} className="flex items-center gap-1.5 sm:gap-2.5">
               <BreadcrumbSeparator />
-              <BreadcrumbItem>
+              <BreadcrumbItemUI>
                 {isLast || !item.href ? (
                   <BreadcrumbPage>{item.label}</BreadcrumbPage>
                 ) : (
@@ -46,7 +46,7 @@ export function PolicyBreadcrumb({ items, className }: PolicyBreadcrumbProps) {
                     <Link to={item.href}>{item.label}</Link>
                   </BreadcrumbLink>
                 )}
-              </BreadcrumbItem>
+              </BreadcrumbItemUI>
             </div>
           );
         })}

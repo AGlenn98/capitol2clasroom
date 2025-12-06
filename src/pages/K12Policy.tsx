@@ -1,6 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { PolicyCard } from "@/components/PolicyCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { PolicyBreadcrumb } from "@/components/PolicyBreadcrumb";
 import { GraduationCap, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -68,6 +69,12 @@ export default function K12Policy() {
 
   return (
     <Layout>
+      {/* Breadcrumb */}
+      <section className="py-3 border-b border-border bg-muted/30">
+        <div className="container">
+          <PolicyBreadcrumb items={[{ label: "K-12 Education" }]} />
+        </div>
+      </section>
       {/* Hero */}
       <section className="bg-primary text-primary-foreground py-16">
         <div className="container">

@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { PolicyBreadcrumb } from "@/components/PolicyBreadcrumb";
 import { Scale, Search, ExternalLink, AlertCircle, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -101,6 +102,12 @@ export default function AdvocacyHub() {
 
   return (
     <Layout>
+      {/* Breadcrumb */}
+      <section className="py-3 border-b border-border bg-muted/30">
+        <div className="container">
+          <PolicyBreadcrumb items={[{ label: "Advocacy Hub" }]} />
+        </div>
+      </section>
       {/* Hero */}
       <section className="bg-primary text-primary-foreground py-10">
         <div className="container">

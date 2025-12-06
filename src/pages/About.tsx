@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { PolicyBreadcrumb } from "@/components/PolicyBreadcrumb";
 import { Compass, Target, Eye, Mail, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -7,6 +8,12 @@ import { Button } from "@/components/ui/button";
 export default function About() {
   return (
     <Layout>
+      {/* Breadcrumb */}
+      <section className="py-3 border-b border-border bg-muted/30">
+        <div className="container">
+          <PolicyBreadcrumb items={[{ label: "About" }]} />
+        </div>
+      </section>
       {/* Hero */}
       <section className="bg-primary text-primary-foreground py-16">
         <div className="container">

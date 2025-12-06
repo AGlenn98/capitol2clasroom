@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
+import { PolicyBreadcrumb } from "@/components/PolicyBreadcrumb";
 import { FileText, ExternalLink, Download, Search, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -100,6 +101,12 @@ export default function Resources() {
 
   return (
     <Layout>
+      {/* Breadcrumb */}
+      <section className="py-3 border-b border-border bg-muted/30">
+        <div className="container">
+          <PolicyBreadcrumb items={[{ label: "Resources" }]} />
+        </div>
+      </section>
       {/* Hero */}
       <section className="bg-primary text-primary-foreground py-16">
         <div className="container">

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Layout } from "@/components/layout/Layout";
+import { PolicyBreadcrumb } from "@/components/PolicyBreadcrumb";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail, CheckCircle, ArrowLeft } from "lucide-react";
@@ -54,6 +55,13 @@ export default function Newsletter() {
 
   return (
     <Layout>
+      {/* Breadcrumb */}
+      <section className="py-3 border-b border-border bg-muted/30">
+        <div className="container">
+          <PolicyBreadcrumb items={[{ label: "Newsletter" }]} />
+        </div>
+      </section>
+
       <section className="py-20">
         <div className="container max-w-xl">
           <div className="text-center mb-8">
