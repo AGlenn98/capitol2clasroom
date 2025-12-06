@@ -11,6 +11,8 @@ import Resources from "./pages/Resources";
 import TakeAction from "./pages/TakeAction";
 import About from "./pages/About";
 import Newsletter from "./pages/Newsletter";
+import AdvocacyHub from "./pages/AdvocacyHub";
+import BillDetail from "./pages/BillDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +28,8 @@ const App = () => (
           <Route path="/k12" element={<K12Policy />} />
           <Route path="/higher-ed" element={<HigherEducation />} />
           <Route path="/legislation" element={<Legislation />} />
+          <Route path="/advocacy" element={<AdvocacyHub />} />
+          <Route path="/advocacy/bill/:billId" element={<BillDetail />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/action" element={<TakeAction />} />
           <Route path="/about" element={<About />} />
