@@ -124,26 +124,27 @@ export default function Legislation() {
   return (
     <Layout>
       {/* Breadcrumb */}
-      <section className="py-3 border-b border-border bg-muted/30">
+      <section className="py-4 border-b border-border/50 bg-muted/30">
         <div className="container">
           <PolicyBreadcrumb items={[{ label: "Legislation Tracker" }]} />
         </div>
       </section>
+
       {/* Hero */}
-      <section className="bg-primary text-primary-foreground py-16">
+      <section className="hero-gradient text-primary-foreground py-20">
         <div className="container">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-accent text-accent-foreground">
-              <Scale className="w-6 h-6" />
+          <div className="flex items-center gap-4 mb-5">
+            <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-accent text-accent-foreground shadow-lg">
+              <Scale className="w-7 h-7" />
             </div>
-            <Badge variant="secondary" className="bg-primary-foreground/20 text-primary-foreground border-none">
+            <Badge variant="secondary" className="bg-primary-foreground/15 text-primary-foreground border-none rounded-full px-4 py-1">
               Bill Tracker
             </Badge>
           </div>
-          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <h1 className="font-serif text-4xl md:text-5xl font-bold mb-5">
             Legislation Tracker
           </h1>
-          <p className="text-lg text-primary-foreground/80 max-w-2xl">
+          <p className="text-xl text-primary-foreground/85 max-w-2xl leading-relaxed">
             Follow education-related bills through the Tennessee General Assembly. 
             Track status, read our analysis, and understand the potential impacts.
           </p>
@@ -151,17 +152,17 @@ export default function Legislation() {
       </section>
 
       {/* Filters */}
-      <section className="py-6 border-b border-border sticky top-16 bg-background z-10">
+      <section className="py-6 border-b border-border/50 sticky top-16 bg-card/95 backdrop-blur-md z-10">
         <div className="container">
           <div className="flex flex-col lg:flex-row lg:items-center gap-4">
             <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 type="search"
                 placeholder="Search bills..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9"
+                className="pl-11 rounded-xl border-border/50 bg-background"
               />
             </div>
             <div className="flex items-center gap-3 overflow-x-auto pb-2 lg:pb-0">
@@ -172,7 +173,7 @@ export default function Legislation() {
                   variant={statusFilter === status ? "default" : "outline"}
                   size="sm"
                   onClick={() => setStatusFilter(status)}
-                  className="shrink-0"
+                  className="shrink-0 rounded-xl"
                 >
                   {status}
                 </Button>
@@ -187,7 +188,7 @@ export default function Legislation() {
                 variant={categoryFilter === cat ? "secondary" : "ghost"}
                 size="sm"
                 onClick={() => setCategoryFilter(cat)}
-                className="shrink-0"
+                className="shrink-0 rounded-xl"
               >
                 {cat}
               </Button>
@@ -197,11 +198,11 @@ export default function Legislation() {
       </section>
 
       {/* Bills Grid */}
-      <section className="py-12">
+      <section className="py-16">
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             <div className="lg:col-span-2">
-              <div className="mb-4">
+              <div className="mb-5">
                 <p className="text-sm text-muted-foreground">
                   Showing {filteredLegislation.length} of {legislation.length} bills
                 </p>
@@ -212,9 +213,13 @@ export default function Legislation() {
                 ))}
               </div>
               {filteredLegislation.length === 0 && (
-                <div className="text-center py-12 bg-card border border-border rounded-lg">
-                  <p className="text-muted-foreground">No bills found matching your criteria.</p>
-                  <Button variant="link" onClick={() => { setSearchQuery(""); setStatusFilter("All"); setCategoryFilter("All Categories"); }}>
+                <div className="text-center py-16 bg-card border border-border/50 rounded-2xl">
+                  <p className="text-muted-foreground mb-3">No bills found matching your criteria.</p>
+                  <Button 
+                    variant="link" 
+                    onClick={() => { setSearchQuery(""); setStatusFilter("All"); setCategoryFilter("All Categories"); }}
+                    className="text-primary"
+                  >
                     Clear filters
                   </Button>
                 </div>
@@ -223,40 +228,40 @@ export default function Legislation() {
             <aside className="lg:col-span-1">
               <div className="sticky top-48 space-y-6">
                 <NewsletterSignup />
-                <div className="bg-secondary/50 rounded-lg p-6">
-                  <h3 className="font-serif font-semibold mb-3">Legislative Calendar</h3>
-                  <ul className="space-y-3 text-sm">
-                    <li className="pb-2 border-b border-border">
-                      <span className="font-medium block">Jan 14, 2025</span>
+                <div className="bg-card border border-border/50 rounded-2xl p-6 shadow-sm">
+                  <h3 className="font-serif font-semibold text-lg mb-4">Legislative Calendar</h3>
+                  <ul className="space-y-4 text-sm">
+                    <li className="pb-4 border-b border-border/50">
+                      <span className="font-medium block text-foreground">Jan 14, 2025</span>
                       <span className="text-muted-foreground">114th General Assembly Convenes</span>
                     </li>
-                    <li className="pb-2 border-b border-border">
-                      <span className="font-medium block">Feb 1, 2025</span>
+                    <li className="pb-4 border-b border-border/50">
+                      <span className="font-medium block text-foreground">Feb 1, 2025</span>
                       <span className="text-muted-foreground">Bill filing deadline</span>
                     </li>
                     <li>
-                      <span className="font-medium block">May 2025</span>
+                      <span className="font-medium block text-foreground">May 2025</span>
                       <span className="text-muted-foreground">Expected adjournment</span>
                     </li>
                   </ul>
                 </div>
-                <div className="bg-card border border-border rounded-lg p-6">
-                  <h3 className="font-serif font-semibold mb-3">Legend</h3>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-center gap-2">
-                      <Badge variant="outline" className="bg-secondary text-secondary-foreground">Proposed</Badge>
+                <div className="bg-card border border-border/50 rounded-2xl p-6 shadow-sm">
+                  <h3 className="font-serif font-semibold text-lg mb-4">Legend</h3>
+                  <ul className="space-y-3 text-sm">
+                    <li className="flex items-center gap-3">
+                      <Badge variant="outline" className="bg-secondary text-secondary-foreground rounded-lg">Proposed</Badge>
                       <span className="text-muted-foreground">Filed, awaiting action</span>
                     </li>
-                    <li className="flex items-center gap-2">
-                      <Badge variant="outline" className="bg-accent/20 text-accent-foreground border-accent/50">In Committee</Badge>
+                    <li className="flex items-center gap-3">
+                      <Badge variant="outline" className="bg-accent/15 text-accent-foreground border-accent/30 rounded-lg">In Committee</Badge>
                       <span className="text-muted-foreground">Under review</span>
                     </li>
-                    <li className="flex items-center gap-2">
-                      <Badge variant="outline" className="bg-success/20 text-success border-success/50">Passed</Badge>
+                    <li className="flex items-center gap-3">
+                      <Badge variant="outline" className="bg-success/15 text-success border-success/30 rounded-lg">Passed</Badge>
                       <span className="text-muted-foreground">Signed into law</span>
                     </li>
-                    <li className="flex items-center gap-2">
-                      <Badge variant="outline" className="bg-destructive/20 text-destructive border-destructive/50">Failed</Badge>
+                    <li className="flex items-center gap-3">
+                      <Badge variant="outline" className="bg-destructive/15 text-destructive border-destructive/30 rounded-lg">Failed</Badge>
                       <span className="text-muted-foreground">Did not pass</span>
                     </li>
                   </ul>

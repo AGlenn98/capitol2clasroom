@@ -9,7 +9,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 
@@ -43,8 +42,8 @@ export function Header() {
 
   return (
     <header className={cn(
-      "sticky top-0 z-sticky bg-white border-b border-border transition-shadow duration-normal",
-      scrolled && "shadow-md"
+      "sticky top-0 z-sticky bg-card/95 backdrop-blur-md border-b border-border/50 transition-all duration-normal",
+      scrolled && "shadow-card border-border"
     )}>
       <nav className="container flex items-center justify-between py-4" aria-label="Main navigation">
         <Logo />
@@ -54,10 +53,10 @@ export function Header() {
           <Link 
             to="/" 
             className={cn(
-              "px-3 py-2 text-sm font-medium rounded-md transition-colors",
+              "px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-normal",
               location.pathname === "/" 
-                ? "text-primary bg-secondary" 
-                : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                ? "text-primary bg-primary/10" 
+                : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
             )}
           >
             Home
@@ -67,24 +66,26 @@ export function Header() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className={cn(
-                "px-3 py-2 text-sm font-medium rounded-md transition-colors inline-flex items-center gap-1",
+                "px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-normal inline-flex items-center gap-1.5",
                 isActivePolicy 
-                  ? "text-primary bg-secondary" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                  ? "text-primary bg-primary/10" 
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
               )}>
                 Policy
-                <ChevronDown className="w-3 h-3" />
+                <ChevronDown className="w-3.5 h-3.5" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-64 bg-popover z-dropdown">
-              <DropdownMenuLabel className="text-xs text-muted-foreground">Education Policy</DropdownMenuLabel>
+            <DropdownMenuContent align="start" className="w-72 p-2 bg-card border-border/50 shadow-lg rounded-2xl z-dropdown">
+              <DropdownMenuLabel className="text-xs text-muted-foreground px-2 pb-2">Education Policy</DropdownMenuLabel>
               {policyItems.map(item => (
-                <DropdownMenuItem key={item.href} asChild>
-                  <Link to={item.href} className="flex items-start gap-3 py-2">
-                    <item.icon className="w-4 h-4 mt-0.5 text-primary" />
+                <DropdownMenuItem key={item.href} asChild className="rounded-xl p-0 focus:bg-muted/50">
+                  <Link to={item.href} className="flex items-start gap-3 p-3">
+                    <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-primary/10 shrink-0">
+                      <item.icon className="w-4 h-4 text-primary" />
+                    </div>
                     <div>
-                      <div className="font-medium">{item.name}</div>
-                      <div className="text-xs text-muted-foreground">{item.description}</div>
+                      <div className="font-medium text-foreground">{item.name}</div>
+                      <div className="text-xs text-muted-foreground mt-0.5">{item.description}</div>
                     </div>
                   </Link>
                 </DropdownMenuItem>
@@ -96,24 +97,26 @@ export function Header() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className={cn(
-                "px-3 py-2 text-sm font-medium rounded-md transition-colors inline-flex items-center gap-1",
+                "px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-normal inline-flex items-center gap-1.5",
                 isActiveAdvocacy 
-                  ? "text-primary bg-secondary" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                  ? "text-primary bg-primary/10" 
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
               )}>
                 Advocacy
-                <ChevronDown className="w-3 h-3" />
+                <ChevronDown className="w-3.5 h-3.5" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-64 bg-popover z-dropdown">
-              <DropdownMenuLabel className="text-xs text-muted-foreground">Get Involved</DropdownMenuLabel>
+            <DropdownMenuContent align="start" className="w-72 p-2 bg-card border-border/50 shadow-lg rounded-2xl z-dropdown">
+              <DropdownMenuLabel className="text-xs text-muted-foreground px-2 pb-2">Get Involved</DropdownMenuLabel>
               {advocacyItems.map(item => (
-                <DropdownMenuItem key={item.href} asChild>
-                  <Link to={item.href} className="flex items-start gap-3 py-2">
-                    <item.icon className="w-4 h-4 mt-0.5 text-accent" />
+                <DropdownMenuItem key={item.href} asChild className="rounded-xl p-0 focus:bg-muted/50">
+                  <Link to={item.href} className="flex items-start gap-3 p-3">
+                    <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-accent/15 shrink-0">
+                      <item.icon className="w-4 h-4 text-accent" />
+                    </div>
                     <div>
-                      <div className="font-medium">{item.name}</div>
-                      <div className="text-xs text-muted-foreground">{item.description}</div>
+                      <div className="font-medium text-foreground">{item.name}</div>
+                      <div className="text-xs text-muted-foreground mt-0.5">{item.description}</div>
                     </div>
                   </Link>
                 </DropdownMenuItem>
@@ -124,10 +127,10 @@ export function Header() {
           <Link 
             to="/about" 
             className={cn(
-              "px-3 py-2 text-sm font-medium rounded-md transition-colors",
+              "px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-normal",
               location.pathname === "/about" 
-                ? "text-primary bg-secondary" 
-                : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                ? "text-primary bg-primary/10" 
+                : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
             )}
           >
             About
@@ -136,7 +139,7 @@ export function Header() {
 
         <div className="hidden lg:flex lg:items-center lg:gap-3">
           <Link to="/newsletter">
-            <Button variant="default" size="sm">
+            <Button size="sm" className="rounded-xl px-5 shadow-sm hover:shadow-md transition-shadow">
               Subscribe
             </Button>
           </Link>
@@ -146,7 +149,7 @@ export function Header() {
         <Button 
           variant="ghost" 
           size="icon" 
-          className="lg:hidden" 
+          className="lg:hidden rounded-xl" 
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
           aria-expanded={mobileMenuOpen} 
           aria-label="Toggle menu"
@@ -157,58 +160,62 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-border bg-white">
-          <div className="container py-4 space-y-1">
+        <div className="lg:hidden border-t border-border/50 bg-card/98 backdrop-blur-md animate-fade-in">
+          <div className="container py-6 space-y-2">
             <Link 
               to="/" 
               onClick={() => setMobileMenuOpen(false)} 
               className={cn(
-                "block px-3 py-2 text-base font-medium rounded-md transition-colors",
+                "block px-4 py-3 text-base font-medium rounded-xl transition-all duration-normal",
                 location.pathname === "/" 
-                  ? "text-primary bg-secondary" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                  ? "text-primary bg-primary/10" 
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
               )}
             >
               Home
             </Link>
             
             {/* Policy Section */}
-            <div className="pt-2">
-              <p className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Policy</p>
+            <div className="pt-3">
+              <p className="px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Policy</p>
               {policyItems.map(item => (
                 <Link
                   key={item.href}
                   to={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
-                    "flex items-center gap-3 px-3 py-2 text-base font-medium rounded-md transition-colors",
+                    "flex items-center gap-3 px-4 py-3 text-base font-medium rounded-xl transition-all duration-normal",
                     location.pathname.startsWith(item.href)
-                      ? "text-primary bg-secondary"
-                      : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                   )}
                 >
-                  <item.icon className="w-4 h-4" />
+                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10">
+                    <item.icon className="w-4 h-4 text-primary" />
+                  </div>
                   {item.name}
                 </Link>
               ))}
             </div>
 
             {/* Advocacy Section */}
-            <div className="pt-2">
-              <p className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Advocacy</p>
+            <div className="pt-3">
+              <p className="px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Advocacy</p>
               {advocacyItems.map(item => (
                 <Link
                   key={item.href}
                   to={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
-                    "flex items-center gap-3 px-3 py-2 text-base font-medium rounded-md transition-colors",
+                    "flex items-center gap-3 px-4 py-3 text-base font-medium rounded-xl transition-all duration-normal",
                     location.pathname === item.href
-                      ? "text-primary bg-secondary"
-                      : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                   )}
                 >
-                  <item.icon className="w-4 h-4" />
+                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-accent/15">
+                    <item.icon className="w-4 h-4 text-accent" />
+                  </div>
                   {item.name}
                 </Link>
               ))}
@@ -218,18 +225,18 @@ export function Header() {
               to="/about" 
               onClick={() => setMobileMenuOpen(false)} 
               className={cn(
-                "block px-3 py-2 text-base font-medium rounded-md transition-colors",
+                "block px-4 py-3 text-base font-medium rounded-xl transition-all duration-normal",
                 location.pathname === "/about" 
-                  ? "text-primary bg-secondary" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                  ? "text-primary bg-primary/10" 
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
               )}
             >
               About
             </Link>
 
-            <div className="pt-4 border-t border-border mt-4">
+            <div className="pt-6 border-t border-border/50 mt-4">
               <Link to="/newsletter" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="default" className="w-full">
+                <Button className="w-full rounded-xl py-3 shadow-sm">
                   Subscribe to Newsletter
                 </Button>
               </Link>
