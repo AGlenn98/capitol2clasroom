@@ -1,6 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { PolicyBreadcrumb } from "@/components/PolicyBreadcrumb";
+import { HeroPattern } from "@/components/HeroPattern";
 import { Target, Eye, Mail, ExternalLink, Heart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ export default function About() {
 
       {/* Hero */}
       <section className="hero-gradient text-primary-foreground py-20">
+        <HeroPattern />
         <div className="container">
           <div className="flex items-center gap-4 mb-5">
             <Badge variant="secondary" className="bg-primary-foreground/15 text-primary-foreground border-none rounded-full px-4 py-1">

@@ -1,5 +1,6 @@
 import { Layout } from "@/components/layout/Layout";
 import { PolicyBreadcrumb } from "@/components/PolicyBreadcrumb";
+import { HeroPattern } from "@/components/HeroPattern";
 import { Scale, Search, ExternalLink, AlertCircle, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -92,8 +93,9 @@ export default function AdvocacyHub() {
         </div>
       </section>
       {/* Hero */}
-      <section className="bg-primary text-primary-foreground py-10">
-        <div className="container">
+      <section className="hero-gradient text-primary-foreground py-10">
+        <HeroPattern />
+        <div className="container relative">
           <div className="flex items-center gap-3 mb-3">
             
             <Badge variant="secondary" className="bg-primary-foreground/20 text-primary-foreground border-none">
