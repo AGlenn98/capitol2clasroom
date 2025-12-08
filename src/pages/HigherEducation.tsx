@@ -13,7 +13,8 @@ const categories = ["All", "Community College", "Universities", "Workforce", "Fi
 const articles = [
   {
     title: "Tennessee Promise: Impact on Nashville Students",
-    description: "How the state's tuition-free community college program is affecting local enrollment, completion rates, and workforce outcomes.",
+    description:
+      "How the state's tuition-free community college program is affecting local enrollment, completion rates, and workforce outcomes.",
     href: "/higher-ed/promise",
     category: "higher-ed" as const,
     date: "Nov 2024",
@@ -21,7 +22,8 @@ const articles = [
   },
   {
     title: "Tennessee Reconnect: Returning to School as an Adult",
-    description: "A guide to the state program that helps adults complete their education, including eligibility and how to apply.",
+    description:
+      "A guide to the state program that helps adults complete their education, including eligibility and how to apply.",
     href: "https://www.tn.gov/nexttennessee/tennessee-reconnect.html",
     category: "higher-ed" as const,
     date: "Oct 2024",
@@ -30,7 +32,8 @@ const articles = [
   },
   {
     title: "Nashville State Community College: Programs & Outcomes",
-    description: "An overview of program offerings, graduation rates, and job placement data for Nashville State students.",
+    description:
+      "An overview of program offerings, graduation rates, and job placement data for Nashville State students.",
     href: "https://www.nscc.edu/",
     category: "higher-ed" as const,
     date: "Oct 2024",
@@ -39,16 +42,18 @@ const articles = [
   },
   {
     title: "TSU & Vanderbilt: Comparing Nashville's Universities",
-    description: "Understanding the different missions, programs, and policy implications of Nashville's major universities.",
+    description:
+      "Understanding the different missions, programs, and policy implications of Nashville's major universities.",
     href: "/higher-ed",
     category: "higher-ed" as const,
     date: "Sep 2024",
     tags: ["Universities"],
   },
   {
-    title: "Workforce Development in Middle Tennessee",
-    description: "How higher education institutions are partnering with employers to address skills gaps in the region.",
-    href: "https://www.tn.gov/education/educators.html",
+    title: "Workforce Development in Tennessee",
+    description:
+      "How higher education institutions are partnering with employers to address skills gaps in the region.",
+    href: "https://tnecd.com/advantages/workforce-education/",
     category: "higher-ed" as const,
     date: "Sep 2024",
     tags: ["Workforce"],
@@ -59,9 +64,8 @@ const articles = [
 export default function HigherEducation() {
   const [activeFilter, setActiveFilter] = useState("All");
 
-  const filteredArticles = activeFilter === "All" 
-    ? articles 
-    : articles.filter(article => article.tags.includes(activeFilter));
+  const filteredArticles =
+    activeFilter === "All" ? articles : articles.filter((article) => article.tags.includes(activeFilter));
 
   return (
     <Layout>
@@ -83,12 +87,10 @@ export default function HigherEducation() {
               Policy Explainers
             </Badge>
           </div>
-          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            Higher Education Policy
-          </h1>
+          <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold mb-4">Higher Education Policy</h1>
           <p className="text-lg text-primary-foreground/80 max-w-2xl">
-            Explore policies affecting Nashville's colleges, universities, and workforce development programs. 
-            From Tennessee Promise to university funding—understand the landscape.
+            Explore policies affecting Nashville's colleges, universities, and workforce development programs. From
+            Tennessee Promise to university funding—understand the landscape.
           </p>
         </div>
       </section>
