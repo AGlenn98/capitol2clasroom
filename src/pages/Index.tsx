@@ -14,15 +14,17 @@ import { useEducationBills } from "@/hooks/useLegislation";
 const featuredContent = [{
   title: "Understanding Tennessee's School Voucher Program",
   description: "A comprehensive look at the Education Savings Account program and what it means for Nashville families.",
-  href: "/k12",
+  href: "https://www.tn.gov/education/esa.html",
   category: "k12" as const,
-  date: "Dec 2024"
+  date: "Dec 2024",
+  isExternal: true
 }, {
   title: "MNPS Budget Breakdown: Where Does the Money Go?",
   description: "An analysis of Metro Nashville Public Schools' funding allocation and spending priorities.",
-  href: "/k12",
+  href: "https://www.nashville.gov/departments/finance/management-and-budget/citizens-guide-budget/metro-nashville-public-schools-budget",
   category: "k12" as const,
-  date: "Nov 2024"
+  date: "Nov 2024",
+  isExternal: true
 }, {
   title: "Tennessee Promise: Impact on Nashville Students",
   description: "How the state's tuition-free community college program is affecting local enrollment and outcomes.",
