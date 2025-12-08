@@ -2,6 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { PolicyCard } from "@/components/PolicyCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { PolicyBreadcrumb } from "@/components/PolicyBreadcrumb";
+import { HeroPattern } from "@/components/HeroPattern";
 import { GraduationCap, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -76,8 +77,9 @@ export default function K12Policy() {
         </div>
       </section>
       {/* Hero */}
-      <section className="bg-primary text-primary-foreground py-16">
-        <div className="container">
+      <section className="hero-gradient text-primary-foreground py-16">
+        <HeroPattern />
+        <div className="container relative">
           <div className="flex items-center gap-3 mb-4">
             <div className="flex items-center justify-center w-12 h-12 rounded-full bg-accent text-accent-foreground">
               <GraduationCap className="w-6 h-6" />

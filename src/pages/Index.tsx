@@ -6,6 +6,7 @@ import { PolicyCard } from "@/components/PolicyCard";
 import { LiveBillCard } from "@/components/LiveBillCard";
 import { SiteSearch } from "@/components/SiteSearch";
 import { EducationNewsSection } from "@/components/EducationNewsSection";
+import { HeroPattern } from "@/components/HeroPattern";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowRight, BookOpen, GraduationCap, Scale, Megaphone, TrendingUp, Users, AlertCircle, Sparkles } from "lucide-react";
 import { useEducationBills } from "@/hooks/useLegislation";
@@ -88,6 +89,7 @@ export default function Index() {
         className="hero-gradient text-primary-foreground py-20 lg:py-28"
         aria-labelledby="hero-heading"
       >
+        <HeroPattern />
         <div className="container">
           <div className="max-w-3xl">
             {/* New visitor hint */}
@@ -336,6 +338,7 @@ export default function Index() {
         className="py-20 hero-gradient text-primary-foreground"
         aria-labelledby="newsletter-heading"
       >
+        <HeroPattern />
         <div className="container">
           <div className="max-w-xl mx-auto text-center">
             <h2 id="newsletter-heading" className="font-serif text-3xl font-bold mb-4">

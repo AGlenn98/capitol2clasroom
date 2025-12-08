@@ -2,6 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { LegislationCard } from "@/components/LegislationCard";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { PolicyBreadcrumb } from "@/components/PolicyBreadcrumb";
+import { HeroPattern } from "@/components/HeroPattern";
 import { Scale, Filter, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -132,6 +133,7 @@ export default function Legislation() {
 
       {/* Hero */}
       <section className="hero-gradient text-primary-foreground py-20">
+        <HeroPattern />
         <div className="container">
           <div className="flex items-center gap-4 mb-5">
             <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-accent text-accent-foreground shadow-lg">
