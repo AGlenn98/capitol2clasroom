@@ -22,18 +22,20 @@ const articles = [
   {
     title: "Tennessee Reconnect: Returning to School as an Adult",
     description: "A guide to the state program that helps adults complete their education, including eligibility and how to apply.",
-    href: "/higher-ed",
+    href: "https://www.tn.gov/nexttennessee/tennessee-reconnect.html",
     category: "higher-ed" as const,
     date: "Oct 2024",
     tags: ["Community College", "Workforce"],
+    isExternal: true,
   },
   {
     title: "Nashville State Community College: Programs & Outcomes",
     description: "An overview of program offerings, graduation rates, and job placement data for Nashville State students.",
-    href: "/higher-ed",
+    href: "https://www.nscc.edu/",
     category: "higher-ed" as const,
     date: "Oct 2024",
     tags: ["Community College"],
+    isExternal: true,
   },
   {
     title: "TSU & Vanderbilt: Comparing Nashville's Universities",
@@ -46,10 +48,11 @@ const articles = [
   {
     title: "Workforce Development in Middle Tennessee",
     description: "How higher education institutions are partnering with employers to address skills gaps in the region.",
-    href: "/higher-ed",
+    href: "https://www.tn.gov/education/educators.html",
     category: "higher-ed" as const,
     date: "Sep 2024",
     tags: ["Workforce"],
+    isExternal: true,
   },
 ];
 
