@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { LegiScanBill, LegiScanBillDetail, LegiScanSearchResult } from "@/types/legislation";
+import { filterEducationBills } from "@/lib/educationBillFilter";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
@@ -11,29 +12,34 @@ export function useEducationBills() {
       const response = await fetch(
         `${SUPABASE_URL}/functions/v1/legislation?action=search&query=education`
       );
-      
+
       if (!response.ok) {
         throw new Error("Failed to fetch education bills");
       }
-      
+
       const data = await response.json();
-      
+
       if (data.error) {
         throw new Error(data.error);
       }
-      
+
       // LegiScan returns results in a specific format
       const searchResults = data.searchresult || {};
       const bills: LegiScanSearchResult[] = [];
-      
+
       // Convert object to array, filtering out summary
       Object.entries(searchResults).forEach(([key, value]) => {
         if (key !== 'summary' && typeof value === 'object') {
           bills.push(value as LegiScanSearchResult);
         }
       });
-      
-      return bills;
+
+      // Filter to only include bills truly related to K-12, higher ed, or vocational education
+      const filteredBills = filterEducationBills(bills);
+
+      console.log(`Education bill filter: ${bills.length} -> ${filteredBills.length} bills (filtered out ${bills.length - filteredBills.length})`);
+
+      return filteredBills;
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
