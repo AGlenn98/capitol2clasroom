@@ -357,14 +357,18 @@ export default function BillDetail() {
 
             {/* Advocacy Sidebar */}
             <aside className="lg:col-span-1 space-y-4">
-              <AdvocacyBar
-                billId={bill.bill_id}
-                billNumber={bill.bill_number}
-                billTitle={bill.title}
-                stance={stance}
-                onStanceChange={setStance}
-                sponsors={sponsors}
-              />
+              <Card>
+                <CardContent className="p-4">
+                  <AdvocacyBar
+                    billId={bill.bill_id}
+                    billNumber={bill.bill_number}
+                    billTitle={bill.title}
+                    stance={stance}
+                    onStanceChange={setStance}
+                    sponsors={sponsors}
+                  />
+                </CardContent>
+              </Card>
 
               {criticalDates.length > 0 && (
                 <Card>

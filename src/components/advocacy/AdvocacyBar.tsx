@@ -31,7 +31,7 @@ export function AdvocacyBar({
   const billUrl = `${window.location.origin}/advocacy/bill/${billId}`;
 
   return (
-    <div className={cn("bg-card border border-border rounded-lg p-6 space-y-6 sticky top-24", className)}>
+    <div className={cn("space-y-6", className)}>
       <div className="text-center">
         <h3 className="font-serif text-lg font-semibold mb-1">Take Action</h3>
         <p className="text-sm text-muted-foreground">Make your voice heard on {billNumber}</p>
