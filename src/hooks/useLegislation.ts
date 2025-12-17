@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { LegiScanBill, LegiScanBillDetail, LegiScanSearchResult } from "@/types/legislation";
+import { isEducationBill, getEducationType } from "@/lib/educationBillFilter";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
@@ -33,7 +34,16 @@ export function useEducationBills() {
         }
       });
       
-      return bills;
+      // Filter to only include true education bills
+      const educationBills = bills.filter(bill => 
+        isEducationBill(bill.title, bill.text_url)
+      );
+      
+      // Add education type to each bill
+      return educationBills.map(bill => ({
+        ...bill,
+        educationType: getEducationType(bill.title, bill.text_url),
+      }));
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
