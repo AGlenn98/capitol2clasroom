@@ -1,14 +1,8 @@
-# My Policy Project!
-
-## My Project info
+# My Policy Project that I am currently developing
 
 **URL**: https://preview--cap2classroom.lovable.app/?__lovable_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoia0VvdDdkN0hwRFNKYThnRkc4WjlsWVRYeDFQMiIsInByb2plY3RfaWQiOiI4ODMwN2NlNy00ZTU2LTRiZTAtYTBjZS0xNTkxZjgxODFkOTQiLCJub25jZSI6IjE2MDc4MDMyYTFkZTFjZjliNzJiNThkZmNkNTAzNzZmIiwiaXNzIjoibG92YWJsZS1hcGkiLCJzdWIiOiI4ODMwN2NlNy00ZTU2LTRiZTAtYTBjZS0xNTkxZjgxODFkOTQiLCJhdWQiOlsibG92YWJsZS1hcHAiXSwiZXhwIjoxNzY1NjU2MzkxLCJuYmYiOjE3NjUwNTE1OTEsImlhdCI6MTc2NTA1MTU5MX0.NJDtAron4IlDuH2bz0VIQQG2t8XD8TPcspqWL2-ErXU
 
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
+** I used lovable dev to alleviate users eyes when utilizing this program. Currently in beta mode. 
 
 Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
 
