@@ -32,7 +32,7 @@ export function AdvocacyBar({
 
   return (
     <div className={cn(
-      "bg-card border border-border rounded-lg p-6 space-y-6 sticky top-24",
+      "bg-card border border-border rounded-lg p-6 space-y-6",
       className
     )}>
       <div className="text-center">
