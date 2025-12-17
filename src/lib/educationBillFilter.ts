@@ -93,8 +93,8 @@ const HIGHER_ED_KEYWORDS = [
   'enrollment',
   'admissions',
   'tcat', // Tennessee College of Applied Technology
-   'vanderbilt university,
-   'belmont university',
+  'vanderbilt university',
+  'belmont university',
    'belmont',
    'fisk',
   'fisk university',
