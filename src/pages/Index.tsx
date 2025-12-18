@@ -104,7 +104,7 @@ export default function Index() {
               id="hero-heading"
               className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in text-balance leading-tight"
             >
-              Navigate Nashville's Education Policy Landscape
+              Navigate Tennessee's Education Policy Landscape
             </h1>
             <p 
               className="text-lg md:text-xl text-primary-foreground/85 mb-8 leading-relaxed animate-fade-in max-w-2xl" 
