@@ -32,7 +32,7 @@ export function Footer() {
               <Logo variant="light" />
             </div>
             <p className="text-sm text-primary-foreground/70 leading-relaxed">
-              This program serves a purpose to view education policy in Nashville and Tennessee.
+              This program serves a purpose to view education policy in Tennessee
             </p>
           </div>
 
