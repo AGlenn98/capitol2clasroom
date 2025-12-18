@@ -4,7 +4,7 @@
 
 ** I used lovable dev to alleviate users eyes when utilizing this program. Currently in beta mode. 
 
-**Use preferred IDE**
+**Using a preferred ide**
 
 If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
