@@ -27,7 +27,7 @@ export default function About() {
           </div>
           <h1 className="font-serif text-4xl md:text-5xl font-bold mb-5">Capitol 2 Classroom</h1>
           <p className="text-xl text-primary-foreground/85 max-w-2xl leading-relaxed">
-            Your trusted, nonpartisan guide to understanding education policy in Nashville and Tennessee.
+            Your trusted, nonpartisan guide to understanding education policy in Tennessee.
           </p>
         </div>
       </section>
