@@ -39,7 +39,7 @@ export default function About() {
             <div className="lg:col-span-2 prose-article">
               <h2 className="font-serif text-3xl font-bold mb-6">Our Mission</h2>
               <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
-                Capitol to Classroom exists to make education policy accessible to all Nashvillians. We believe that
+                Capitol to Classroom exists to make education policy accessible to all Tennesseans. We believe that
                 informed citizens are empowered citizens, and that understanding the policies shaping our schools is
                 essential to building a better future for our community.
               </p>
@@ -53,7 +53,7 @@ export default function About() {
                     <h3 className="font-serif text-xl font-semibold">Purpose</h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
-                    To provide clear, accurate, and nonpartisan analysis of education policy that helps Nashville
+                    To provide clear, accurate, and nonpartisan analysis of education policy that helps Tennessee
                     residents understand how decisions at the local, state, and federal levels affect our schools.
                   </p>
                 </div>
@@ -65,7 +65,7 @@ export default function About() {
                     <h3 className="font-serif text-xl font-semibold">Vision</h3>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
-                    A Nashville where every citizen has the knowledge and tools to participate meaningfully in education
+                    A state where every citizen has the knowledge and tools to participate meaningfully in education
                     policy discussions and advocate effectively for students.
                   </p>
                 </div>
