@@ -100,10 +100,10 @@ export function Footer() {
         <div className="mt-16 pt-8 border-t border-primary-foreground/20">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-primary-foreground/60">
-              © {new Date().getFullYear()} Nashville Policy Compass. All rights reserved.
+              © {new Date().getFullYear()} Capitol to Classroom. All rights reserved.
             </p>
             <p className="text-sm text-primary-foreground/60 flex items-center gap-1.5">
-              Made with <Heart className="w-3.5 h-3.5 text-accent fill-accent" /> for Nashville
+              Made for Tennesseans
             </p>
           </div>
         </div>
