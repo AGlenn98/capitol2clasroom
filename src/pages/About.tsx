@@ -39,7 +39,7 @@ export default function About() {
             <div className="lg:col-span-2 prose-article">
               <h2 className="font-serif text-3xl font-bold mb-6">Our Mission</h2>
               <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
-                Nashville Policy Compass exists to make education policy accessible to all Nashvillians. We believe that
+                Capitol to Classroom exists to make education policy accessible to all Nashvillians. We believe that
                 informed citizens are empowered citizens, and that understanding the policies shaping our schools is
                 essential to building a better future for our community.
               </p>
@@ -111,7 +111,7 @@ export default function About() {
               </ul>
 
               <h2 className="font-serif text-3xl font-bold mb-6">Who We Serve</h2>
-              <p className="text-muted-foreground mb-5 text-lg">Nashville Policy Compass is designed for:</p>
+              <p className="text-muted-foreground mb-5 text-lg">Capitol to Classroom is designed for:</p>
               <ul className="space-y-3 text-muted-foreground mb-10">
                 {[
                   { bold: "Parents and families", rest: "seeking to understand policies affecting their children's education" },
@@ -152,8 +152,7 @@ export default function About() {
                 <div className="bg-muted/50 rounded-2xl p-7">
                   <h3 className="font-serif text-xl font-semibold mb-4">Transparency</h3>
                   <p className="text-muted-foreground mb-5 leading-relaxed">
-                    Nashville Policy Compass is independently operated and does not accept funding from political
-                    campaigns, parties, or advocacy organizations that lobby on education policy.
+                    Captiol to Classroom is currently a beta tester
                   </p>
                   <Button variant="outline" size="sm" className="w-full gap-2 rounded-xl">
                     View Our Methodology <ExternalLink className="w-4 h-4" />
