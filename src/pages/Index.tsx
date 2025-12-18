@@ -110,7 +110,7 @@ export default function Index() {
               className="text-lg md:text-xl text-primary-foreground/85 mb-8 leading-relaxed animate-fade-in max-w-2xl" 
               style={{ animationDelay: "0.1s" }}
             >
-              Your trusted, nonpartisan guide to understanding education policy in Nashville. 
+              Your trusted, nonpartisan guide to understanding education policy in Tennessee. 
               Track real legislation, contact your legislators, and make your voice heard.
             </p>
             <div 
