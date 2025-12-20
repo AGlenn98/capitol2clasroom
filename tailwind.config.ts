@@ -19,7 +19,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Source Serif 4", "Georgia", "serif"],
+        display: ["Bebas Neue", "Impact", "sans-serif"],
         sans: ["Inter", "system-ui", "sans-serif"],
       },
       colors: {
