@@ -10,7 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useEducationBills } from "@/hooks/useLegislation";
-import { NewsCommentary } from "@/components/advocacy/NewsCommentary";
+
 import { CriticalDatesTimeline } from "@/components/advocacy/CriticalDatesTimeline";
 import { CategoryFilter, CategoryBadge } from "@/components/advocacy/CategoryFilter";
 import { useAllStances } from "@/hooks/useUserStance";
@@ -232,7 +232,7 @@ export default function AdvocacyHub() {
                 </CardContent>
               </Card>
 
-              <NewsCommentary />
+              
 
               <Card>
                 <CardContent className="p-4">
