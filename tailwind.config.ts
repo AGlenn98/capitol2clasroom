@@ -19,8 +19,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Bebas Neue", "Impact", "sans-serif"],
+        serif: ["Crimson Pro", "Georgia", "serif"],
         sans: ["Inter", "system-ui", "sans-serif"],
+        display: ["Crimson Pro", "Georgia", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -99,7 +100,6 @@ export default {
         lg: "var(--shadow-lg)",
         modal: "var(--shadow-modal)",
         glow: "var(--shadow-glow)",
-        sticker: "var(--shadow-sticker)",
       },
       zIndex: {
         dropdown: "var(--z-dropdown)",
@@ -165,22 +165,11 @@ export default {
         },
         "float": {
           "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-8px)" },
-        },
-        "float-rotate": {
-          "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
-          "50%": { transform: "translateY(-10px) rotate(3deg)" },
+          "50%": { transform: "translateY(-5px)" },
         },
         "pulse-soft": {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.7" },
-        },
-        "wobble": {
-          "0%": { transform: "rotate(0deg)" },
-          "25%": { transform: "rotate(-5deg)" },
-          "50%": { transform: "rotate(5deg)" },
-          "75%": { transform: "rotate(-3deg)" },
-          "100%": { transform: "rotate(0deg)" },
         },
       },
       animation: {
@@ -192,9 +181,7 @@ export default {
         "scale-in": "scale-in 0.25s ease-out",
         "gradient-shift": "gradient-shift 6s ease infinite",
         "float": "float 3s ease-in-out infinite",
-        "float-rotate": "float-rotate 5s ease-in-out infinite",
         "pulse-soft": "pulse-soft 2s ease-in-out infinite",
-        "wobble": "wobble 0.5s ease-in-out",
       },
     },
   },

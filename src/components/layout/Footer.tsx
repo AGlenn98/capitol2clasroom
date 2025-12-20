@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
-import { Mail } from "lucide-react";
+import { Mail, Heart } from "lucide-react";
 import { Logo } from "@/components/Logo";
-import { CivicSticker } from "@/components/CivicSticker";
 
 const footerLinks = {
   explore: [
@@ -24,36 +23,28 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="bg-primary text-primary-foreground mt-auto relative overflow-hidden">
-      {/* Decorative stickers */}
-      <div className="absolute top-8 right-8 opacity-20 hidden lg:block">
-        <CivicSticker variant="vote" color="white" size="lg" animated={false} />
-      </div>
-      <div className="absolute bottom-12 left-12 opacity-15 hidden lg:block">
-        <CivicSticker variant="check" color="white" size="md" animated={false} />
-      </div>
-
-      <div className="container py-16 relative z-10">
+    <footer className="bg-primary text-primary-foreground mt-auto">
+      <div className="container py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="mb-4">
               <Logo variant="light" />
             </div>
-            <p className="text-sm text-primary-foreground/70 leading-relaxed font-sans">
+            <p className="text-sm text-primary-foreground/70 leading-relaxed">
               This program serves a purpose to view education policy in Tennessee
             </p>
           </div>
 
           {/* Explore Links */}
           <div>
-            <h3 className="font-display text-xl tracking-wider uppercase mb-5">Explore</h3>
+            <h3 className="font-serif font-semibold text-lg mb-5">Explore</h3>
             <ul className="space-y-3">
               {footerLinks.explore.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-sm text-primary-foreground/70 hover:text-accent transition-colors duration-normal font-sans"
+                    className="text-sm text-primary-foreground/70 hover:text-accent transition-colors duration-normal"
                   >
                     {link.name}
                   </Link>
@@ -64,13 +55,13 @@ export function Footer() {
 
           {/* Action Links */}
           <div>
-            <h3 className="font-display text-xl tracking-wider uppercase mb-5">Take Action</h3>
+            <h3 className="font-serif font-semibold text-lg mb-5">Take Action</h3>
             <ul className="space-y-3">
               {footerLinks.action.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-sm text-primary-foreground/70 hover:text-accent transition-colors duration-normal font-sans"
+                    className="text-sm text-primary-foreground/70 hover:text-accent transition-colors duration-normal"
                   >
                     {link.name}
                   </Link>
@@ -81,13 +72,13 @@ export function Footer() {
 
           {/* About Links */}
           <div>
-            <h3 className="font-display text-xl tracking-wider uppercase mb-5">About</h3>
+            <h3 className="font-serif font-semibold text-lg mb-5">About</h3>
             <ul className="space-y-3">
               {footerLinks.about.map((link) => (
                 <li key={link.name}>
                   <Link
                     to={link.href}
-                    className="text-sm text-primary-foreground/70 hover:text-accent transition-colors duration-normal font-sans"
+                    className="text-sm text-primary-foreground/70 hover:text-accent transition-colors duration-normal"
                   >
                     {link.name}
                   </Link>
@@ -97,7 +88,7 @@ export function Footer() {
             <div className="mt-6 pt-6 border-t border-primary-foreground/20">
               <a
                 href="mailto:contact@nashvillepolicycompass.com"
-                className="inline-flex items-center gap-2 text-sm text-primary-foreground/70 hover:text-accent transition-colors duration-normal font-sans"
+                className="inline-flex items-center gap-2 text-sm text-primary-foreground/70 hover:text-accent transition-colors duration-normal"
               >
                 <Mail className="w-4 h-4" />
                 Contact Us
@@ -108,10 +99,10 @@ export function Footer() {
 
         <div className="mt-16 pt-8 border-t border-primary-foreground/20">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-primary-foreground/60 font-sans">
+            <p className="text-sm text-primary-foreground/60">
               © {new Date().getFullYear()} Capitol to Classroom. All rights reserved.
             </p>
-            <p className="text-sm text-primary-foreground/60 flex items-center gap-1.5 font-sans">
+            <p className="text-sm text-primary-foreground/60 flex items-center gap-1.5">
               Made for Tennesseans
             </p>
           </div>

@@ -10,20 +10,22 @@ export function Logo({ variant = "default" }: LogoProps) {
   const isLight = variant === "light";
   
   return (
-    <Link to="/" className="flex items-center gap-3 group">
+    <Link to="/" className="flex items-center gap-2.5 group">
       <Landmark 
         className={cn(
-          "h-8 w-8 group-hover:rotate-6 transition-all duration-normal",
-          isLight ? "text-primary-foreground" : "text-primary group-hover:text-accent"
+          "h-7 w-7 group-hover:rotate-6 transition-all duration-normal",
+          isLight ? "text-primary-foreground" : "text-foreground group-hover:text-primary"
         )} 
       />
       <span 
+        style={{ fontFamily: 'Inter, Helvetica, Arial, sans-serif' }} 
         className={cn(
-          "font-display text-2xl tracking-wider uppercase",
+          "text-2xl",
           isLight ? "text-primary-foreground" : "text-foreground"
         )}
       >
-        Capitol to Classroom
+        <span className="font-light">Capitol</span>
+        <span className="font-bold"> to Classroom</span>
       </span>
     </Link>
   );
