@@ -88,7 +88,7 @@ export default function AdvocacyHub() {
       <section className="py-3 border-b border-border bg-muted/30">
         <div className="container">
           <PolicyBreadcrumb items={[{
-          label: "Advocacy Hub"
+          label: "Bill Track List"
         }]} />
         </div>
       </section>
@@ -99,14 +99,14 @@ export default function AdvocacyHub() {
           <div className="flex items-center gap-3 mb-3">
             
             <Badge variant="secondary" className="bg-primary-foreground/20 text-primary-foreground border-none">
-              Advocacy Hub
+              Bill Track List
             </Badge>
           </div>
           <h1 className="font-serif text-2xl md:text-3xl font-bold mb-2">
-            Tennessee Education Advocacy
+            Bill Track List
           </h1>
           <p className="text-sm text-primary-foreground/80 max-w-2xl mb-3">
-            Track real education bills, set your stance, and make your voice heard.
+            Track all active education bills in the Tennessee legislature.
           </p>
           
           {(supportedCount > 0 || opposedCount > 0) && <div className="flex gap-3 text-sm">
