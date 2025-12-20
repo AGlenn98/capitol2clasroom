@@ -88,8 +88,8 @@ export default function Index() {
               className="text-lg text-primary-foreground/85 mb-6 leading-relaxed animate-fade-in max-w-2xl"
               style={{ animationDelay: "0.1s" }}
             >
-              Your nonpartisan source for tracking education legislation. Search bills, contact legislators, and make
-              your voice heard.
+              A nonpartisan source for tracking education legislation. Search bills, contact legislators, and make your
+              voice heard.
             </p>
           </div>
         </div>
