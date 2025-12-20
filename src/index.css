@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
 /* Civic Design System - Bold, Patriotic, Action-Oriented */
 
 @layer base {
