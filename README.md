@@ -2,7 +2,7 @@
 
 **URL**: https://preview--cap2classroom.lovable.app/?__lovable_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoia0VvdDdkN0hwRFNKYThnRkc4WjlsWVRYeDFQMiIsInByb2plY3RfaWQiOiI4ODMwN2NlNy00ZTU2LTRiZTAtYTBjZS0xNTkxZjgxODFkOTQiLCJub25jZSI6IjE2MDc4MDMyYTFkZTFjZjliNzJiNThkZmNkNTAzNzZmIiwiaXNzIjoibG92YWJsZS1hcGkiLCJzdWIiOiI4ODMwN2NlNy00ZTU2LTRiZTAtYTBjZS0xNTkxZjgxODFkOTQiLCJhdWQiOlsibG92YWJsZS1hcHAiXSwiZXhwIjoxNzY1NjU2MzkxLCJuYmYiOjE3NjUwNTE1OTEsImlhdCI6MTc2NTA1MTU5MX0.NJDtAron4IlDuH2bz0VIQQG2t8XD8TPcspqWL2-ErXU
 
-** I used lovable dev to alleviate users eyes when using 
+** I used lovable dev through vscode to alleviate users eyes when using 
 this program.
 This project is built with:
 
