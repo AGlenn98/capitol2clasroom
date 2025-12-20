@@ -22,45 +22,57 @@ import { Link } from "react-router-dom";
 
 const statusToStage = (status: number): TimelineStage => {
   switch (status) {
-    case 1: return 'introduced';
-    case 2: return 'committee';
-    case 3: return 'floor_vote';
-    case 4: return 'enacted';
+    case 1:
+      return "introduced";
+    case 2:
+      return "committee";
+    case 3:
+      return "floor_vote";
+    case 4:
+      return "enacted";
     case 5:
-    case 6: return 'failed';
-    default: return 'introduced';
+    case 6:
+      return "failed";
+    default:
+      return "introduced";
   }
 };
 
-const statusToBillStatus = (status: number): 'proposed' | 'committee' | 'passed' | 'failed' => {
+const statusToBillStatus = (status: number): "proposed" | "committee" | "passed" | "failed" => {
   switch (status) {
-    case 1: return 'proposed';
+    case 1:
+      return "proposed";
     case 2:
-    case 3: return 'committee';
-    case 4: return 'passed';
+    case 3:
+      return "committee";
+    case 4:
+      return "passed";
     case 5:
-    case 6: return 'failed';
-    default: return 'proposed';
+    case 6:
+      return "failed";
+    default:
+      return "proposed";
   }
 };
 
 export default function BillDetail() {
   const { billId } = useParams<{ billId: string }>();
   const numericBillId = billId ? parseInt(billId, 10) : null;
-  
+
   const { data: bill, isLoading, error } = useBillDetail(numericBillId);
   const { stance, setStance } = useUserStance(numericBillId || 0);
 
-  const criticalDates = bill?.history?.slice(0, 5).map((h, i) => ({
-    date: h.date,
-    label: h.action,
-    description: h.chamber,
-    isPast: true,
-    isCurrent: i === 0,
-  })) || [];
+  const criticalDates =
+    bill?.history?.slice(0, 5).map((h, i) => ({
+      date: h.date,
+      label: h.action,
+      description: h.chamber,
+      isPast: true,
+      isCurrent: i === 0,
+    })) || [];
 
   if (bill?.calendar) {
-    bill.calendar.forEach(event => {
+    bill.calendar.forEach((event) => {
       criticalDates.push({
         date: event.date,
         label: event.type,
@@ -71,12 +83,13 @@ export default function BillDetail() {
     });
   }
 
-  const sponsors = bill?.sponsors?.map(s => ({
-    name: `${s.first_name} ${s.last_name}`,
-    party: s.party,
-    district: s.district,
-    email: undefined,
-  })) || [];
+  const sponsors =
+    bill?.sponsors?.map((s) => ({
+      name: `${s.first_name} ${s.last_name}`,
+      party: s.party,
+      district: s.district,
+      email: undefined,
+    })) || [];
 
   if (isLoading) {
     return (
@@ -107,9 +120,7 @@ export default function BillDetail() {
               <CardContent className="p-6 text-center">
                 <AlertCircle className="w-10 h-10 text-destructive mx-auto mb-3" />
                 <h2 className="font-serif text-lg font-bold mb-2">Bill Not Found</h2>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Unable to load this bill.
-                </p>
+                <p className="text-sm text-muted-foreground mb-4">Unable to load this bill.</p>
                 <div className="flex justify-center gap-2">
                   <Button asChild variant="outline" size="sm">
                     <Link to="/advocacy">
@@ -119,7 +130,7 @@ export default function BillDetail() {
                   </Button>
                   <Button
                     size="sm"
-                    onClick={() => window.open('https://wapp.capitol.tn.gov/apps/BillInfo/default.aspx', '_blank')}
+                    onClick={() => window.open("https://wapp.capitol.tn.gov/apps/BillInfo/default.aspx", "_blank")}
                   >
                     <ExternalLink className="w-3 h-3 mr-1" />
                     TN Legislature
@@ -146,16 +157,13 @@ export default function BillDetail() {
         billTitle={bill.title}
         description={bill.description}
         sponsors={sponsors}
-        history={bill.history?.map(h => ({ date: h.date, action: h.action, chamber: h.chamber }))}
+        history={bill.history?.map((h) => ({ date: h.date, action: h.action, chamber: h.chamber }))}
       />
 
       {/* Breadcrumb */}
       <section className="py-3 border-b border-border bg-muted/30 print:hidden">
         <div className="container">
-          <PolicyBreadcrumb items={[
-            { label: "Advocacy Hub", href: "/advocacy" },
-            { label: bill.bill_number }
-          ]} />
+          <PolicyBreadcrumb items={[{ label: "Bill Tracking List", href: "/advocacy" }, { label: bill.bill_number }]} />
         </div>
       </section>
 
@@ -169,26 +177,23 @@ export default function BillDetail() {
               {bill.session.session_name}
             </Badge>
             {stance && (
-              <Badge 
-                variant="outline" 
-                className={stance === 'support' 
-                  ? 'bg-success/20 text-success-foreground border-success/50' 
-                  : 'bg-destructive/20 text-destructive-foreground border-destructive/50'
+              <Badge
+                variant="outline"
+                className={
+                  stance === "support"
+                    ? "bg-success/20 text-success-foreground border-success/50"
+                    : "bg-destructive/20 text-destructive-foreground border-destructive/50"
                 }
               >
-                {stance === 'support' ? '✓ Supporting' : '✗ Opposing'}
+                {stance === "support" ? "✓ Supporting" : "✗ Opposing"}
               </Badge>
             )}
           </div>
-          
-          <h1 className="font-serif text-xl md:text-2xl font-bold mb-2">
-            {bill.title}
-          </h1>
-          
+
+          <h1 className="font-serif text-xl md:text-2xl font-bold mb-2">{bill.title}</h1>
+
           {bill.description && (
-            <p className="text-sm text-primary-foreground/80 max-w-3xl line-clamp-2">
-              {bill.description}
-            </p>
+            <p className="text-sm text-primary-foreground/80 max-w-3xl line-clamp-2">{bill.description}</p>
           )}
         </div>
       </section>
@@ -258,15 +263,13 @@ export default function BillDetail() {
                             {sponsor.first_name} {sponsor.last_name}
                           </p>
                           <p className="text-muted-foreground">
-                            {sponsor.party} • D-{sponsor.district.replace('HD-', '').replace('SD-', '')}
+                            {sponsor.party} • D-{sponsor.district.replace("HD-", "").replace("SD-", "")}
                           </p>
                         </Link>
                       ))}
                     </div>
                     {bill.sponsors.length > 6 && (
-                      <p className="text-xs text-muted-foreground mt-2">
-                        +{bill.sponsors.length - 6} more sponsors
-                      </p>
+                      <p className="text-xs text-muted-foreground mt-2">+{bill.sponsors.length - 6} more sponsors</p>
                     )}
                   </CardContent>
                 </Card>
@@ -313,9 +316,11 @@ export default function BillDetail() {
                         variant="outline"
                         size="sm"
                         className="w-full justify-between h-8 text-xs"
-                        onClick={() => window.open(text.state_link || text.url, '_blank')}
+                        onClick={() => window.open(text.state_link || text.url, "_blank")}
                       >
-                        <span>{text.type} - {text.date}</span>
+                        <span>
+                          {text.type} - {text.date}
+                        </span>
                         <ExternalLink className="w-3 h-3" />
                       </Button>
                     ))}
@@ -334,7 +339,7 @@ export default function BillDetail() {
                       variant="outline"
                       size="sm"
                       className="w-full justify-between h-8 text-xs"
-                      onClick={() => window.open(bill.state_link, '_blank')}
+                      onClick={() => window.open(bill.state_link, "_blank")}
                     >
                       View on TN Legislature
                       <ExternalLink className="w-3 h-3" />
@@ -345,7 +350,7 @@ export default function BillDetail() {
                       variant="outline"
                       size="sm"
                       className="w-full justify-between h-8 text-xs"
-                      onClick={() => window.open(bill.url, '_blank')}
+                      onClick={() => window.open(bill.url, "_blank")}
                     >
                       LegiScan Bill Page
                       <ExternalLink className="w-3 h-3" />
@@ -379,11 +384,7 @@ export default function BillDetail() {
               )}
 
               {/* Email Subscription */}
-              <BillSubscription
-                billId={bill.bill_id}
-                billNumber={bill.bill_number}
-                billTitle={bill.title}
-              />
+              <BillSubscription billId={bill.bill_id} billNumber={bill.bill_number} billTitle={bill.title} />
             </aside>
           </div>
         </div>
