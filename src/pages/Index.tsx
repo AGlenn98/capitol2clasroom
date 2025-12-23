@@ -68,24 +68,24 @@ export default function Index() {
 
   return (
     <Layout>
-      {/* Hero Section - Compact */}
-      <section className="hero-gradient text-primary-foreground py-12 lg:py-16" aria-labelledby="hero-heading">
+      {/* Hero Section - Soft Gradient */}
+      <section className="hero-gradient py-16 lg:py-20" aria-labelledby="hero-heading">
         <HeroPattern />
-        <div className="container">
+        <div className="container relative z-10">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-foreground/10 backdrop-blur-sm rounded-full text-sm text-primary-foreground/90 mb-4 animate-fade-in">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/15 backdrop-blur-sm rounded-full text-sm text-primary mb-5 animate-fade-in border border-primary/20">
               <Sparkles className="w-4 h-4" aria-hidden="true" />
-              <span>Track Tennessee Education Legislation in Real-Time</span>
+              <span className="font-medium">Track Tennessee Education Legislation in Real-Time</span>
             </div>
 
             <h1
               id="hero-heading"
-              className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold mb-4 animate-fade-in text-balance leading-tight"
+              className="font-display text-4xl md:text-5xl lg:text-6xl mb-5 animate-fade-in text-balance leading-none text-foreground"
             >
-              Tennessee Education Bill Tracker
+              TENNESSEE EDUCATION BILL TRACKER
             </h1>
             <p
-              className="text-lg text-primary-foreground/85 mb-6 leading-relaxed animate-fade-in max-w-2xl"
+              className="text-lg text-foreground/75 mb-6 leading-relaxed animate-fade-in max-w-2xl font-light"
               style={{ animationDelay: "0.1s" }}
             >
               Your nonpartisan source for tracking education legislation. Search bills, contact legislators, and make
@@ -146,8 +146,8 @@ export default function Index() {
           {/* Section Header */}
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 id="bills-heading" className="font-serif text-2xl md:text-3xl font-bold mb-1">
-                Active Education Bills
+              <h2 id="bills-heading" className="font-display text-2xl md:text-3xl mb-1 text-foreground">
+                ACTIVE EDUCATION BILLS
               </h2>
               <p className="text-muted-foreground">Real-time legislation from the Tennessee General Assembly</p>
             </div>
@@ -253,8 +253,8 @@ export default function Index() {
       <section className="py-12 section-soft" aria-labelledby="explore-heading">
         <div className="container">
           <div className="text-center mb-8">
-            <h2 id="explore-heading" className="font-serif text-2xl font-bold mb-2">
-              Explore More
+            <h2 id="explore-heading" className="font-display text-2xl mb-2 text-foreground">
+              EXPLORE MORE
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto">Dive deeper into Tennessee education policy</p>
           </div>
@@ -273,8 +273,8 @@ export default function Index() {
                     >
                       <card.icon className="w-6 h-6 text-primary group-hover:text-accent transition-colors duration-normal" />
                     </div>
-                    <h3 className="font-serif font-semibold text-sm mb-1">{card.title}</h3>
-                    <p className="text-xs text-muted-foreground hidden sm:block leading-relaxed">{card.description}</p>
+                    <h3 className="font-display text-sm mb-1 tracking-wide">{card.title.toUpperCase()}</h3>
+                    <p className="text-xs text-muted-foreground hidden sm:block leading-relaxed font-sans">{card.description}</p>
                     <span className="mt-2 text-xs font-medium text-primary group-hover:text-accent transition-colors duration-normal inline-flex items-center gap-1">
                       Explore
                       <ArrowRight
@@ -291,14 +291,13 @@ export default function Index() {
       </section>
 
       {/* Newsletter CTA */}
-      <section className="py-16 hero-gradient text-primary-foreground" aria-labelledby="newsletter-heading">
-        <HeroPattern />
+      <section className="py-16 bg-gradient-to-br from-card via-secondary/50 to-card" aria-labelledby="newsletter-heading">
         <div className="container">
           <div className="max-w-xl mx-auto text-center">
-            <h2 id="newsletter-heading" className="font-serif text-2xl font-bold mb-3">
-              Stay Informed
+            <h2 id="newsletter-heading" className="font-display text-2xl mb-3 text-foreground">
+              STAY INFORMED
             </h2>
-            <p className="text-primary-foreground/85 mb-6 leading-relaxed">
+            <p className="text-muted-foreground mb-6 leading-relaxed">
               Get weekly updates on legislation and policy changes.
             </p>
             <div className="max-w-md mx-auto">

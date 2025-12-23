@@ -14,18 +14,16 @@ export function Logo({ variant = "default" }: LogoProps) {
       <Landmark 
         className={cn(
           "h-7 w-7 group-hover:rotate-6 transition-all duration-normal",
-          isLight ? "text-primary-foreground" : "text-foreground group-hover:text-primary"
+          isLight ? "text-primary-foreground" : "text-primary group-hover:text-accent"
         )} 
       />
       <span 
-        style={{ fontFamily: 'Inter, Helvetica, Arial, sans-serif' }} 
         className={cn(
-          "text-2xl",
+          "font-display text-2xl tracking-wide",
           isLight ? "text-primary-foreground" : "text-foreground"
         )}
       >
-        <span className="font-light">Capitol</span>
-        <span className="font-bold"> to Classroom</span>
+        CAPITOL TO CLASSROOM
       </span>
     </Link>
   );

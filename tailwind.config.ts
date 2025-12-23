@@ -19,9 +19,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        serif: ["Crimson Pro", "Georgia", "serif"],
-        sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Crimson Pro", "Georgia", "serif"],
+        display: ["Bebas Neue", "Impact", "sans-serif"],
+        sans: ["Source Sans 3", "system-ui", "sans-serif"],
+        serif: ["Source Sans 3", "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

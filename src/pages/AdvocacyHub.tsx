@@ -93,27 +93,26 @@ export default function AdvocacyHub() {
         </div>
       </section>
       {/* Hero */}
-      <section className="hero-gradient text-primary-foreground py-10">
+      <section className="hero-gradient py-12">
         <HeroPattern />
-        <div className="container relative">
-          <div className="flex items-center gap-3 mb-3">
-            
-            <Badge variant="secondary" className="bg-primary-foreground/20 text-primary-foreground border-none">
+        <div className="container relative z-10">
+          <div className="flex items-center gap-3 mb-4">
+            <Badge variant="secondary" className="bg-primary/15 text-primary border border-primary/20">
               Bill Track List
             </Badge>
           </div>
-          <h1 className="font-serif text-2xl md:text-3xl font-bold mb-2">
-            Bill Track List
+          <h1 className="font-display text-3xl md:text-4xl mb-3 text-foreground">
+            BILL TRACK LIST
           </h1>
-          <p className="text-sm text-primary-foreground/80 max-w-2xl mb-3">
+          <p className="text-base text-foreground/70 max-w-2xl mb-4 font-light">
             Track all active education bills in the Tennessee legislature.
           </p>
           
           {(supportedCount > 0 || opposedCount > 0) && <div className="flex gap-3 text-sm">
-              {supportedCount > 0 && <span className="px-3 py-1 bg-success/20 rounded-full text-xs">
+              {supportedCount > 0 && <span className="px-3 py-1.5 bg-success/20 rounded-full text-xs font-medium text-success">
                   ✅ {supportedCount} supported
                 </span>}
-              {opposedCount > 0 && <span className="px-3 py-1 bg-destructive/20 rounded-full text-xs">
+              {opposedCount > 0 && <span className="px-3 py-1.5 bg-destructive/20 rounded-full text-xs font-medium text-destructive">
                   ❌ {opposedCount} opposed
                 </span>}
             </div>}
@@ -139,8 +138,8 @@ export default function AdvocacyHub() {
             <div className="lg:col-span-2">
               <div className="mb-4 flex items-center justify-between">
                 <div>
-                  <h2 className="font-serif text-lg font-bold">Active Education Bills</h2>
-                  {!isLoading && !error && <p className="text-xs text-muted-foreground">
+                  <h2 className="font-display text-lg">ACTIVE EDUCATION BILLS</h2>
+                  {!isLoading && !error && <p className="text-xs text-muted-foreground font-sans">
                       {filteredBills.length} bills
                       {totalPages > 1 && ` • Page ${currentPage}/${totalPages}`}
                     </p>}
@@ -202,8 +201,8 @@ export default function AdvocacyHub() {
                                   </Badge>}
                               </div>
                               
-                              <h3 className="font-serif text-sm font-semibold mb-1.5 group-hover:text-primary transition-colors line-clamp-2">
-                                {bill.title}
+                              <h3 className="font-display text-sm mb-1.5 group-hover:text-primary transition-colors line-clamp-2">
+                                {bill.title.toUpperCase()}
                               </h3>
                               
                               <p className="text-[11px] text-muted-foreground mb-2 line-clamp-1">
@@ -236,7 +235,7 @@ export default function AdvocacyHub() {
 
               <Card>
                 <CardContent className="p-4">
-                  <h3 className="font-serif font-semibold mb-2 text-sm">Official Resources</h3>
+                  <h3 className="font-display text-sm mb-2 tracking-wide">OFFICIAL RESOURCES</h3>
                   <div className="space-y-1.5">
                     <Button variant="outline" size="sm" className="w-full justify-start text-xs h-8" onClick={() => window.open('https://www.capitol.tn.gov/', '_blank')}>
                       <ExternalLink className="w-3 h-3 mr-2" />
