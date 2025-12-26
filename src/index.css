@@ -4,60 +4,66 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Nashville Policy Compass - Contemporary Soft Gradient Design System */
+/* Tennessee Education Bill Tracker - Civic Engagement Design System */
 
 @layer base {
   :root {
-    /* Primary: Soft slate blue - contemporary, trustworthy */
-    --primary: 210 35% 45%;
+    /* Civic Colors - Bold two-tone scheme */
+    --civic-red: 4 65% 55%;
+    --civic-red-dark: 4 65% 45%;
+    --civic-blue: 200 55% 62%;
+    --civic-blue-dark: 200 55% 52%;
+    
+    /* Primary: Vibrant coral-red for action */
+    --primary: 4 65% 55%;
     --primary-foreground: 0 0% 100%;
     
-    /* Background: Warm cream - soft and inviting */
-    --background: 40 40% 96%;
-    --foreground: 215 25% 22%;
+    /* Background: Soft sky blue - inviting and civic */
+    --background: 200 30% 96%;
+    --foreground: 215 30% 18%;
 
-    /* Card: Soft blue-gray for content cards */
-    --card: 205 25% 88%;
-    --card-foreground: 215 25% 22%;
+    /* Card: Clean white for content cards */
+    --card: 0 0% 100%;
+    --card-foreground: 215 30% 18%;
 
-    /* Card alternate: Warm cream for contrast */
-    --card-cream: 35 50% 94%;
-    --card-cream-foreground: 215 25% 22%;
+    /* Card alternate: Light blue tint for contrast */
+    --card-cream: 200 40% 97%;
+    --card-cream-foreground: 215 30% 18%;
 
-    --popover: 40 40% 98%;
-    --popover-foreground: 215 25% 22%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 30% 18%;
 
-    /* Secondary: Muted blue for accents */
-    --secondary: 205 30% 82%;
-    --secondary-foreground: 215 30% 30%;
+    /* Secondary: Soft blue for accents */
+    --secondary: 200 35% 90%;
+    --secondary-foreground: 215 30% 25%;
 
     /* Muted: Soft gray-blue */
-    --muted: 210 20% 90%;
+    --muted: 200 20% 92%;
     --muted-foreground: 215 15% 45%;
 
-    /* Accent: Soft teal-blue - contemporary touch */
-    --accent: 195 45% 55%;
+    /* Accent: Sky blue - civic touch */
+    --accent: 200 55% 62%;
     --accent-foreground: 0 0% 100%;
 
-    /* Status colors - soft contemporary tones */
-    --success: 160 40% 45%;
+    /* Status colors - civic tones */
+    --success: 160 45% 42%;
     --success-foreground: 0 0% 100%;
-    --warning: 40 75% 55%;
-    --warning-foreground: 215 25% 15%;
-    --destructive: 0 55% 55%;
+    --warning: 40 80% 50%;
+    --warning-foreground: 215 30% 15%;
+    --destructive: 4 65% 50%;
     --destructive-foreground: 0 0% 98%;
 
     /* Party colors */
-    --party-republican: 0 60% 55%;
+    --party-republican: 4 65% 50%;
     --party-republican-foreground: 0 0% 100%;
-    --party-republican-muted: 0 40% 94%;
+    --party-republican-muted: 4 40% 94%;
     --party-democrat: 215 65% 55%;
     --party-democrat-foreground: 0 0% 100%;
     --party-democrat-muted: 215 50% 94%;
 
-    --border: 210 20% 85%;
-    --input: 210 20% 88%;
-    --ring: 210 35% 45%;
+    --border: 200 20% 88%;
+    --input: 200 20% 92%;
+    --ring: 4 65% 55%;
 
     --radius: 1rem;
 
@@ -82,13 +88,13 @@
     --z-tooltip: 300;
     --z-toast: 400;
 
-    /* Shadow tokens - soft contemporary shadows */
-    --shadow-sm: 0 1px 3px 0 hsl(210 25% 25% / 0.05);
-    --shadow-card: 0 4px 12px -2px hsl(210 25% 25% / 0.08), 0 2px 6px -2px hsl(210 25% 25% / 0.05);
-    --shadow-md: 0 8px 20px -4px hsl(210 25% 25% / 0.1), 0 4px 8px -4px hsl(210 25% 25% / 0.06);
-    --shadow-lg: 0 20px 40px -8px hsl(210 25% 25% / 0.12), 0 8px 16px -8px hsl(210 25% 25% / 0.08);
-    --shadow-modal: 0 32px 64px -16px hsl(210 25% 25% / 0.18);
-    --shadow-glow: 0 0 30px hsl(195 45% 55% / 0.2);
+    /* Shadow tokens - clean shadows */
+    --shadow-sm: 0 1px 3px 0 hsl(215 30% 20% / 0.06);
+    --shadow-card: 0 4px 16px -4px hsl(215 30% 20% / 0.1), 0 2px 6px -2px hsl(215 30% 20% / 0.06);
+    --shadow-md: 0 8px 24px -6px hsl(215 30% 20% / 0.12), 0 4px 10px -4px hsl(215 30% 20% / 0.08);
+    --shadow-lg: 0 20px 50px -12px hsl(215 30% 20% / 0.18), 0 8px 20px -8px hsl(215 30% 20% / 0.1);
+    --shadow-modal: 0 32px 64px -16px hsl(215 30% 20% / 0.22);
+    --shadow-glow: 0 0 30px hsl(4 65% 55% / 0.2);
 
     /* Duration tokens */
     --duration-fast: 150ms;
@@ -96,86 +102,92 @@
     --duration-slow: 400ms;
 
     /* Chart colors */
-    --chart-1: 210 35% 45%;
-    --chart-2: 195 45% 55%;
-    --chart-3: 160 40% 45%;
-    --chart-4: 280 40% 55%;
-    --chart-5: 35 60% 55%;
+    --chart-1: 4 65% 55%;
+    --chart-2: 200 55% 62%;
+    --chart-3: 160 45% 42%;
+    --chart-4: 280 45% 55%;
+    --chart-5: 40 80% 50%;
 
     /* Typography */
     --font-display: 'Bebas Neue', 'Impact', sans-serif;
     --font-sans: 'Source Sans 3', system-ui, sans-serif;
 
     /* Sidebar */
-    --sidebar-background: 210 35% 40%;
+    --sidebar-background: 4 55% 48%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 195 45% 55%;
+    --sidebar-primary: 200 55% 62%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 210 30% 48%;
+    --sidebar-accent: 4 50% 55%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 210 28% 50%;
-    --sidebar-ring: 195 45% 55%;
+    --sidebar-border: 4 45% 55%;
+    --sidebar-ring: 200 55% 62%;
   }
 
   .dark {
-    --background: 215 25% 12%;
-    --foreground: 210 20% 92%;
-
-    --card: 215 25% 16%;
-    --card-foreground: 210 20% 92%;
+    /* Civic Colors - Dark mode */
+    --civic-red: 4 60% 58%;
+    --civic-red-dark: 4 60% 48%;
+    --civic-blue: 200 50% 50%;
+    --civic-blue-dark: 200 50% 40%;
     
-    --card-cream: 215 20% 18%;
-    --card-cream-foreground: 210 20% 92%;
+    --background: 215 30% 10%;
+    --foreground: 200 20% 94%;
 
-    --popover: 215 25% 14%;
-    --popover-foreground: 210 20% 92%;
+    --card: 215 28% 14%;
+    --card-foreground: 200 20% 94%;
+    
+    --card-cream: 215 25% 16%;
+    --card-cream-foreground: 200 20% 94%;
 
-    --primary: 195 45% 55%;
-    --primary-foreground: 215 25% 12%;
+    --popover: 215 28% 12%;
+    --popover-foreground: 200 20% 94%;
 
-    --secondary: 215 22% 20%;
-    --secondary-foreground: 210 20% 92%;
+    --primary: 4 60% 58%;
+    --primary-foreground: 0 0% 100%;
 
-    --muted: 215 20% 18%;
-    --muted-foreground: 210 15% 55%;
+    --secondary: 215 25% 18%;
+    --secondary-foreground: 200 20% 94%;
 
-    --accent: 195 45% 55%;
-    --accent-foreground: 215 25% 12%;
+    --muted: 215 22% 16%;
+    --muted-foreground: 200 15% 55%;
 
-    --success: 160 40% 50%;
+    --accent: 200 50% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --success: 160 45% 48%;
     --success-foreground: 0 0% 100%;
 
-    --destructive: 0 50% 55%;
+    --destructive: 4 55% 55%;
     --destructive-foreground: 0 0% 98%;
 
     /* Party colors - dark mode */
-    --party-republican: 0 55% 55%;
+    --party-republican: 4 55% 55%;
     --party-republican-foreground: 0 0% 100%;
-    --party-republican-muted: 0 35% 22%;
+    --party-republican-muted: 4 35% 20%;
     --party-democrat: 215 60% 55%;
     --party-democrat-foreground: 0 0% 100%;
-    --party-democrat-muted: 215 40% 22%;
+    --party-democrat-muted: 215 40% 20%;
 
-    --border: 215 20% 24%;
-    --input: 215 20% 24%;
-    --ring: 195 45% 55%;
+    --border: 215 22% 22%;
+    --input: 215 22% 22%;
+    --ring: 4 60% 58%;
 
     /* Shadow tokens - dark mode */
-    --shadow-sm: 0 1px 3px 0 hsl(0 0% 0% / 0.25);
-    --shadow-card: 0 4px 12px -2px hsl(0 0% 0% / 0.35), 0 2px 6px -2px hsl(0 0% 0% / 0.3);
-    --shadow-md: 0 8px 20px -4px hsl(0 0% 0% / 0.4), 0 4px 8px -4px hsl(0 0% 0% / 0.35);
-    --shadow-lg: 0 20px 40px -8px hsl(0 0% 0% / 0.45), 0 8px 16px -8px hsl(0 0% 0% / 0.4);
-    --shadow-modal: 0 32px 64px -16px hsl(0 0% 0% / 0.55);
-    --shadow-glow: 0 0 30px hsl(195 45% 55% / 0.25);
+    --shadow-sm: 0 1px 3px 0 hsl(0 0% 0% / 0.3);
+    --shadow-card: 0 4px 12px -2px hsl(0 0% 0% / 0.4), 0 2px 6px -2px hsl(0 0% 0% / 0.35);
+    --shadow-md: 0 8px 20px -4px hsl(0 0% 0% / 0.45), 0 4px 8px -4px hsl(0 0% 0% / 0.4);
+    --shadow-lg: 0 20px 40px -8px hsl(0 0% 0% / 0.5), 0 8px 16px -8px hsl(0 0% 0% / 0.45);
+    --shadow-modal: 0 32px 64px -16px hsl(0 0% 0% / 0.6);
+    --shadow-glow: 0 0 30px hsl(4 60% 58% / 0.25);
 
-    --sidebar-background: 215 28% 10%;
-    --sidebar-foreground: 210 20% 92%;
-    --sidebar-primary: 195 45% 55%;
-    --sidebar-primary-foreground: 215 25% 12%;
-    --sidebar-accent: 215 24% 18%;
-    --sidebar-accent-foreground: 210 20% 92%;
-    --sidebar-border: 215 20% 20%;
-    --sidebar-ring: 195 45% 55%;
+    --sidebar-background: 215 30% 8%;
+    --sidebar-foreground: 200 20% 94%;
+    --sidebar-primary: 4 60% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 215 25% 16%;
+    --sidebar-accent-foreground: 200 20% 94%;
+    --sidebar-border: 215 22% 18%;
+    --sidebar-ring: 4 60% 58%;
   }
 }
 
@@ -220,16 +232,39 @@
     @apply bg-gradient-to-br from-card/60 via-background to-secondary/40;
   }
 
-  /* Hero gradient - contemporary soft blue-cream gradient */
+  /* Civic Hero Banner - Bold two-tone design */
+  .civic-hero {
+    background-color: hsl(var(--civic-blue));
+  }
+
+  .bg-civic-blue {
+    background-color: hsl(var(--civic-blue));
+  }
+
+  .bg-civic-red {
+    background-color: hsl(var(--civic-red));
+  }
+
+  .bg-civic-red-dark {
+    background-color: hsl(var(--civic-red-dark));
+  }
+
+  .text-civic-red {
+    color: hsl(var(--civic-red));
+  }
+
+  .text-civic-blue {
+    color: hsl(var(--civic-blue));
+  }
+
+  /* Hero gradient - fallback soft gradient */
   .hero-gradient {
     @apply relative overflow-hidden;
     background: linear-gradient(
       135deg, 
-      hsl(205 30% 85%) 0%, 
-      hsl(210 35% 80%) 25%, 
-      hsl(195 40% 75%) 50%, 
-      hsl(40 45% 92%) 75%, 
-      hsl(35 50% 94%) 100%
+      hsl(200 55% 65%) 0%, 
+      hsl(200 50% 70%) 50%, 
+      hsl(200 45% 75%) 100%
     );
   }
 
@@ -237,7 +272,7 @@
   .hero-gradient::after {
     content: '';
     @apply absolute inset-0 pointer-events-none;
-    background: radial-gradient(ellipse 60% 40% at 70% 30%, hsl(195 50% 70% / 0.3), transparent);
+    background: radial-gradient(ellipse 60% 40% at 70% 30%, hsl(200 60% 75% / 0.3), transparent);
   }
 
   /* Abstract geometric pattern overlay */
