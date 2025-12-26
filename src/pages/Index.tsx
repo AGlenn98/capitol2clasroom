@@ -3,8 +3,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { LiveBillCard } from "@/components/LiveBillCard";
-import { SiteSearch } from "@/components/SiteSearch";
-import { HeroPattern } from "@/components/HeroPattern";
+import { CivicHeroBanner } from "@/components/CivicHeroBanner";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   ArrowRight,
@@ -13,12 +12,9 @@ import {
   Scale,
   Megaphone,
   AlertCircle,
-  Sparkles,
   Search,
-  Filter,
 } from "lucide-react";
 import { useEducationBills } from "@/hooks/useLegislation";
-import { Input } from "@/components/ui/input";
 import { useState, useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 
@@ -68,79 +64,26 @@ export default function Index() {
 
   return (
     <Layout>
-      {/* Hero Section - Soft Gradient */}
-      <section className="hero-gradient py-16 lg:py-20" aria-labelledby="hero-heading">
-        <HeroPattern />
-        <div className="container relative z-10">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/15 backdrop-blur-sm rounded-full text-sm text-primary mb-5 animate-fade-in border border-primary/20">
-              <Sparkles className="w-4 h-4" aria-hidden="true" />
-              <span className="font-medium">Track Tennessee Education Legislation in Real-Time</span>
-            </div>
-
-            <h1
-              id="hero-heading"
-              className="font-display text-4xl md:text-5xl lg:text-6xl mb-5 animate-fade-in text-balance leading-none text-foreground"
-            >
-              TENNESSEE EDUCATION BILL TRACKER
-            </h1>
-            <p
-              className="text-lg text-foreground/75 mb-6 leading-relaxed animate-fade-in max-w-2xl font-light"
-              style={{ animationDelay: "0.1s" }}
-            >
-              Your nonpartisan source for tracking education legislation. Search bills, contact legislators, and make
-              your voice heard.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Civic Engagement Hero Banner */}
+      <CivicHeroBanner 
+        searchQuery={searchQuery} 
+        onSearchChange={setSearchQuery} 
+      />
 
       {/* Legislation Tracker - Centerpiece */}
-      <section className="py-8 -mt-6 relative z-10" aria-labelledby="bills-heading" aria-busy={isLoading}>
+      <section className="py-12 relative z-10" aria-labelledby="bills-heading" aria-busy={isLoading}>
         <div className="container">
-          {/* Search and Filter Bar */}
-          <div className="bg-card border border-border rounded-2xl shadow-lg p-6 mb-8">
-            <div className="flex flex-col md:flex-row gap-4 items-center">
-              <div className="relative flex-1 w-full">
-                <Search
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground"
-                  aria-hidden="true"
-                />
-                <Input
-                  type="search"
-                  placeholder="Search bills by number, title, or sponsor..."
-                  className="pl-10 h-12 text-base rounded-xl border-border/50"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  aria-label="Search education bills"
-                />
-              </div>
-              <div className="flex gap-3 w-full md:w-auto">
-                <Link to="/advocacy" className="flex-1 md:flex-initial">
-                  <Button variant="default" className="w-full gap-2 rounded-xl h-12">
-                    <Filter className="w-4 h-4" />
-                    Advanced Filters
-                  </Button>
-                </Link>
-                <Link to="/advocacy" className="flex-1 md:flex-initial">
-                  <Button variant="outline" className="w-full gap-2 rounded-xl h-12">
-                    <Scale className="w-4 h-4" />
-                    Full Bill List
-                  </Button>
-                </Link>
-              </div>
-            </div>
-
-            {/* Quick Stats */}
-            <div className="flex flex-wrap gap-4 mt-4 pt-4 border-t border-border/50">
-              <Badge variant="secondary" className="text-sm py-1.5 px-3">
-                <Scale className="w-3.5 h-3.5 mr-1.5" />
-                {bills?.length || 0} Active Bills
+          {/* Quick Stats Bar */}
+          <div className="flex flex-wrap gap-4 mb-8 justify-center">
+            <Badge variant="secondary" className="text-sm py-2 px-4 bg-card shadow-sm">
+              <Scale className="w-4 h-4 mr-2" />
+              {bills?.length || 0} Active Bills
+            </Badge>
+            {searchQuery && (
+              <Badge variant="outline" className="text-sm py-2 px-4 bg-card shadow-sm">
+                Showing {filteredBills.length} results for "{searchQuery}"
               </Badge>
-              <Badge variant="outline" className="text-sm py-1.5 px-3">
-                Showing {filteredBills.length} results
-              </Badge>
-            </div>
+            )}
           </div>
 
           {/* Section Header */}
