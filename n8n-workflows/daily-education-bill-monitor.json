@@ -1,0 +1,168 @@
+{
+  "name": "Daily Education Bill Monitor",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * *"
+            }
+          ]
+        }
+      },
+      "name": "Schedule: Daily 8 AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.legiscan.com/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "queryAuth",
+        "options": {},
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "op",
+              "value": "search"
+            },
+            {
+              "name": "state",
+              "value": "TN"
+            },
+            {
+              "name": "query",
+              "value": "education"
+            }
+          ]
+        }
+      },
+      "name": "LegiScan: Search Education Bills",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [470, 300],
+      "credentials": {
+        "queryAuth": {
+          "id": "1",
+          "name": "LegiScan API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "dateTime": [
+            {
+              "value1": "={{$json.searchresult.change_hash}}",
+              "operation": "notEqual",
+              "value2": "={{$node[\"Get Last Hash\"].json.last_hash}}"
+            }
+          ]
+        }
+      },
+      "name": "Filter: New Bills Only",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [690, 300]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "news_cache",
+        "columns": "bill_id, title, status, change_hash, fetched_at",
+        "values": "={{$json.bill_id}},={{$json.title}},={{$json.status}},={{$json.change_hash}},={{$now}}"
+      },
+      "name": "Supabase: Store New Bills",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [910, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Transform LegiScan response to readable format\nconst bills = items[0].json.searchresult.summary;\n\nreturn bills.map(bill => ({\n  json: {\n    bill_id: bill.bill_id,\n    bill_number: bill.bill_number,\n    title: bill.title,\n    status: bill.status,\n    status_date: bill.status_date,\n    url: bill.url,\n    state_link: bill.state_link,\n    relevance: bill.relevance\n  }\n}));"
+      },
+      "name": "Transform: Format Bill Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1130, 300]
+    },
+    {
+      "parameters": {
+        "content": "## New Education Bills Found!\n\nThe following bills were discovered:\n\n{{$json.bill_number}}: {{$json.title}}\nStatus: {{$json.status}}\nDate: {{$json.status_date}}\nLink: {{$json.url}}",
+        "options": {}
+      },
+      "name": "Send Notification",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [1350, 300]
+    }
+  ],
+  "connections": {
+    "Schedule: Daily 8 AM": {
+      "main": [
+        [
+          {
+            "node": "LegiScan: Search Education Bills",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LegiScan: Search Education Bills": {
+      "main": [
+        [
+          {
+            "node": "Filter: New Bills Only",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter: New Bills Only": {
+      "main": [
+        [
+          {
+            "node": "Supabase: Store New Bills",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase: Store New Bills": {
+      "main": [
+        [
+          {
+            "node": "Transform: Format Bill Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transform: Format Bill Data": {
+      "main": [
+        [
+          {
+            "node": "Send Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "instanceId": "your-instance-id"
+  },
+  "tags": []
+}

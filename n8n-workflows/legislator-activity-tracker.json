@@ -1,0 +1,175 @@
+{
+  "name": "Legislator Activity Tracker",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "legislator-activity",
+        "options": {}
+      },
+      "name": "Webhook: Trigger on Request",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "legislator-activity-webhook"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Get legislator ID from webhook payload\nconst legislatorId = $json.body.legislator_id || $json.query.legislator_id;\n\nif (!legislatorId) {\n  throw new Error('No legislator_id provided');\n}\n\nreturn [{\n  json: {\n    legislator_id: parseInt(legislatorId),\n    request_time: new Date().toISOString()\n  }\n}];"
+      },
+      "name": "Code: Extract Legislator ID",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [470, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.legiscan.com/?op=getPerson&id={{$json.legislator_id}}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "queryAuth",
+        "options": {}
+      },
+      "name": "LegiScan: Get Legislator Info",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [690, 200],
+      "credentials": {
+        "queryAuth": {
+          "id": "1",
+          "name": "LegiScan API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.legiscan.com/?op=getSponsoredList&id={{$json.legislator_id}}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "queryAuth",
+        "options": {}
+      },
+      "name": "LegiScan: Get Sponsored Bills",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [690, 400],
+      "credentials": {
+        "queryAuth": {
+          "id": "1",
+          "name": "LegiScan API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "functionCode": "// Merge legislator info with sponsored bills\nconst legislatorInfo = $node[\"LegiScan: Get Legislator Info\"].json.person;\nconst sponsoredBills = $node[\"LegiScan: Get Sponsored Bills\"].json.sponsoredbills;\n\n// Filter for education-related bills\nconst educationKeywords = ['education', 'school', 'teacher', 'student', 'classroom', 'curriculum'];\n\nconst educationBills = Object.values(sponsoredBills).filter(bill => {\n  const title = bill.title?.toLowerCase() || '';\n  return educationKeywords.some(keyword => title.includes(keyword));\n});\n\nreturn [{\n  json: {\n    legislator: {\n      id: legislatorInfo.people_id,\n      name: legislatorInfo.name,\n      party: legislatorInfo.party,\n      role: legislatorInfo.role,\n      district: legislatorInfo.district\n    },\n    total_bills: Object.keys(sponsoredBills).length,\n    education_bills: educationBills.length,\n    recent_education_bills: educationBills.slice(0, 5).map(bill => ({\n      bill_id: bill.bill_id,\n      bill_number: bill.bill_number,\n      title: bill.title,\n      status: bill.status,\n      last_action: bill.last_action_date\n    })),\n    activity_summary: `${legislatorInfo.name} has sponsored ${educationBills.length} education-related bills out of ${Object.keys(sponsoredBills).length} total bills.`,\n    fetched_at: new Date().toISOString()\n  }\n}];"
+      },
+      "name": "Code: Analyze Activity",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [910, 300]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": "legislator_activity_cache",
+        "columns": "legislator_id, name, party, total_bills, education_bills, activity_summary, recent_bills, fetched_at",
+        "values": "={{$json.legislator.id}},={{$json.legislator.name}},={{$json.legislator.party}},={{$json.total_bills}},={{$json.education_bills}},={{$json.activity_summary}},={{JSON.stringify($json.recent_education_bills)}},={{$json.fetched_at}}"
+      },
+      "name": "Supabase: Cache Activity Data",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1130, 200]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{$json}}",
+        "options": {}
+      },
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1350, 300]
+    }
+  ],
+  "connections": {
+    "Webhook: Trigger on Request": {
+      "main": [
+        [
+          {
+            "node": "Code: Extract Legislator ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code: Extract Legislator ID": {
+      "main": [
+        [
+          {
+            "node": "LegiScan: Get Legislator Info",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "LegiScan: Get Sponsored Bills",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LegiScan: Get Legislator Info": {
+      "main": [
+        [
+          {
+            "node": "Code: Analyze Activity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LegiScan: Get Sponsored Bills": {
+      "main": [
+        [
+          {
+            "node": "Code: Analyze Activity",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code: Analyze Activity": {
+      "main": [
+        [
+          {
+            "node": "Supabase: Cache Activity Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase: Cache Activity Data": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "instanceId": "your-instance-id"
+  },
+  "tags": []
+}
