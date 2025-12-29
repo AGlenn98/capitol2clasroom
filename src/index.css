@@ -1,69 +1,68 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Oswald:wght@600;700&family=Source+Sans+Pro:wght@400;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Tennessee Education Bill Tracker - Civic Engagement Design System */
+/* Capitol to Classroom - Civic Engagement Design System */
 
 @layer base {
   :root {
-    /* Civic Colors - Bold two-tone scheme */
-    --civic-red: 4 65% 55%;
-    --civic-red-dark: 4 65% 45%;
-    --civic-blue: 200 55% 62%;
-    --civic-blue-dark: 200 55% 52%;
+    /* Civic Colors - Bold two-tone scheme from poster */
+    --civic-blue: 199 58% 64%;
+    --civic-blue-light: 199 65% 69%;
+    --democracy-red: 0 50% 58%;
+    --democracy-red-dark: 0 50% 50%;
+    --charcoal: 0 0% 10%;
+    --off-white: 210 17% 98%;
+    --vote-brown: 0 32% 40%;
     
-    /* Primary: Vibrant coral-red for action */
-    --primary: 4 65% 55%;
+    /* Primary: Democracy red for action */
+    --primary: 0 50% 58%;
     --primary-foreground: 0 0% 100%;
     
-    /* Background: Soft sky blue - inviting and civic */
-    --background: 200 30% 96%;
-    --foreground: 215 30% 18%;
+    /* Background: Soft off-white */
+    --background: 210 17% 98%;
+    --foreground: 0 0% 10%;
 
     /* Card: Clean white for content cards */
     --card: 0 0% 100%;
-    --card-foreground: 215 30% 18%;
-
-    /* Card alternate: Light blue tint for contrast */
-    --card-cream: 200 40% 97%;
-    --card-cream-foreground: 215 30% 18%;
+    --card-foreground: 0 0% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 30% 18%;
+    --popover-foreground: 0 0% 10%;
 
     /* Secondary: Soft blue for accents */
-    --secondary: 200 35% 90%;
-    --secondary-foreground: 215 30% 25%;
+    --secondary: 199 35% 92%;
+    --secondary-foreground: 0 0% 15%;
 
-    /* Muted: Soft gray-blue */
-    --muted: 200 20% 92%;
-    --muted-foreground: 215 15% 45%;
+    /* Muted: Soft gray */
+    --muted: 210 15% 92%;
+    --muted-foreground: 0 0% 40%;
 
-    /* Accent: Sky blue - civic touch */
-    --accent: 200 55% 62%;
+    /* Accent: Civic blue */
+    --accent: 199 58% 64%;
     --accent-foreground: 0 0% 100%;
 
-    /* Status colors - civic tones */
+    /* Status colors */
     --success: 160 45% 42%;
     --success-foreground: 0 0% 100%;
     --warning: 40 80% 50%;
-    --warning-foreground: 215 30% 15%;
-    --destructive: 4 65% 50%;
+    --warning-foreground: 0 0% 15%;
+    --destructive: 0 50% 50%;
     --destructive-foreground: 0 0% 98%;
 
     /* Party colors */
-    --party-republican: 4 65% 50%;
+    --party-republican: 0 60% 50%;
     --party-republican-foreground: 0 0% 100%;
-    --party-republican-muted: 4 40% 94%;
+    --party-republican-muted: 0 40% 94%;
     --party-democrat: 215 65% 55%;
     --party-democrat-foreground: 0 0% 100%;
     --party-democrat-muted: 215 50% 94%;
 
-    --border: 200 20% 88%;
-    --input: 200 20% 92%;
-    --ring: 4 65% 55%;
+    --border: 210 15% 88%;
+    --input: 210 15% 92%;
+    --ring: 0 50% 58%;
 
     --radius: 1rem;
 
@@ -89,12 +88,12 @@
     --z-toast: 400;
 
     /* Shadow tokens - clean shadows */
-    --shadow-sm: 0 1px 3px 0 hsl(215 30% 20% / 0.06);
-    --shadow-card: 0 4px 16px -4px hsl(215 30% 20% / 0.1), 0 2px 6px -2px hsl(215 30% 20% / 0.06);
-    --shadow-md: 0 8px 24px -6px hsl(215 30% 20% / 0.12), 0 4px 10px -4px hsl(215 30% 20% / 0.08);
-    --shadow-lg: 0 20px 50px -12px hsl(215 30% 20% / 0.18), 0 8px 20px -8px hsl(215 30% 20% / 0.1);
-    --shadow-modal: 0 32px 64px -16px hsl(215 30% 20% / 0.22);
-    --shadow-glow: 0 0 30px hsl(4 65% 55% / 0.2);
+    --shadow-sm: 0 1px 3px 0 hsl(0 0% 0% / 0.06);
+    --shadow-card: 0 4px 24px -6px hsl(0 0% 0% / 0.08);
+    --shadow-md: 0 8px 40px -6px hsl(0 0% 0% / 0.12);
+    --shadow-lg: 0 20px 50px -12px hsl(0 0% 0% / 0.18);
+    --shadow-modal: 0 32px 64px -16px hsl(0 0% 0% / 0.22);
+    --shadow-glow: 0 0 30px hsl(0 50% 58% / 0.2);
 
     /* Duration tokens */
     --duration-fast: 150ms;
@@ -102,92 +101,91 @@
     --duration-slow: 400ms;
 
     /* Chart colors */
-    --chart-1: 4 65% 55%;
-    --chart-2: 200 55% 62%;
+    --chart-1: 0 50% 58%;
+    --chart-2: 199 58% 64%;
     --chart-3: 160 45% 42%;
     --chart-4: 280 45% 55%;
     --chart-5: 40 80% 50%;
 
     /* Typography */
-    --font-display: 'Bebas Neue', 'Impact', sans-serif;
-    --font-sans: 'Source Sans 3', system-ui, sans-serif;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-heading: 'Oswald', 'Impact', sans-serif;
+    --font-sans: 'Source Sans Pro', system-ui, sans-serif;
 
     /* Sidebar */
-    --sidebar-background: 4 55% 48%;
+    --sidebar-background: 0 0% 10%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 200 55% 62%;
+    --sidebar-primary: 0 50% 58%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 4 50% 55%;
+    --sidebar-accent: 199 58% 64%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 4 45% 55%;
-    --sidebar-ring: 200 55% 62%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 0 50% 58%;
   }
 
   .dark {
     /* Civic Colors - Dark mode */
-    --civic-red: 4 60% 58%;
-    --civic-red-dark: 4 60% 48%;
-    --civic-blue: 200 50% 50%;
-    --civic-blue-dark: 200 50% 40%;
+    --civic-blue: 199 50% 50%;
+    --civic-blue-light: 199 55% 55%;
+    --democracy-red: 0 45% 55%;
+    --democracy-red-dark: 0 45% 45%;
+    --vote-brown: 0 30% 50%;
     
-    --background: 215 30% 10%;
-    --foreground: 200 20% 94%;
+    --background: 0 0% 8%;
+    --foreground: 0 0% 94%;
 
-    --card: 215 28% 14%;
-    --card-foreground: 200 20% 94%;
-    
-    --card-cream: 215 25% 16%;
-    --card-cream-foreground: 200 20% 94%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 94%;
 
-    --popover: 215 28% 12%;
-    --popover-foreground: 200 20% 94%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 94%;
 
-    --primary: 4 60% 58%;
+    --primary: 0 45% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 215 25% 18%;
-    --secondary-foreground: 200 20% 94%;
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 0 0% 94%;
 
-    --muted: 215 22% 16%;
-    --muted-foreground: 200 15% 55%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 55%;
 
-    --accent: 200 50% 50%;
+    --accent: 199 50% 50%;
     --accent-foreground: 0 0% 100%;
 
     --success: 160 45% 48%;
     --success-foreground: 0 0% 100%;
 
-    --destructive: 4 55% 55%;
+    --destructive: 0 50% 55%;
     --destructive-foreground: 0 0% 98%;
 
     /* Party colors - dark mode */
-    --party-republican: 4 55% 55%;
+    --party-republican: 0 55% 55%;
     --party-republican-foreground: 0 0% 100%;
-    --party-republican-muted: 4 35% 20%;
+    --party-republican-muted: 0 35% 20%;
     --party-democrat: 215 60% 55%;
     --party-democrat-foreground: 0 0% 100%;
     --party-democrat-muted: 215 40% 20%;
 
-    --border: 215 22% 22%;
-    --input: 215 22% 22%;
-    --ring: 4 60% 58%;
+    --border: 0 0% 20%;
+    --input: 0 0% 18%;
+    --ring: 0 45% 55%;
 
     /* Shadow tokens - dark mode */
     --shadow-sm: 0 1px 3px 0 hsl(0 0% 0% / 0.3);
-    --shadow-card: 0 4px 12px -2px hsl(0 0% 0% / 0.4), 0 2px 6px -2px hsl(0 0% 0% / 0.35);
-    --shadow-md: 0 8px 20px -4px hsl(0 0% 0% / 0.45), 0 4px 8px -4px hsl(0 0% 0% / 0.4);
-    --shadow-lg: 0 20px 40px -8px hsl(0 0% 0% / 0.5), 0 8px 16px -8px hsl(0 0% 0% / 0.45);
+    --shadow-card: 0 4px 12px -2px hsl(0 0% 0% / 0.4);
+    --shadow-md: 0 8px 20px -4px hsl(0 0% 0% / 0.45);
+    --shadow-lg: 0 20px 40px -8px hsl(0 0% 0% / 0.5);
     --shadow-modal: 0 32px 64px -16px hsl(0 0% 0% / 0.6);
-    --shadow-glow: 0 0 30px hsl(4 60% 58% / 0.25);
+    --shadow-glow: 0 0 30px hsl(0 45% 55% / 0.25);
 
-    --sidebar-background: 215 30% 8%;
-    --sidebar-foreground: 200 20% 94%;
-    --sidebar-primary: 4 60% 58%;
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 94%;
+    --sidebar-primary: 0 45% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 215 25% 16%;
-    --sidebar-accent-foreground: 200 20% 94%;
-    --sidebar-border: 215 22% 18%;
-    --sidebar-ring: 4 60% 58%;
+    --sidebar-accent: 0 0% 14%;
+    --sidebar-accent-foreground: 0 0% 94%;
+    --sidebar-border: 0 0% 16%;
+    --sidebar-ring: 0 45% 55%;
   }
 }
 
@@ -202,25 +200,103 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
-    @apply tracking-wide uppercase;
+    font-family: var(--font-heading);
+    @apply tracking-wide uppercase font-bold;
   }
 }
 
 @layer components {
-  /* Contemporary soft card style */
+  /* Civic Hero - Blue background */
+  .civic-hero {
+    background-color: hsl(var(--civic-blue));
+  }
+
+  .bg-civic-blue {
+    background-color: hsl(var(--civic-blue));
+  }
+
+  .bg-democracy-red {
+    background-color: hsl(var(--democracy-red));
+  }
+
+  .bg-democracy-red-dark {
+    background-color: hsl(var(--democracy-red-dark));
+  }
+
+  .text-democracy-red {
+    color: hsl(var(--democracy-red));
+  }
+
+  .text-civic-blue {
+    color: hsl(var(--civic-blue));
+  }
+
+  .text-vote-brown {
+    color: hsl(var(--vote-brown));
+  }
+
+  /* Red block for OUR text */
+  .red-block {
+    background-color: hsl(var(--democracy-red));
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1.2 / 1;
+    max-height: 550px;
+  }
+
+  /* OUR text styling - Playfair Display */
+  .our-text {
+    font-family: var(--font-display);
+    font-weight: 900;
+    color: hsl(var(--civic-blue));
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+  }
+
+  /* Feature cards */
+  .feature-card {
+    @apply bg-card p-10 rounded-2xl shadow-card transition-all duration-normal;
+  }
+
+  .feature-card:hover {
+    @apply -translate-y-2 shadow-lg;
+  }
+
+  .feature-icon {
+    @apply w-16 h-16 rounded-xl flex items-center justify-center mb-7;
+  }
+
+  .feature-icon.blue {
+    background: hsl(var(--civic-blue) / 0.2);
+    color: hsl(var(--civic-blue));
+  }
+
+  .feature-icon.red {
+    background: hsl(var(--democracy-red) / 0.15);
+    color: hsl(var(--democracy-red));
+  }
+
+  /* Stats section */
+  .stats-section {
+    @apply bg-foreground py-20;
+  }
+
+  .stat-number {
+    font-family: var(--font-display);
+    @apply text-5xl font-bold mb-3;
+  }
+
+  .stat-number.blue { color: hsl(var(--civic-blue)); }
+  .stat-number.red { color: hsl(var(--democracy-red)); }
+
+  /* Contemporary card style */
   .cozy-card {
     @apply bg-card border border-border/30 rounded-2xl p-6 shadow-card transition-all duration-normal;
   }
 
   .cozy-card:hover {
     @apply shadow-md border-border/50;
-  }
-
-  /* Cream card variant */
-  .cream-card {
-    background: hsl(var(--card-cream));
-    @apply border border-border/30 rounded-2xl p-6 shadow-card transition-all duration-normal;
   }
 
   /* Soft section backgrounds */
@@ -230,128 +306,6 @@
 
   .section-warm {
     @apply bg-gradient-to-br from-card/60 via-background to-secondary/40;
-  }
-
-  /* Civic Hero Banner - Bold two-tone design */
-  .civic-hero {
-    background-color: hsl(var(--civic-blue));
-  }
-
-  .bg-civic-blue {
-    background-color: hsl(var(--civic-blue));
-  }
-
-  .bg-civic-red {
-    background-color: hsl(var(--civic-red));
-  }
-
-  .bg-civic-red-dark {
-    background-color: hsl(var(--civic-red-dark));
-  }
-
-  .text-civic-red {
-    color: hsl(var(--civic-red));
-  }
-
-  .text-civic-blue {
-    color: hsl(var(--civic-blue));
-  }
-
-  /* Hero gradient - fallback soft gradient */
-  .hero-gradient {
-    @apply relative overflow-hidden;
-    background: linear-gradient(
-      135deg, 
-      hsl(200 55% 65%) 0%, 
-      hsl(200 50% 70%) 50%, 
-      hsl(200 45% 75%) 100%
-    );
-  }
-
-  /* Soft gradient overlay for hero */
-  .hero-gradient::after {
-    content: '';
-    @apply absolute inset-0 pointer-events-none;
-    background: radial-gradient(ellipse 60% 40% at 70% 30%, hsl(200 60% 75% / 0.3), transparent);
-  }
-
-  /* Abstract geometric pattern overlay */
-  .hero-pattern {
-    @apply absolute inset-0 pointer-events-none overflow-hidden;
-  }
-
-  .hero-shape {
-    @apply absolute rounded-full opacity-[0.08];
-  }
-
-  /* Large circle - top right */
-  .hero-shape-1 {
-    width: 600px;
-    height: 600px;
-    right: -150px;
-    top: -200px;
-    background: linear-gradient(135deg, hsl(0 0% 100% / 0.15), transparent);
-    border: 2px solid hsl(0 0% 100% / 0.1);
-  }
-
-  /* Medium circle - bottom left */
-  .hero-shape-2 {
-    width: 400px;
-    height: 400px;
-    left: -100px;
-    bottom: -150px;
-    background: linear-gradient(45deg, hsl(28 80% 55% / 0.2), transparent);
-    border: 2px solid hsl(28 80% 55% / 0.15);
-  }
-
-  /* Small accent circle */
-  .hero-shape-3 {
-    width: 150px;
-    height: 150px;
-    right: 15%;
-    bottom: 20%;
-    background: hsl(0 0% 100% / 0.1);
-    opacity: 0.12;
-  }
-
-  /* Diagonal line accent */
-  .hero-shape-4 {
-    width: 300px;
-    height: 2px;
-    left: 10%;
-    top: 40%;
-    background: linear-gradient(90deg, transparent, hsl(0 0% 100% / 0.2), transparent);
-    border-radius: 0;
-    transform: rotate(-15deg);
-  }
-
-  /* Floating dots */
-  .hero-shape-5 {
-    width: 12px;
-    height: 12px;
-    right: 25%;
-    top: 30%;
-    background: hsl(28 80% 55% / 0.4);
-    opacity: 0.6;
-  }
-
-  .hero-shape-6 {
-    width: 8px;
-    height: 8px;
-    left: 30%;
-    top: 25%;
-    background: hsl(0 0% 100% / 0.3);
-    opacity: 0.5;
-  }
-
-  /* Grid pattern overlay - subtle */
-  .hero-gradient::before {
-    content: '';
-    @apply absolute inset-0 pointer-events-none;
-    background-image: 
-      linear-gradient(hsl(0 0% 100% / 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(0 0% 100% / 0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
   }
 
   .prose-article {
@@ -424,25 +378,18 @@
 
   /* Soft glow effect */
   .glow-accent {
-    box-shadow: 0 0 30px hsl(28 80% 55% / 0.2);
+    box-shadow: 0 0 30px hsl(var(--accent) / 0.2);
   }
 }
 
-/* Logo title with gradient and hover effects */
+/* Logo title styling */
 .logo-title {
-  background: linear-gradient(120deg, hsl(235 35% 35%) 0%, hsl(28 80% 55%) 50%, hsl(235 35% 35%) 100%);
-  background-size: 200% 100%;
-  background-position: 100% 0;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: background-position 0.5s ease-out, transform 0.3s ease-out;
+  @apply transition-all duration-normal;
 }
 
 .logo-title:hover,
 .group:hover .logo-title {
-  background-position: 0% 0;
-  transform: scale(1.02);
+  color: hsl(var(--democracy-red));
 }
 
 /* Accessibility: Skip to content link */
@@ -500,144 +447,34 @@
   }
 }
 
-/* Accessibility: High contrast mode support */
-@media (prefers-contrast: more) {
-  :root {
-    --border: 235 25% 50%;
-    --muted-foreground: 235 15% 30%;
+/* Animation keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Print styles for bill summaries */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Print styles */
 @media print {
-  /* Hide non-essential elements */
-  header,
-  footer,
-  nav,
-  .print\\:hidden,
-  button,
-  [role="navigation"],
-  .sticky {
+  .no-print {
     display: none !important;
-  }
-
-  /* Reset backgrounds and shadows */
-  body {
-    background: white !important;
-    color: black !important;
-    font-size: 12pt;
-    line-height: 1.5;
-  }
-
-  .print\\:block {
-    display: block !important;
-  }
-
-  .print\\:bg-transparent {
-    background: transparent !important;
-  }
-
-  .print\\:text-foreground {
-    color: black !important;
-  }
-
-  /* Ensure good page breaks */
-  h1, h2, h3, h4, h5, h6 {
-    page-break-after: avoid;
-  }
-
-  section {
-    page-break-inside: avoid;
-  }
-
-  /* Card styling for print */
-  .card {
-    border: 1px solid #ccc !important;
-    box-shadow: none !important;
-    break-inside: avoid;
-  }
-
-  /* Link styling */
-  a {
-    text-decoration: none !important;
-    color: black !important;
-  }
-
-  /* Badge styling */
-  .badge {
-    border: 1px solid #999 !important;
-    background: transparent !important;
-    color: black !important;
-  }
-}
-
-/* Custom scrollbar for horizontal scroll containers */
-.scrollbar-thin {
-  scrollbar-width: thin;
-  scrollbar-color: hsl(var(--border)) hsl(var(--muted) / 0.3);
-}
-
-.scrollbar-thin::-webkit-scrollbar {
-  height: 6px;
-}
-
-.scrollbar-thin::-webkit-scrollbar-track {
-  background: hsl(var(--muted) / 0.2);
-  border-radius: 6px;
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb {
-  background: hsl(var(--border));
-  border-radius: 6px;
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground) / 0.4);
-}
-
-/* Mobile-specific optimizations */
-@layer utilities {
-  /* Touch-friendly tap targets */
-  .touch-target {
-    @apply min-h-[44px] min-w-[44px];
-  }
-
-  /* Safe area insets for notched devices */
-  .safe-bottom {
-    padding-bottom: env(safe-area-inset-bottom, 0);
-  }
-
-  .safe-top {
-    padding-top: env(safe-area-inset-top, 0);
-  }
-
-  /* Improved scroll behavior on mobile */
-  .scroll-smooth-mobile {
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-  }
-
-  /* Prevent text size adjustment on orientation change */
-  .text-size-adjust-none {
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-  }
-}
-
-/* Mobile card hover states */
-@media (hover: none) {
-  .hover\\:shadow-md:active {
-    box-shadow: var(--shadow-md);
-  }
-  
-  .hover\\:bg-muted:active {
-    background-color: hsl(var(--muted));
-  }
-}
-
-/* Sticky header mobile optimization */
-@media (max-width: 1024px) {
-  .sticky.top-16 {
-    top: 4rem;
   }
 }
