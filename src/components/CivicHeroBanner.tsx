@@ -50,32 +50,38 @@ export function CivicHeroBanner({ searchQuery, onSearchChange }: CivicHeroBanner
         style={{ animationDelay: '0.4s' }}
       >
         {/* Vote Checkbox */}
-        <button
+        <Link
+          to="/action"
           className="group flex items-center gap-4 cursor-pointer hover:scale-105 transition-transform duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-civic-blue rounded-sm"
           aria-label="Your vote matters - Take action"
-          onClick={() => window.location.href = '/action'}
         >
-          <div className="w-14 h-14 md:w-[72px] md:h-[72px] bg-white flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
-            <Check className="w-10 h-10 md:w-12 md:h-12 text-foreground stroke-[3]" aria-hidden="true" />
+          <div className="w-14 h-14 md:w-[72px] md:h-[72px] bg-white flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+            <Check 
+              className="w-10 h-10 md:w-12 md:h-12 text-foreground stroke-[3] opacity-0 scale-50 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300" 
+              aria-hidden="true" 
+            />
           </div>
           <span className="font-heading text-4xl md:text-5xl lg:text-6xl text-vote-brown tracking-[3px] uppercase font-bold">
             VOTE
           </span>
-        </button>
+        </Link>
 
         {/* Voice Checkbox */}
-        <button
+        <Link
+          to="/legislators"
           className="group flex items-center gap-4 cursor-pointer hover:scale-105 transition-transform duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-civic-blue rounded-sm"
           aria-label="Your voice matters - Contact legislators"
-          onClick={() => window.location.href = '/legislators'}
         >
-          <div className="w-14 h-14 md:w-[72px] md:h-[72px] bg-white flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
-            <Check className="w-10 h-10 md:w-12 md:h-12 text-foreground stroke-[3]" aria-hidden="true" />
+          <div className="w-14 h-14 md:w-[72px] md:h-[72px] bg-white flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+            <Check 
+              className="w-10 h-10 md:w-12 md:h-12 text-foreground stroke-[3] opacity-0 scale-50 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300" 
+              aria-hidden="true" 
+            />
           </div>
           <span className="font-heading text-4xl md:text-5xl lg:text-6xl text-vote-brown tracking-[3px] uppercase font-bold">
             VOICE
           </span>
-        </button>
+        </Link>
       </div>
 
       {/* Search Section */}
