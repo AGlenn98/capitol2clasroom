@@ -10,7 +10,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useEducationBills } from "@/hooks/useLegislation";
-
 import { CriticalDatesTimeline } from "@/components/advocacy/CriticalDatesTimeline";
 import { CategoryFilter, CategoryBadge } from "@/components/advocacy/CategoryFilter";
 import { useAllStances } from "@/hooks/useUserStance";
@@ -201,7 +200,7 @@ export default function AdvocacyHub() {
                                   </Badge>}
                               </div>
                               
-                              <h3 className="font-display text-sm mb-1.5 group-hover:text-primary transition-colors line-clamp-2">
+                              <h3 className="text-sm mb-1.5 group-hover:text-primary transition-colors line-clamp-2 font-sans">
                                 {bill.title.toUpperCase()}
                               </h3>
                               
