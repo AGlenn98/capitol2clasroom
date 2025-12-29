@@ -41,22 +41,25 @@ export function Header() {
   const isActiveAdvocacy = advocacyItems.some(item => location.pathname === item.href) || location.pathname === "/legislation";
 
   return (
-    <header className={cn(
-      "sticky top-0 z-sticky bg-card/95 backdrop-blur-md border-b border-border/50 transition-all duration-normal",
-      scrolled && "shadow-card border-border"
-    )}>
-      <nav className="container flex items-center justify-between py-4" aria-label="Main navigation">
+    <header 
+      className={cn(
+        "sticky top-0 z-sticky bg-card/95 backdrop-blur-md transition-all duration-normal",
+        scrolled && "shadow-card"
+      )}
+      style={{ animationDelay: '0s' }}
+    >
+      <nav className="container flex items-center justify-between py-5" aria-label="Main navigation">
         <Logo />
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex lg:items-center lg:gap-1">
+        <div className="hidden lg:flex lg:items-center lg:gap-2">
           <Link 
             to="/" 
             className={cn(
-              "px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-normal",
+              "px-5 py-2.5 text-[15px] font-medium rounded-3xl transition-all duration-normal",
               location.pathname === "/" 
-                ? "text-primary bg-primary/10" 
-                : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                ? "bg-primary/10 text-primary" 
+                : "text-foreground hover:text-primary"
             )}
           >
             Home
@@ -66,13 +69,13 @@ export function Header() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className={cn(
-                "px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-normal inline-flex items-center gap-1.5",
+                "px-5 py-2.5 text-[15px] font-medium rounded-3xl transition-all duration-normal inline-flex items-center gap-1.5",
                 isActivePolicy 
-                  ? "text-primary bg-primary/10" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                  ? "bg-primary/10 text-primary" 
+                  : "text-foreground hover:text-primary"
               )}>
                 Policy
-                <ChevronDown className="w-3.5 h-3.5" />
+                <ChevronDown className="w-4 h-4" />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-72 p-2 bg-card border-border/50 shadow-lg rounded-2xl z-dropdown">
@@ -80,8 +83,8 @@ export function Header() {
               {policyItems.map(item => (
                 <DropdownMenuItem key={item.href} asChild className="rounded-xl p-0 focus:bg-muted/50">
                   <Link to={item.href} className="flex items-start gap-3 p-3">
-                    <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-primary/10 shrink-0">
-                      <item.icon className="w-4 h-4 text-primary" />
+                    <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-accent/20 shrink-0">
+                      <item.icon className="w-4 h-4 text-accent" />
                     </div>
                     <div>
                       <div className="font-medium text-foreground">{item.name}</div>
@@ -97,13 +100,13 @@ export function Header() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className={cn(
-                "px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-normal inline-flex items-center gap-1.5",
+                "px-5 py-2.5 text-[15px] font-medium rounded-3xl transition-all duration-normal inline-flex items-center gap-1.5",
                 isActiveAdvocacy 
-                  ? "text-primary bg-primary/10" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                  ? "bg-primary/10 text-primary" 
+                  : "text-foreground hover:text-primary"
               )}>
                 Advocacy
-                <ChevronDown className="w-3.5 h-3.5" />
+                <ChevronDown className="w-4 h-4" />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-72 p-2 bg-card border-border/50 shadow-lg rounded-2xl z-dropdown">
@@ -111,8 +114,8 @@ export function Header() {
               {advocacyItems.map(item => (
                 <DropdownMenuItem key={item.href} asChild className="rounded-xl p-0 focus:bg-muted/50">
                   <Link to={item.href} className="flex items-start gap-3 p-3">
-                    <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-accent/15 shrink-0">
-                      <item.icon className="w-4 h-4 text-accent" />
+                    <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-primary/15 shrink-0">
+                      <item.icon className="w-4 h-4 text-primary" />
                     </div>
                     <div>
                       <div className="font-medium text-foreground">{item.name}</div>
@@ -127,10 +130,10 @@ export function Header() {
           <Link 
             to="/about" 
             className={cn(
-              "px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-normal",
+              "px-5 py-2.5 text-[15px] font-medium rounded-3xl transition-all duration-normal",
               location.pathname === "/about" 
-                ? "text-primary bg-primary/10" 
-                : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                ? "bg-primary/10 text-primary" 
+                : "text-foreground hover:text-primary"
             )}
           >
             About
@@ -139,7 +142,7 @@ export function Header() {
 
         <div className="hidden lg:flex lg:items-center lg:gap-3">
           <Link to="/newsletter">
-            <Button size="sm" className="rounded-xl px-5 shadow-sm hover:shadow-md transition-shadow">
+            <Button className="rounded-3xl px-7 py-2.5 font-semibold shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all">
               Subscribe
             </Button>
           </Link>
@@ -169,7 +172,7 @@ export function Header() {
                 "block px-4 py-3 text-base font-medium rounded-xl transition-all duration-normal",
                 location.pathname === "/" 
                   ? "text-primary bg-primary/10" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                  : "text-foreground hover:bg-muted/50"
               )}
             >
               Home
@@ -187,11 +190,11 @@ export function Header() {
                     "flex items-center gap-3 px-4 py-3 text-base font-medium rounded-xl transition-all duration-normal",
                     location.pathname.startsWith(item.href)
                       ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                      : "text-foreground hover:bg-muted/50"
                   )}
                 >
-                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10">
-                    <item.icon className="w-4 h-4 text-primary" />
+                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-accent/20">
+                    <item.icon className="w-4 h-4 text-accent" />
                   </div>
                   {item.name}
                 </Link>
@@ -210,11 +213,11 @@ export function Header() {
                     "flex items-center gap-3 px-4 py-3 text-base font-medium rounded-xl transition-all duration-normal",
                     location.pathname === item.href
                       ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                      : "text-foreground hover:bg-muted/50"
                   )}
                 >
-                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-accent/15">
-                    <item.icon className="w-4 h-4 text-accent" />
+                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/15">
+                    <item.icon className="w-4 h-4 text-primary" />
                   </div>
                   {item.name}
                 </Link>
@@ -228,7 +231,7 @@ export function Header() {
                 "block px-4 py-3 text-base font-medium rounded-xl transition-all duration-normal",
                 location.pathname === "/about" 
                   ? "text-primary bg-primary/10" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                  : "text-foreground hover:bg-muted/50"
               )}
             >
               About
@@ -236,7 +239,7 @@ export function Header() {
 
             <div className="pt-6 border-t border-border/50 mt-4">
               <Link to="/newsletter" onClick={() => setMobileMenuOpen(false)}>
-                <Button className="w-full rounded-xl py-3 shadow-sm">
+                <Button className="w-full rounded-xl py-3 shadow-sm font-semibold">
                   Subscribe to Newsletter
                 </Button>
               </Link>

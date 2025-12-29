@@ -19,9 +19,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ["Bebas Neue", "Impact", "sans-serif"],
-        sans: ["Source Sans 3", "system-ui", "sans-serif"],
-        serif: ["Source Sans 3", "system-ui", "sans-serif"],
+        display: ["Playfair Display", "Georgia", "serif"],
+        heading: ["Oswald", "Impact", "sans-serif"],
+        sans: ["Source Sans Pro", "system-ui", "sans-serif"],
+        serif: ["Playfair Display", "Georgia", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -30,10 +31,15 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         civic: {
-          red: "hsl(var(--civic-red))",
-          "red-dark": "hsl(var(--civic-red-dark))",
           blue: "hsl(var(--civic-blue))",
-          "blue-dark": "hsl(var(--civic-blue-dark))",
+          "blue-light": "hsl(var(--civic-blue-light))",
+        },
+        democracy: {
+          red: "hsl(var(--democracy-red))",
+          "red-dark": "hsl(var(--democracy-red-dark))",
+        },
+        vote: {
+          brown: "hsl(var(--vote-brown))",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
@@ -149,7 +155,7 @@ export default {
         "fade-in-up": {
           "0%": {
             opacity: "0",
-            transform: "translateY(20px)",
+            transform: "translateY(30px)",
           },
           "100%": {
             opacity: "1",

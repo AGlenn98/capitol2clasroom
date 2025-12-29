@@ -10,17 +10,17 @@ export function Logo({ variant = "default" }: LogoProps) {
   const isLight = variant === "light";
   
   return (
-    <Link to="/" className="flex items-center gap-2.5 group">
+    <Link to="/" className="flex items-center gap-3 group">
       <Landmark 
         className={cn(
-          "h-7 w-7 group-hover:rotate-6 transition-all duration-normal",
-          isLight ? "text-primary-foreground" : "text-primary group-hover:text-accent"
+          "h-8 w-8 md:h-10 md:w-10 transition-all duration-normal",
+          isLight ? "text-primary-foreground" : "text-primary group-hover:text-primary/80"
         )} 
       />
       <span 
         className={cn(
-          "font-display text-2xl tracking-wide",
-          isLight ? "text-primary-foreground" : "text-foreground"
+          "font-heading text-lg md:text-xl tracking-[3px] uppercase font-semibold",
+          isLight ? "text-primary-foreground" : "text-foreground group-hover:text-primary transition-colors"
         )}
       >
         CAPITOL TO CLASSROOM

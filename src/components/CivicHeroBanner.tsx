@@ -13,124 +13,104 @@ export function CivicHeroBanner({ searchQuery, onSearchChange }: CivicHeroBanner
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Trigger animations after mount
     const timer = setTimeout(() => setIsLoaded(true), 100);
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <header 
-      className="civic-hero relative min-h-[85vh] flex flex-col justify-center overflow-hidden"
-      aria-labelledby="hero-heading"
-    >
-      {/* Background - Sky Blue */}
-      <div 
-        className={`absolute inset-0 bg-civic-blue transition-opacity duration-200 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-      />
-
-      {/* Main Content Container */}
-      <div className="container relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 py-16 lg:py-0">
-        
-        {/* Left Side - Typography */}
+    <header className="civic-hero relative overflow-hidden" aria-labelledby="hero-heading">
+      {/* Poster Section - Red block with OUR text */}
+      <div className="relative w-full">
         <div 
-          className={`flex-1 transition-all duration-500 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}
-          style={{ transitionDelay: '100ms' }}
+          className={`red-block flex items-center justify-center transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+          style={{ animationDelay: '0.2s' }}
         >
-          {/* Knockout Text Effect Container */}
-          <div className="relative">
-            {/* Red Background Block */}
-            <div className="bg-civic-red inline-block p-4 sm:p-6 lg:p-8 -ml-4 sm:-ml-6 lg:-ml-8">
-              <h1 
-                id="hero-heading"
-                className="font-display text-[3.5rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] xl:text-[8rem] leading-[0.85] tracking-tight"
-              >
-                {/* Using mix-blend-mode for knockout effect */}
-                <span className="block text-civic-blue" style={{ mixBlendMode: 'screen' }}>
-                  EDUCATION
-                </span>
-                <span className="block text-civic-blue" style={{ mixBlendMode: 'screen' }}>
-                  MATTERS
-                </span>
-              </h1>
-            </div>
-          </div>
-          
-          {/* Subheading - visible on mobile, hidden on larger screens where checkboxes show */}
-          <p className="mt-6 text-lg text-civic-red font-medium max-w-md lg:hidden">
-            Track Tennessee education legislation. Make your voice heard.
-          </p>
-        </div>
-
-        {/* Right Side - Checkboxes */}
-        <div 
-          className={`flex flex-col gap-4 sm:gap-6 transition-all duration-500 ${isLoaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}
-          style={{ transitionDelay: '300ms' }}
-        >
-          {/* Vote Checkbox */}
-          <button
-            className="civic-checkbox group flex items-center gap-4 sm:gap-5 hover:scale-105 transition-transform duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-civic-red focus-visible:ring-offset-2 focus-visible:ring-offset-civic-blue rounded-sm"
-            aria-label="Your vote matters"
-            onClick={() => window.location.href = '/action'}
+          {/* The large OUR text - BLUE on RED background */}
+          <h1 
+            id="hero-heading"
+            className="our-text flex justify-center items-center"
           >
-            <div className="w-10 h-10 sm:w-14 sm:h-14 bg-white flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
-              <Check className="w-6 h-6 sm:w-8 sm:h-8 text-foreground stroke-[3]" aria-hidden="true" />
-            </div>
-            <span className="font-display text-3xl sm:text-4xl lg:text-5xl text-civic-red tracking-wide">
-              VOTE
+            <span className="text-[clamp(200px,32vw,380px)] leading-[0.85] tracking-[-8px]">
+              O
             </span>
-          </button>
-
-          {/* Voice Checkbox */}
-          <button
-            className="civic-checkbox group flex items-center gap-4 sm:gap-5 hover:scale-105 transition-transform duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-civic-red focus-visible:ring-offset-2 focus-visible:ring-offset-civic-blue rounded-sm"
-            aria-label="Your voice matters"
-            onClick={() => window.location.href = '/legislators'}
-          >
-            <div className="w-10 h-10 sm:w-14 sm:h-14 bg-white flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
-              <Check className="w-6 h-6 sm:w-8 sm:h-8 text-foreground stroke-[3]" aria-hidden="true" />
-            </div>
-            <span className="font-display text-3xl sm:text-4xl lg:text-5xl text-civic-red tracking-wide">
-              VOICE
+            <span className="text-[clamp(200px,32vw,380px)] leading-[0.85] tracking-[-8px]">
+              U
             </span>
-          </button>
+            <span className="text-[clamp(200px,32vw,380px)] leading-[0.85] tracking-[-8px]">
+              R
+            </span>
+          </h1>
+          <span className="sr-only">Our Vote, Our Voice - Education Matters</span>
         </div>
       </div>
 
-      {/* Bottom Search Section */}
+      {/* Vote/Voice Section - On Blue */}
       <div 
-        className={`absolute bottom-0 left-0 right-0 pb-10 sm:pb-12 lg:pb-16 transition-all duration-300 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-        style={{ transitionDelay: '500ms' }}
+        className={`bg-civic-blue px-6 md:px-12 py-16 md:py-20 flex flex-col md:flex-row justify-center gap-10 md:gap-20 transition-all duration-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+        style={{ animationDelay: '0.4s' }}
       >
-        <div className="container">
-          <div className="max-w-2xl mx-auto">
-            <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
-              {/* Search Input */}
-              <div className="relative flex-1">
-                <Search 
-                  className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" 
-                  aria-hidden="true" 
-                />
-                <Input
-                  type="search"
-                  placeholder="Search education bills and legislation..."
-                  className="pl-12 h-14 text-base bg-white border-0 shadow-lg rounded-xl focus-visible:ring-2 focus-visible:ring-civic-red focus-visible:ring-offset-0"
-                  value={searchQuery}
-                  onChange={(e) => onSearchChange(e.target.value)}
-                  aria-label="Search education bills"
-                />
-              </div>
-              
-              {/* View All Button */}
-              <Link to="/advocacy" className="sm:flex-shrink-0">
-                <Button 
-                  size="lg"
-                  className="w-full sm:w-auto h-14 px-6 bg-civic-red hover:bg-civic-red-dark text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5 gap-2"
-                >
-                  View All Legislation
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              </Link>
+        {/* Vote Checkbox */}
+        <button
+          className="group flex items-center gap-4 cursor-pointer hover:scale-105 transition-transform duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-civic-blue rounded-sm"
+          aria-label="Your vote matters - Take action"
+          onClick={() => window.location.href = '/action'}
+        >
+          <div className="w-14 h-14 md:w-[72px] md:h-[72px] bg-white flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
+            <Check className="w-10 h-10 md:w-12 md:h-12 text-foreground stroke-[3]" aria-hidden="true" />
+          </div>
+          <span className="font-heading text-4xl md:text-5xl lg:text-6xl text-vote-brown tracking-[3px] uppercase font-bold">
+            VOTE
+          </span>
+        </button>
+
+        {/* Voice Checkbox */}
+        <button
+          className="group flex items-center gap-4 cursor-pointer hover:scale-105 transition-transform duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-civic-blue rounded-sm"
+          aria-label="Your voice matters - Contact legislators"
+          onClick={() => window.location.href = '/legislators'}
+        >
+          <div className="w-14 h-14 md:w-[72px] md:h-[72px] bg-white flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
+            <Check className="w-10 h-10 md:w-12 md:h-12 text-foreground stroke-[3]" aria-hidden="true" />
+          </div>
+          <span className="font-heading text-4xl md:text-5xl lg:text-6xl text-vote-brown tracking-[3px] uppercase font-bold">
+            VOICE
+          </span>
+        </button>
+      </div>
+
+      {/* Search Section */}
+      <div 
+        className={`bg-civic-blue px-6 md:px-12 pb-24 md:pb-28 lg:pb-32 transition-all duration-500 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+        style={{ animationDelay: '0.6s' }}
+      >
+        <div className="max-w-[1000px] mx-auto">
+          <div className="bg-white rounded-2xl p-4 md:p-5 shadow-lg flex flex-col md:flex-row gap-4 md:gap-5 items-stretch">
+            {/* Search Input */}
+            <div className="flex-1 flex items-center gap-4 bg-muted/50 rounded-xl px-5">
+              <Search 
+                className="w-6 h-6 text-muted-foreground flex-shrink-0" 
+                aria-hidden="true" 
+              />
+              <Input
+                type="search"
+                placeholder="Search education bills and legislation..."
+                className="flex-1 border-0 bg-transparent py-5 text-base md:text-lg placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0"
+                value={searchQuery}
+                onChange={(e) => onSearchChange(e.target.value)}
+                aria-label="Search education bills"
+              />
             </div>
+            
+            {/* View All Button */}
+            <Link to="/advocacy" className="flex-shrink-0">
+              <Button 
+                size="lg"
+                className="w-full md:w-auto h-14 md:h-16 px-8 md:px-9 bg-democracy-red hover:bg-democracy-red-dark text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:translate-x-1 gap-2 md:gap-3 text-base md:text-lg"
+              >
+                View All Legislation
+                <ArrowRight className="w-5 h-5" />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
