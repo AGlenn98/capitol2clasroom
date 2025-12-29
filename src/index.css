@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Oswald:wght@600;700&family=Source+Sans+Pro:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -16,11 +18,11 @@
     --charcoal: 0 0% 10%;
     --off-white: 210 17% 98%;
     --vote-brown: 0 32% 40%;
-    
+
     /* Primary: Democracy red for action */
     --primary: 0 50% 58%;
     --primary-foreground: 0 0% 100%;
-    
+
     /* Background: Soft off-white */
     --background: 210 17% 98%;
     --foreground: 0 0% 10%;
@@ -110,7 +112,7 @@
     /* Typography */
     --font-display: 'Playfair Display', Georgia, serif;
     --font-heading: 'Oswald', 'Impact', sans-serif;
-    --font-sans: 'Source Sans Pro', system-ui, sans-serif;
+    --font-sans: Roboto, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 
     /* Sidebar */
     --sidebar-background: 0 0% 10%;
@@ -121,6 +123,7 @@
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 0 0% 20%;
     --sidebar-ring: 0 50% 58%;
+    --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
   }
 
   .dark {
@@ -130,7 +133,7 @@
     --democracy-red: 0 45% 55%;
     --democracy-red-dark: 0 45% 45%;
     --vote-brown: 0 30% 50%;
-    
+
     --background: 0 0% 8%;
     --foreground: 0 0% 94%;
 
@@ -186,6 +189,8 @@
     --sidebar-accent-foreground: 0 0% 94%;
     --sidebar-border: 0 0% 16%;
     --sidebar-ring: 0 45% 55%;
+    --font-sans: Roboto, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
   }
 }
 
@@ -311,27 +316,27 @@
   .prose-article {
     @apply leading-relaxed;
   }
-  
+
   .prose-article p {
     @apply mb-5 text-foreground/85 text-lg leading-relaxed;
   }
-  
+
   .prose-article h2 {
     @apply text-2xl font-bold mt-10 mb-5;
   }
-  
+
   .prose-article h3 {
     @apply text-xl font-semibold mt-8 mb-4;
   }
-  
+
   .prose-article ul, .prose-article ol {
     @apply mb-5 ml-6;
   }
-  
+
   .prose-article li {
     @apply mb-3;
   }
-  
+
   .prose-article blockquote {
     @apply border-l-4 border-accent pl-5 italic my-6 text-muted-foreground bg-muted/30 py-4 pr-4 rounded-r-xl;
   }
@@ -371,7 +376,7 @@
   .text-balance {
     text-wrap: balance;
   }
-  
+
   .gradient-overlay {
     background: linear-gradient(to bottom, transparent 0%, hsl(var(--background)) 100%);
   }
