@@ -1,0 +1,192 @@
+{
+  "name": "Bill Status Change Tracker",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 */4 * * *"
+            }
+          ]
+        }
+      },
+      "name": "Schedule: Every 4 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "table": "bill_subscriptions",
+        "returnAll": true
+      },
+      "name": "Supabase: Get Subscribed Bills",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [470, 300]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "name": "Loop Over Bills",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [690, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://api.legiscan.com/?op=getBill&id={{$json.bill_id}}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "queryAuth",
+        "options": {}
+      },
+      "name": "LegiScan: Get Bill Details",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [910, 300],
+      "credentials": {
+        "queryAuth": {
+          "id": "1",
+          "name": "LegiScan API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "functionCode": "// Compare current status with cached status\nconst currentBill = items[0].json.bill;\nconst cachedBill = $node[\"Supabase: Get Subscribed Bills\"].json;\n\nconst hasChanged = (\n  currentBill.status !== cachedBill.last_status ||\n  currentBill.history.length !== cachedBill.last_history_count\n);\n\nif (hasChanged) {\n  return [\n    {\n      json: {\n        bill_id: currentBill.bill_id,\n        bill_number: currentBill.bill_number,\n        title: currentBill.title,\n        old_status: cachedBill.last_status,\n        new_status: currentBill.status,\n        status_date: currentBill.status_date,\n        change_type: currentBill.history.length > cachedBill.last_history_count ? 'new_history' : 'status_change',\n        user_id: cachedBill.user_id\n      }\n    }\n  ];\n}\n\nreturn [];"
+      },
+      "name": "Code: Detect Changes",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1130, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.change_type}}",
+              "value2": ""
+            }
+          ]
+        }
+      },
+      "name": "Filter: Has Changes",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1350, 300]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "table": "bill_subscriptions",
+        "filterType": "manual",
+        "matchCriteria": {
+          "bill_id": "={{$json.bill_id}}"
+        },
+        "columns": "last_status, last_history_count, updated_at",
+        "values": "={{$json.new_status}},={{$json.history_count}},={{$now}}"
+      },
+      "name": "Supabase: Update Cache",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1570, 200]
+    },
+    {
+      "parameters": {
+        "content": "## Bill Status Update\n\n**{{$json.bill_number}}**: {{$json.title}}\n\n**Previous Status**: {{$json.old_status}}\n**New Status**: {{$json.new_status}}\n**Date**: {{$json.status_date}}\n\n**Change Type**: {{$json.change_type}}",
+        "options": {}
+      },
+      "name": "Notify User",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [1570, 400]
+    }
+  ],
+  "connections": {
+    "Schedule: Every 4 Hours": {
+      "main": [
+        [
+          {
+            "node": "Supabase: Get Subscribed Bills",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase: Get Subscribed Bills": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Bills",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Bills": {
+      "main": [
+        [
+          {
+            "node": "LegiScan: Get Bill Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LegiScan: Get Bill Details": {
+      "main": [
+        [
+          {
+            "node": "Code: Detect Changes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code: Detect Changes": {
+      "main": [
+        [
+          {
+            "node": "Filter: Has Changes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter: Has Changes": {
+      "main": [
+        [
+          {
+            "node": "Supabase: Update Cache",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Notify User",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "instanceId": "your-instance-id"
+  },
+  "tags": []
+}
